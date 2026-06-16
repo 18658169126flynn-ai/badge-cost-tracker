@@ -176,8 +176,8 @@ function calcFull(d) {
   return calcBOM(d) + assembleCost + packagingCost + profitMargin;
 }
 
-// 预测：基于最近3个月线性趋势 + 阻尼
-function predict(monthsAhead) {
+// 预测：三种场景（保守/基准/激进）
+function predict(monthsAhead, scenario) {
   const last = trendData[trendData.length-1];
   const prev = trendData[trendData.length-3];
   const monthsDiff = 9;
@@ -185,12 +185,27 @@ function predict(monthsAhead) {
   const pcbSlope = (last.pcb - prev.pcb) / monthsDiff;
   const capSlope = (last.cap - prev.cap) / monthsDiff;
   const tfSlope = (last.tfcard - prev.tfcard) / monthsDiff;
-  const dampen = monthsAhead > 3 ? 0.5 : 0.7;
+  
+  let storageMul, pcbMul, capMul, tfMul;
+  if (scenario === 'low') {
+    // 保守：线性外推，阻尼大
+    storageMul = monthsAhead > 3 ? 0.3 : 0.5;
+    pcbMul = 0.5; capMul = 0.5; tfMul = 0.5;
+  } else if (scenario === 'high') {
+    // 激进：存储/PCB可能翻倍
+    storageMul = monthsAhead >= 6 ? 2.5 : monthsAhead >= 3 ? 1.8 : 1.2;
+    pcbMul = monthsAhead >= 6 ? 1.5 : monthsAhead >= 3 ? 1.2 : 1.0;
+    capMul = 1.2; tfMul = 1.5;
+  } else {
+    // 基准：适度增长
+    storageMul = monthsAhead > 3 ? 0.7 : 0.9;
+    pcbMul = 0.8; capMul = 0.8; tfMul = 0.8;
+  }
   return {
-    storage: last.storage + storageSlope * monthsAhead * dampen,
-    pcb: last.pcb + pcbSlope * monthsAhead,
-    cap: last.cap + capSlope * monthsAhead,
-    tfcard: last.tfcard + tfSlope * monthsAhead,
+    storage: last.storage + storageSlope * monthsAhead * storageMul,
+    pcb: last.pcb + pcbSlope * monthsAhead * pcbMul,
+    cap: last.cap + capSlope * monthsAhead * capMul,
+    tfcard: last.tfcard + tfSlope * monthsAhead * tfMul,
   };
 }
 
@@ -206,26 +221,55 @@ const fullDelta = ((currentFull - baselineFull) / baselineFull * 100).toFixed(1)
 document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + '% vs 基准报价 ¥' + baselineFull;
 
 // Predictions
-const p1 = predict(1), p3 = predict(3), p6 = predict(6);
-const p1Full = calcFull(p1), p3Full = calcFull(p3), p6Full = calcFull(p6);
+// 三种场景预测
+const scenarios = ['low','mid','high'];
+const p1 = {}, p3 = {}, p6 = {};
+scenarios.forEach(s => {
+  p1[s] = calcFull(predict(1, s));
+  p3[s] = calcFull(predict(3, s));
+  p6[s] = calcFull(predict(6, s));
+});
 
-document.getElementById('pred-1m').textContent = '¥' + p1Full.toFixed(0);
-document.getElementById('pred-1m-sub').textContent = '+' + ((p1Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
-document.getElementById('pred-3m').textContent = '¥' + p3Full.toFixed(0);
-document.getElementById('pred-3m-sub').textContent = '+' + ((p3Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
-document.getElementById('pred-6m').textContent = '¥' + p6Full.toFixed(0);
-document.getElementById('pred-6m-sub').textContent = '+' + ((p6Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
+document.getElementById('pred-1m').innerHTML = '¥' + p1.mid.toFixed(0) + '<br><span style="font-size:11px;color:#9ca3af">保守¥' + p1.low.toFixed(0) + ' / 激进¥' + p1.high.toFixed(0) + '</span>';
+document.getElementById('pred-1m-sub').textContent = '+' + ((p1.mid-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准（基准场景）';
+document.getElementById('pred-3m').innerHTML = '¥' + p3.mid.toFixed(0) + '<br><span style="font-size:11px;color:#9ca3af">保守¥' + p3.low.toFixed(0) + ' / 激进¥' + p3.high.toFixed(0) + '</span>';
+document.getElementById('pred-3m-sub').textContent = '+' + ((p3.mid-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准（基准场景）';
+document.getElementById('pred-6m').innerHTML = '¥' + p6.mid.toFixed(0) + '<br><span style="font-size:11px;color:#9ca3af">保守¥' + p6.low.toFixed(0) + ' / 激进¥' + p6.high.toFixed(0) + '</span>';
+document.getElementById('pred-6m-sub').textContent = '+' + ((p6.mid-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准（基准场景）';
 
 // ============ TOTAL COST CHART ============
 const allLabels = [...trendData.map(d=>d.label), '2026年7月(预)', '2026年9月(预)', '2026年12月(预)'];
-const allFulls = [...trendData.map(d=>calcFull(d)), p1Full, p3Full, p6Full];
+const allFullsLow = [...trendData.map(d=>calcFull(d)), p1.low, p3.low, p6.low];
+const allFulls = [...trendData.map(d=>calcFull(d)), p1.mid, p3.mid, p6.mid];
+const allFullsHigh = [...trendData.map(d=>calcFull(d)), p1.high, p3.high, p6.high];
 
 new Chart(document.getElementById('totalCostChart'), {
   type: 'line',
   data: {
     labels: allLabels,
     datasets: [{
-      label: '整机总成本 (¥)',
+      label: '激进场景（存储翻倍）(¥)',
+      data: allFullsHigh,
+      borderColor: '#ef4444',
+      backgroundColor: 'rgba(239,68,68,.05)',
+      fill: false, tension: 0.3, pointRadius: 4,
+      pointBackgroundColor: allLabels.map((_,i)=>i>=5?'#ef4444':'#ef4444'),
+      segment: {
+        borderDash: ctx => ctx.p1DataIndex >= 5 ? [6,3] : undefined,
+        borderColor: ctx => ctx.p1DataIndex >= 5 ? '#ef4444' : '#ef4444',
+      }
+    },{
+    },{ label: '保守场景 (¥)',
+      data: allFullsLow,
+      borderColor: '#22c55e',
+      fill: false, tension: 0.3, pointRadius: 3,
+      borderDash: [4,2],
+      segment: {
+        borderDash: ctx => ctx.p1DataIndex >= 5 ? [6,3] : undefined,
+        borderColor: ctx => ctx.p1DataIndex >= 5 ? '#22c55e' : '#22c55e',
+      }
+    },{
+      label: '基准场景 (¥)',
       data: allFulls,
       borderColor: '#3b82f6',
       backgroundColor: 'rgba(59,130,246,.1)',
