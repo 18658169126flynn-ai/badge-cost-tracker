@@ -349,7 +349,7 @@ new Chart(document.getElementById('componentChart'), {
 // ============ BOM TABLE ============
 // 基于最新成本表数据
 const bomItems = [
-  { cat:'电子料', name:'存储 2+16', base:50, current:344.76, risk:'high', note:'AI需求驱动，暴涨。基准报价50，市价30→344' },
+  { cat:'电子料', name:'存储 2+16', base:50, current:344.76, risk:'high', note:'AI需求驱动，暴涨。基准报价50→344，涨幅+589%' },
   { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:45.5, risk:'mid', note:'3月高点¥77.3后回落至¥45.5，随NAND波动' },
   { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:78, risk:'mid', note:'8寸晶圆代工涨价5-20%' },
   { cat:'PCB', name:'PCB光板', base:8, current:13.2, risk:'mid', note:'铜箔+CCL涨价传导，+65%' },
@@ -389,7 +389,7 @@ document.getElementById('bomTable').innerHTML = bomHTML;
 const risks = [
   {
     title: '🔴 存储芯片 2+16', cls:'risk-high',
-    text: '9个月暴涨432%（¥79.67→¥344.76）。基准报价¥50，市场调研仅¥30，差价巨大。AI服务器需求挤占产能，三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。MLC NAND价格从$3.2涨至$12.9。预计2026年中见顶。建议：尽早锁价或备货6个月用量。'
+    text: '基准报价¥50涨至¥344.76（+589%）。AI服务器需求挤占产能，三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。MLC NAND价格从$3.2涨至$12.9。预计2026年中见顶。建议：尽早锁价或备货6个月用量。'
   },
   {
     title: '🔴 锂电池 1800mA', cls:'risk-high',
