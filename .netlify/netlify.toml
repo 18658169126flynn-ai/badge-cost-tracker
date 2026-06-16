@@ -1,0 +1,26 @@
+plugins = []
+headers = []
+redirects = []
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "/Users/abc123/.openclaw/workspace/badge-cost-tracker"
+publishOrigin = "default"
+base = "/Users/abc123/.openclaw/workspace/badge-cost-tracker"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]

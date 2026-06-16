@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>胸牌记录仪 — 成本动态追踪</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="chart.min.js"></script>
 <style>
 :root{--bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e4e4e7;--muted:#9ca3af;--accent:#3b82f6;--red:#ef4444;--green:#22c55e;--orange:#f59e0b;--purple:#a855f7;--cyan:#06b6d4}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -20,8 +20,8 @@ h1{font-size:28px;font-weight:700;margin-bottom:6px}
 .badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
 .grid{display:grid;gap:16px;margin-bottom:20px}
 .grid-4{grid-template-columns:repeat(4,1fr)}
-.grid-2{grid-template-columns:repeat(2,1fr)}
 .grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
 .card h3{font-size:14px;color:var(--muted);margin-bottom:8px;font-weight:500}
 .card .big{font-size:32px;font-weight:700}
@@ -55,35 +55,30 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 市场调研 + 实时报价趋势 · 数据更新至 2026年6月16日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年6月16日</p>
 
 <!-- KPI Cards -->
-<div class="grid grid-4">
+<div class="grid grid-3">
   <div class="card">
     <h3>📊 当前 BOM 总成本（含涨幅）</h3>
     <div class="big" id="kpi-current">—</div>
     <div class="delta up" id="kpi-current-delta"></div>
   </div>
   <div class="card">
-    <h3>📦 米蓝报价（MOQ 3.2K）</h3>
-    <div class="big">¥269.43</div>
-    <div class="delta" style="color:var(--muted)">2025年5月基准</div>
+    <h3>📦 米蓝整机报价（MOQ 3.2K）</h3>
+    <div class="big">¥295</div>
+    <div class="delta" style="color:var(--muted)">2025年5月基准整机价格</div>
   </div>
   <div class="card">
-    <h3>📦 组装费</h3>
-    <div class="big">¥10</div>
-    <div class="delta" style="color:var(--muted)">每台</div>
-  </div>
-  <div class="card">
-    <h3>📋 包材费</h3>
-    <div class="big">¥20</div>
-    <div class="delta" style="color:var(--muted)">每台（含配件）</div>
+    <h3>📈 最新整机成本参考</h3>
+    <div class="big" id="kpi-latest">—</div>
+    <div class="delta up" id="kpi-latest-delta"></div>
   </div>
 </div>
 
 <!-- Prediction -->
 <div class="card">
-  <h3>🔮 未来成本预测（基于趋势外推）</h3>
+  <h3>🔮 未来整机成本预测（基于趋势外推，含组装/包材/利润）</h3>
   <div class="prediction-row">
     <div class="prediction-box">
       <div class="label">1个月后（2026.07）</div>
@@ -103,10 +98,10 @@ tr:hover{background:rgba(59,130,246,.05)}
   </div>
 </div>
 
-<!-- Total Cost Trend Chart -->
+<!-- Charts -->
 <div class="grid grid-2">
   <div class="card chart-card">
-    <h2>📈 胸牌总成本趋势（含预测）</h2>
+    <h2>📈 整机总成本趋势（含预测）</h2>
     <div class="chart-wrap"><canvas id="totalCostChart"></canvas></div>
   </div>
   <div class="card chart-card">
@@ -120,7 +115,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <div class="card" style="overflow-x:auto">
 <table>
 <thead>
-<tr><th>分类</th><th>物料</th><th>基准价(2025.05)</th><th>当前市价(2026.06)</th><th>涨幅</th><th>成本影响/台</th><th>风险等级</th></tr>
+<tr><th>分类</th><th>物料</th><th>米蓝报价(2025.05)</th><th>当前市价(2026.06)</th><th>涨幅</th><th>成本影响/台</th><th>风险等级</th></tr>
 </thead>
 <tbody id="bomTable"></tbody>
 </table>
@@ -140,92 +135,101 @@ tr:hover{background:rgba(59,130,246,.05)}
 </div>
 
 <div class="footer">
-  胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 市场调研 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
+  胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
   生成时间：2026-06-16
 </div>
 </div>
 
 <script>
 // ============ DATA ============
-const baselineDate = '2025-05';
-const baselineBOM = 239.43; // 米蓝报价 BOM
+// 基于最新胸牌成本表（已更新）
+const baselineBOM = 245.43;   // 最新 BOM 成本
 const assembleCost = 10;
+const packagingCost = 15;      // 包材从19→15
 const profitMargin = 20;
+const baselineFull = 295;       // 米蓝整机报价（用户确认）
+const tfcardCost = 17.5;       // 64G TF卡客供
 
-// Tracked component prices over time (from 电子料报价趋势)
+// 追踪物料的历史价格趋势（电子料报价趋势表 - 最新版）
 const trendData = [
-  { date:'2025-09', label:'2025年9月', storage:79.67, pcb:8, cap:0.22 },
-  { date:'2026-01', label:'2026年1月', storage:237.30, pcb:10, cap:0.27 },
-  { date:'2026-02', label:'2026年2月', storage:252.04, pcb:10.5, cap:0.30 },
-  { date:'2026-03', label:'2026年3月', storage:313.69, pcb:11.2, cap:0.32 },
-  { date:'2026-06', label:'2026年6月', storage:344.76, pcb:13.2, cap:0.38 },
+  { date:'2025-09', label:'2025年9月', storage:79.67, storage18:47.8, pcb:8, cap:22, tfcard:20.3, tfcard32:14.9 },
+  { date:'2026-01', label:'2026年1月', storage:237.30, storage18:84, pcb:10, cap:27, tfcard:42.9, tfcard32:27.5 },
+  { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.4, tfcard32:33.1 },
+  { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.3, tfcard32:48 },
+  { date:'2026-06', label:'2026年6月', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.5, tfcard32:29.9 },
 ];
 
-// Baseline (May 2025) values for tracked items
-const baseStorage = 30; // from cost sheet
+// 基准值（最新成本表 米蓝报价）
+const baseStorage = 50;   // 存储从30→50
 const basePCB = 8;
-const baseCap = 0.20; // estimated from trend
-const baseTracked = baseStorage + basePCB + baseCap; // 38.20
-const baseOther = baselineBOM - baseTracked; // ~201.23
+const baseCap = 22;        // 0201阻容基准（每万片）
+const baseTFCard = 20.3;   // 64G TF卡基准
+const baseTracked = baseStorage + basePCB + baseCap + baseTFCard; // 73.20
+const baseOther = baselineBOM - baseTracked; // 172.23（其他BOM物料）
 
-// Calculate total BOM at each time point
-function calcTotal(d) {
-  return baseOther + d.storage + d.pcb + d.cap;
+// 计算各时间点的 BOM 总成本（不含客供料）
+function calcBOM(d) {
+  return baseOther + d.storage + d.pcb + d.cap + d.tfcard;
+}
+// 计算整机总成本（BOM + 组装 + 包材 + 利润）
+function calcFull(d) {
+  return calcBOM(d) + assembleCost + packagingCost + profitMargin;
 }
 
-// Predict future: linear regression on last 3 points
+// 预测：基于最近3个月线性趋势 + 阻尼
 function predict(monthsAhead) {
   const last = trendData[trendData.length-1];
-  const prev = trendData[trendData.length-3]; // use 3 months back for slope
-  const monthsDiff = 9; // approx months between prev and last
+  const prev = trendData[trendData.length-3];
+  const monthsDiff = 9;
   const storageSlope = (last.storage - prev.storage) / monthsDiff;
   const pcbSlope = (last.pcb - prev.pcb) / monthsDiff;
   const capSlope = (last.cap - prev.cap) / monthsDiff;
-  
-  // Storage may be peaking per news, apply dampening
+  const tfSlope = (last.tfcard - prev.tfcard) / monthsDiff;
   const dampen = monthsAhead > 3 ? 0.5 : 0.7;
   return {
     storage: last.storage + storageSlope * monthsAhead * dampen,
     pcb: last.pcb + pcbSlope * monthsAhead,
     cap: last.cap + capSlope * monthsAhead,
+    tfcard: last.tfcard + tfSlope * monthsAhead,
   };
 }
 
 // ============ KPI ============
-const currentBOM = calcTotal(trendData[trendData.length-1]);
+const currentBOM = calcBOM(trendData[trendData.length-1]);
+const currentFull = calcFull(trendData[trendData.length-1]);
 document.getElementById('kpi-current').textContent = '¥' + currentBOM.toFixed(0);
 const bomDelta = ((currentBOM - baselineBOM) / baselineBOM * 100).toFixed(1);
-document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + '% vs 2025.05 基准';
+document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + '% vs 基准 ¥' + baselineBOM;
+
+document.getElementById('kpi-latest').textContent = '¥' + currentFull.toFixed(0);
+const fullDelta = ((currentFull - baselineFull) / baselineFull * 100).toFixed(1);
+document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + '% vs 米蓝报价 ¥' + baselineFull;
 
 // Predictions
 const p1 = predict(1), p3 = predict(3), p6 = predict(6);
-const p1Total = calcTotal(p1);
-const p3Total = calcTotal(p3);
-const p6Total = calcTotal(p6);
+const p1Full = calcFull(p1), p3Full = calcFull(p3), p6Full = calcFull(p6);
 
-document.getElementById('pred-1m').textContent = '¥' + p1Total.toFixed(0);
-document.getElementById('pred-1m-sub').textContent = '+' + ((p1Total-baselineBOM)/baselineBOM*100).toFixed(1) + '% vs 基准';
-document.getElementById('pred-3m').textContent = '¥' + p3Total.toFixed(0);
-document.getElementById('pred-3m-sub').textContent = '+' + ((p3Total-baselineBOM)/baselineBOM*100).toFixed(1) + '% vs 基准';
-document.getElementById('pred-6m').textContent = '¥' + p6Total.toFixed(0);
-document.getElementById('pred-6m-sub').textContent = '+' + ((p6Total-baselineBOM)/baselineBOM*100).toFixed(1) + '% vs 基准';
+document.getElementById('pred-1m').textContent = '¥' + p1Full.toFixed(0);
+document.getElementById('pred-1m-sub').textContent = '+' + ((p1Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
+document.getElementById('pred-3m').textContent = '¥' + p3Full.toFixed(0);
+document.getElementById('pred-3m-sub').textContent = '+' + ((p3Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
+document.getElementById('pred-6m').textContent = '¥' + p6Full.toFixed(0);
+document.getElementById('pred-6m-sub').textContent = '+' + ((p6Full-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准';
 
 // ============ TOTAL COST CHART ============
 const allLabels = [...trendData.map(d=>d.label), '2026年7月(预)', '2026年9月(预)', '2026年12月(预)'];
-const allTotals = [...trendData.map(d=>calcTotal(d)), p1Total, p3Total, p6Total];
+const allFulls = [...trendData.map(d=>calcFull(d)), p1Full, p3Full, p6Full];
 
 new Chart(document.getElementById('totalCostChart'), {
   type: 'line',
   data: {
     labels: allLabels,
     datasets: [{
-      label: '总BOM成本 (¥)',
-      data: allTotals,
+      label: '整机总成本 (¥)',
+      data: allFulls,
       borderColor: '#3b82f6',
       backgroundColor: 'rgba(59,130,246,.1)',
-      fill: true,
-      tension: 0.3,
-      pointRadius: 5,
+      fill: true, tension: 0.3, pointRadius: 5,
       pointBackgroundColor: allLabels.map((_,i)=>i>=5?'#f59e0b':'#3b82f6'),
       pointBorderColor: allLabels.map((_,i)=>i>=5?'#f59e0b':'#3b82f6'),
       segment: {
@@ -233,12 +237,10 @@ new Chart(document.getElementById('totalCostChart'), {
         borderColor: ctx => ctx.p1DataIndex >= 5 ? '#f59e0b' : '#3b82f6',
       }
     },{
-      label: '米蓝报价基准 (¥269)',
-      data: allLabels.map(()=>269.43),
+      label: '米蓝报价基准 (¥295)',
+      data: allLabels.map(()=>baselineFull),
       borderColor: 'rgba(239,68,68,.4)',
-      borderDash: [8,4],
-      pointRadius: 0,
-      borderWidth: 1.5,
+      borderDash: [8,4], pointRadius: 0, borderWidth: 1.5,
     }]
   },
   options: {
@@ -262,21 +264,30 @@ new Chart(document.getElementById('componentChart'), {
     datasets: [{
       label: '存储 2+16 (¥)',
       data: trendData.map(d=>d.storage),
-      borderColor: '#ef4444',
-      backgroundColor: 'rgba(239,68,68,.1)',
-      fill: false, tension: 0.3, pointRadius: 4,
+      borderColor: '#ef4444', fill: false, tension: 0.3, pointRadius: 4,
       yAxisID: 'y',
+    },{ label: '存储 1+8 (¥)',
+      data: trendData.map(d=>d.storage18),
+      borderColor: '#f97316', fill: false, tension: 0.3, pointRadius: 4, borderDash:[4,2],
+      yAxisID: 'y'
     },{
       label: 'PCB 光板 (¥)',
       data: trendData.map(d=>d.pcb),
-      borderColor: '#3b82f6',
-      fill: false, tension: 0.3, pointRadius: 4,
+      borderColor: '#3b82f6', fill: false, tension: 0.3, pointRadius: 4,
       yAxisID: 'y1',
     },{
-      label: '电容 (¥)',
+      label: '64G TF卡 (¥)',
+      data: trendData.map(d=>d.tfcard),
+      borderColor: '#a855f7', fill: false, tension: 0.3, pointRadius: 4,
+      yAxisID: 'y1',
+    },{
+      label: '0201阻容/万片 (¥)',
       data: trendData.map(d=>d.cap),
-      borderColor: '#22c55e',
-      fill: false, tension: 0.3, pointRadius: 4,
+      borderColor: '#22c55e', fill: false, tension: 0.3, pointRadius: 4,
+      yAxisID: 'y1',
+    },{ label: '32G TF卡 (¥)',
+      data: trendData.map(d=>d.tfcard32),
+      borderColor: '#f59e0b', fill: false, tension: 0.3, pointRadius: 4,
       yAxisID: 'y1',
     }]
   },
@@ -285,31 +296,32 @@ new Chart(document.getElementById('componentChart'), {
     plugins: { legend: { labels: { color:'#9ca3af', font:{size:12} } } },
     scales: {
       x: { ticks:{color:'#9ca3af',font:{size:11}}, grid:{color:'rgba(255,255,255,.05)'} },
-      y: { type:'linear', position:'left', title:{display:true,text:'存储 (¥)',color:'#ef4444'}, ticks:{color:'#ef4444',callback:v=>'¥'+v}, grid:{color:'rgba(255,255,255,.05)'} },
-      y1: { type:'linear', position:'right', title:{display:true,text:'PCB/电容 (¥)',color:'#9ca3af'}, ticks:{color:'#9ca3af',callback:v=>'¥'+v}, grid:{drawOnChartArea:false} },
+      y: { type:'linear', position:'left', title:{display:true,text:'存储 (¥)',color:'#ef4444'}, ticks:{color:'#ef4444',callback:v=>'¥'+v}, grid:{color:'rgba(255,255,255,.05)'}, beginAtZero:false },
+      y1: { type:'linear', position:'right', title:{display:true,text:'PCB/TF卡/电容 (¥)',color:'#9ca3af'}, ticks:{color:'#9ca3af',callback:v=>'¥'+v}, grid:{drawOnChartArea:false} },
     }
   }
 });
 
 // ============ BOM TABLE ============
+// 基于最新成本表数据
 const bomItems = [
-  { cat:'电子料', name:'存储 2+16', base:30, current:344.76, risk:'high', note:'AI需求驱动，暴涨4.3倍' },
+  { cat:'电子料', name:'存储 2+16', base:50, current:344.76, risk:'high', note:'AI需求驱动，暴涨。米蓝报价50，市价30→344' },
+  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:45.5, risk:'mid', note:'3月高点¥77.3后回落至¥45.5，随NAND波动' },
   { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:78, risk:'mid', note:'8寸晶圆代工涨价5-20%' },
-  { cat:'PCB', name:'PCB光板', base:8, current:13.2, risk:'mid', note:'铜箔+CCL涨价传导' },
-  { cat:'电子料', name:'电子料及产测（含电容）', base:35, current:38, risk:'mid', note:'MLCC涨价15-20%' },
-  { cat:'显示', name:'2.13寸水墨屏', base:23.6, current:24, risk:'low', note:'E Ink独占，价格稳定' },
-  { cat:'电池', name:'1800mA电池', base:11.8, current:16, risk:'high', note:'碳酸锂涨250%+' },
-  { cat:'光学', name:'摄像头模组', base:12, current:13, risk:'low', note:'CMOS供应充足' },
-  { cat:'射频', name:'天线(LTE+三合一+分集)', base:2.53, current:2.53, risk:'low', note:'价格稳定' },
+  { cat:'PCB', name:'PCB光板', base:8, current:13.2, risk:'mid', note:'铜箔+CCL涨价传导，+65%' },
+  { cat:'电子料', name:'电子料及产测', base:32, current:38, risk:'mid', note:'MLCC涨价15-20%，含电容/电阻等' },
+  { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
+  { cat:'电池', name:'1800mA电池', base:10.8, current:16, risk:'high', note:'碳酸锂涨250%+，需重做3C' },
+  { cat:'光学', name:'摄像头模组', base:12, current:13, risk:'low', note:'图源顺，CMOS供应充足' },
+  { cat:'射频', name:'天线(LTE+三合一+分集)', base:2.53, current:2.53, risk:'low', note:'3月转产合同价，换厂需重新调试' },
   { cat:'声学', name:'喇叭+MIC', base:2, current:2.2, risk:'low', note:'小幅波动' },
-  { cat:'结构', name:'壳子（塑胶件+五金件）', base:10.5, current:11.5, risk:'low', note:'ABS+PC原料小幅上涨' },
-  { cat:'配件', name:'耳机', base:7, current:7, risk:'low', note:'标准件' },
+  { cat:'结构', name:'壳子（塑胶件+五金件）', base:10.5, current:11.5, risk:'low', note:'润荣MOQ 3K，ABS+PC小幅涨' },
+  { cat:'配件', name:'耳机', base:6, current:7, risk:'low', note:'供应商报价' },
   { cat:'配件', name:'充电头+数据线', base:5, current:5.5, risk:'low', note:'标准件' },
-  { cat:'包材', name:'包材全套', base:19, current:20, risk:'low', note:'纸价小幅上涨' },
   { cat:'辅料', name:'辅料+损耗', base:3, current:4, risk:'low', note:'泡棉/胶带等' },
 ];
 
-let html = '';
+let bomHTML = '';
 bomItems.forEach(item => {
   const delta = item.current - item.base;
   const pct = (delta / item.base * 100).toFixed(1);
@@ -317,7 +329,7 @@ bomItems.forEach(item => {
   const riskBadge = item.risk === 'high' ? '<span class="badge badge-red">高</span>' :
                     item.risk === 'mid' ? '<span class="badge badge-orange">中</span>' :
                     '<span class="badge badge-green">低</span>';
-  html += `<tr>
+  bomHTML += `<tr>
     <td>${item.cat}</td>
     <td><strong>${item.name}</strong><br><span style="font-size:11px;color:var(--muted)">${item.note}</span></td>
     <td>¥${item.base.toFixed(1)}</td>
@@ -327,17 +339,17 @@ bomItems.forEach(item => {
     <td>${riskBadge}</td>
   </tr>`;
 });
-document.getElementById('bomTable').innerHTML = html;
+document.getElementById('bomTable').innerHTML = bomHTML;
 
 // ============ RISK CARDS ============
 const risks = [
   {
     title: '🔴 存储芯片 2+16', cls:'risk-high',
-    text: '9个月暴涨432%（¥79.67→¥344.76）。AI服务器需求挤占产能，三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。MLC NAND价格从$3.2涨至$12.9。预计2026年中见顶，下半年可能回调但仍处高位。建议：尽早锁价或备货6个月用量。'
+    text: '9个月暴涨432%（¥79.67→¥344.76）。米蓝报价¥50，市场调研仅¥30，差价巨大。AI服务器需求挤占产能，三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。MLC NAND价格从$3.2涨至$12.9。预计2026年中见顶。建议：尽早锁价或备货6个月用量。'
   },
   {
     title: '🔴 锂电池 1800mA', cls:'risk-high',
-    text: '碳酸锂价格从5.8万/吨暴涨至20.5万/吨（+250%），电池成本上升约35%。需重做3C认证（起订量5K），认证周期和费用需额外考虑。建议：评估3C认证分摊成本，考虑备货策略。'
+    text: '碳酸锂价格从5.8万/吨暴涨至20.5万/吨（+250%），电池成本上升约48%（¥10.8→¥16）。需重做3C认证（起订量5K），认证周期和费用需额外考虑。建议：评估3C认证分摊成本，考虑备货策略。'
   },
   {
     title: '🟡 PCB 光板', cls:'risk-mid',
@@ -345,23 +357,23 @@ const risks = [
   },
   {
     title: '🟡 MLCC/电容', cls:'risk-mid',
-    text: 'MLCC现货价格普遍涨15-20%，AI服务器用高容产品涨50-60%。村田、太阳诱电、三星电机集体调价，交期延长至4个月。国巨2月起消费级电阻涨价15-20%。7月日系厂商第二轮涨价即将落地。建议：提前下单锁定交期。'
+    text: 'MLCC现货价格普遍涨15-20%，AI服务器用高容产品涨50-60%。村田、太阳诱电、三星电机集体调价，交期延长至4个月。7月日系厂商第二轮涨价即将落地。建议：提前下单锁定交期。'
   },
   {
     title: '🟡 主控芯片 SL8541E', cls:'risk-mid',
     text: '8英寸晶圆产能持续收缩，产能利用率攀升至85-90%，代工价格上调5-20%，封测成本涨幅接近30%。展锐平台供应相对稳定，但上游成本压力在传导。建议：确认展锐长协价是否覆盖本次涨价周期。'
   },
   {
+    title: '🟡 64G TF卡（客供）', cls:'risk-mid',
+    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至3月高点¥77.3（+280%），6月回落至¥45.5（+124%）。随NAND价格剧烈波动，3月冲高后回调。建议：关注NAND走势，适时锁价备货。'
+  },
+  {
     title: '🟢 水墨屏 2.13寸', cls:'risk-low',
-    text: 'E Ink元太科技独占电子纸技术，目前价格稳定（¥15-22区间）。COMPUTEX 2026展示新技术方向，短期内无涨价信号。但单一供应商风险需关注。建议：维持现有采购策略。'
+    text: 'E Ink元太科技独占电子纸技术，当前¥18.6（米蓝报价），市场¥15-22区间。COMPUTEX 2026展示新技术方向，短期内无涨价信号。建议：维持现有采购策略。'
   },
   {
     title: '🟢 摄像头模组', cls:'risk-low',
-    text: 'CMOS图像传感器供应充足，思特威等国产厂商持续推出新品。AI眼镜等新需求增长但不直接影响低端模组。价格基本稳定。建议：正常采购。'
-  },
-  {
-    title: '🟢 壳体/结构件', cls:'risk-low',
-    text: 'ABS+PC原料小幅波动，润荣MOQ 3K报价¥10.5基本稳定。模具已开，切换成本高。建议：维持现有供应商。'
+    text: '图源顺供应，CMOS图像传感器供应充足，思特威等国产厂商持续推出新品。价格基本稳定¥12→¥13。建议：正常采购。'
   },
 ];
 let riskHTML = '';
