@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>供应链每日数据看板</title>
+<script src="chart.min.js"></script>
+<style>
+:root{--bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e4e4e7;--muted:#9ca3af;--accent:#3b82f6;--red:#ef4444;--green:#22c55e;--orange:#f59e0b;--purple:#a855f7;--cyan:#06b6d4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:20px}
+.container{max-width:1400px;margin:0 auto}
+h1{font-size:28px;font-weight:700;margin-bottom:6px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
+.nav-link{display:inline-block;padding:6px 16px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:8px;color:var(--accent);text-decoration:none;font-size:13px;margin-bottom:20px;transition:all .2s}
+.nav-link:hover{background:rgba(59,130,246,.25)}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600}
+.badge-red{background:rgba(239,68,68,.15);color:var(--red)}
+.badge-orange{background:rgba(245,158,11,.15);color:var(--orange)}
+.badge-green{background:rgba(34,197,94,.15);color:var(--green)}
+.badge-purple{background:rgba(168,85,247,.15);color:var(--purple)}
+.badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
+.badge-blue{background:rgba(59,130,246,.15);color:var(--accent)}
+.grid{display:grid;gap:16px;margin-bottom:20px}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card h3{font-size:14px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.card .big{font-size:32px;font-weight:700}
+.card .delta{font-size:14px;margin-top:4px}
+.card .delta.up{color:var(--red)}
+.card .delta.down{color:var(--green)}
+.chart-card{padding:20px}
+.chart-card h2{font-size:16px;font-weight:600;margin-bottom:16px}
+.chart-wrap{position:relative;height:300px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:12px}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:rgba(59,130,246,.05)}
+.section-title{font-size:18px;font-weight:600;margin:28px 0 14px;display:flex;align-items:center;gap:8px}
+.section-title span{font-size:20px}
+.risk-card{padding:16px;border-left:3px solid}
+.risk-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.risk-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.risk-high{border-color:var(--red)}
+.risk-mid{border-color:var(--orange)}
+.risk-low{border-color:var(--green)}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border)}
+.chain-flow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;padding:10px 0}
+.chain-box{border-radius:8px;padding:10px 16px;text-align:center;min-width:120px}
+.chain-arrow{font-size:20px;color:var(--muted)}
+@media(max-width:900px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}.chart-wrap{height:240px}}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="nav-link">📟 切换到胸牌成本追踪</a>
+<h1>📊 供应链每日数据看板</h1>
+<p class="subtitle">基于 BOM 成本结构 + 公开市场报价 + 行业涨价资讯 · 覆盖原材料→元器件→终端全链路</p>
+
+<!-- ===== KPI ===== -->
+<div class="grid grid-4">
+  <div class="card">
+    <h3>🔴 存储 2+16</h3>
+    <div class="big" style="color:var(--red)">¥344.76</div>
+    <div class="delta up">↑ +589% vs 基准</div>
+  </div>
+  <div class="card">
+    <h3>🟡 PCB 光板</h3>
+    <div class="big" style="color:var(--orange)">¥13.20</div>
+    <div class="delta up">↑ +65% vs 基准</div>
+  </div>
+  <div class="card">
+    <h3>🟡 MLCC/阻容</h3>
+    <div class="big" style="color:var(--orange)">¥38</div>
+    <div class="delta up">↑ +73% vs 基准</div>
+  </div>
+  <div class="card">
+    <h3>🔴 碳酸锂</h3>
+    <div class="big" style="color:var(--red)">16.65万/吨</div>
+    <div class="delta up">↑ +187% vs 低点5.8万</div>
+  </div>
+</div>
+
+<!-- ===== 原材料价格追踪 ===== -->
+<div class="section-title"><span>📈</span> 原材料与元器件价格趋势</div>
+<div class="grid grid-2">
+  <div class="card chart-card">
+    <h2>存储芯片价格走势</h2>
+    <div class="chart-wrap"><canvas id="storageChart"></canvas></div>
+  </div>
+  <div class="card chart-card">
+    <h2>被动元件 & PCB 价格走势</h2>
+    <div class="chart-wrap"><canvas id="passiveChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ===== 涨价明细表 ===== -->
+<div class="section-title"><span>📋</span> 关键物料涨价明细</div>
+<div class="card" style="overflow-x:auto">
+<table>
+<thead><tr><th>分类</th><th>物料</th><th>基准价</th><th>当前价</th><th>涨幅</th><th>驱动因素</th><th>趋势</th></tr></thead>
+<tbody>
+<tr><td>存储</td><td><strong>DRAM 2+16</strong></td><td>¥50</td><td>¥344.76</td><td class="delta up">+589%</td><td>AI服务器挤占产能，HBM需求爆发</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
+<tr><td>存储</td><td><strong>DRAM 1+8</strong></td><td>¥47.8</td><td>¥189.84</td><td class="delta up">+297%</td><td>同上，低端产能被压缩</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
+<tr><td>存储</td><td><strong>NAND 64G TF卡</strong></td><td>¥20.3</td><td>¥45.5</td><td class="delta up">+124%</td><td>NAND Flash产值+280%，3月高点¥77.3回调</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
+<tr><td>存储</td><td><strong>NAND 32G TF卡</strong></td><td>¥14.9</td><td>¥29.9</td><td class="delta up">+101%</td><td>同上</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
+<tr><td>PCB</td><td><strong>PCB 光板</strong></td><td>¥8</td><td>¥13.2</td><td class="delta up">+65%</td><td>铜箔+CCL涨价，AI服务器抢购HVLP4铜箔</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
+<tr><td>被动元件</td><td><strong>0201阻容/万片</strong></td><td>¥22</td><td>¥38</td><td class="delta up">+73%</td><td>MLCC超级周期，村田7月涨价10-40%</td><td><span class="badge badge-red">🔴 加速</span></td></tr>
+<tr><td>电池</td><td><strong>碳酸锂</strong></td><td>5.8万/吨</td><td>16.65万/吨</td><td class="delta up">+187%</td><td>储能接棒电动车，高盛Q4预测25万</td><td><span class="badge badge-orange">🟡 震荡</span></td></tr>
+<tr><td>晶圆</td><td><strong>8寸晶圆代工</strong></td><td>基准</td><td>+5~20%</td><td class="delta up">+12%</td><td>产能利用率85-90%，100+原厂涨价</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
+<tr><td>电子特气</td><td><strong>六氟化钨</strong></td><td>基准</td><td>大幅上涨</td><td class="delta up">涨幅未公开</td><td>半导体制造关键材料，国产替代加速</td><td><span class="badge badge-orange">🟡 热炒</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ===== 涨价传导链 ===== -->
+<div class="section-title"><span>🔗</span> 供应链涨价传导链</div>
+<div class="card">
+  <div class="chain-flow">
+    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
+      <div style="font-size:12px;color:var(--muted)">AI需求爆发</div>
+      <div style="font-size:14px;font-weight:600;color:var(--red)">GPU→HBM→存储</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
+      <div style="font-size:12px;color:var(--muted)">产能挤占</div>
+      <div style="font-size:14px;font-weight:600;color:var(--orange)">DRAM/NAND涨价</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
+      <div style="font-size:12px;color:var(--muted)">PCB/MLCC</div>
+      <div style="font-size:14px;font-weight:600;color:var(--purple)">被动元件涨价</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
+      <div style="font-size:12px;color:var(--muted)">上游材料</div>
+      <div style="font-size:14px;font-weight:600;color:var(--cyan)">铜箔/陶瓷粉/特气</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
+      <div style="font-size:12px;color:var(--muted)">设备端</div>
+      <div style="font-size:14px;font-weight:600;color:var(--green)">半导体设备扩产</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">涨价从终端需求→芯片→被动元件→上游材料逐级传导，每环节滞后1-2个季度</p>
+</div>
+
+<!-- ===== 投资机会 ===== -->
+<div class="section-title"><span>💰</span> 供应链投资机会</div>
+
+<div class="card" style="margin-bottom:20px">
+  <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">🎯 未来7-30天重点关注</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">基于供应链涨价传导链 + AI需求爆发 + 机构共识，筛选确定性最高的标的</p>
+  <div style="overflow-x:auto">
+  <table>
+  <thead><tr><th>优先级</th><th>股票</th><th>代码</th><th>主线逻辑</th><th>催化剂</th><th>风险提示</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>三环集团</strong></td><td>300408.SZ</td><td>MLCC涨价超级周期，AI服务器用量翻20倍</td><td>7月日系厂商第二轮涨价落地</td><td>PE 100x+，短期回调风险</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>生益科技</strong></td><td>600183.SH</td><td>覆铜板龙头，PCB涨价年核心标的</td><td>13家PCB厂商590亿扩产潮</td><td>股价已创历史新高</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>兆易创新</strong></td><td>603986.SH</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动</td><td>存储涨价持续至2027Q4</td><td>DRAM缺口2028年后可能收窄</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>风华高科</strong></td><td>000636.SZ</td><td>MLCC国产替代，暂停中低端接单引爆涨价</td><td>Q1营收+18.9%、净利+37.1%</td><td>6/12跌停-8%，波动大</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>天齐锂业</strong></td><td>002466.SZ</td><td>碳酸锂涨价周期，高盛Q4预测25万/吨</td><td>储能需求接棒电动车</td><td>近一月跌16.8%，短期磨底</td></tr>
+  </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">🔭 未来1-3个月持续关注</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">中长期逻辑确认、等待回调介入或趋势验证的标的</p>
+  <div style="overflow-x:auto">
+  <table>
+  <thead><tr><th>股票</th><th>代码</th><th>主线逻辑</th><th>关注节点</th><th>当前状态</th></tr></thead>
+  <tbody>
+    <tr><td><strong>北方华创</strong></td><td>002371.SZ</td><td>半导体设备龙头，存储扩产+国产替代</td><td>Q3设备订单验证</td><td>股价刷新历史新高</td></tr>
+    <tr><td><strong>东山精密</strong></td><td>002384.SZ</td><td>PCB+光模块双主线，CPO算力核心</td><td>AI服务器订单兑现</td><td>近期涨停，涨幅较大</td></tr>
+    <tr><td><strong>佰维存储</strong></td><td>688525.SH</td><td>存储模组，受益NAND涨价+AI终端升级</td><td>NAND价格走势验证</td><td>高位震荡</td></tr>
+    <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>铝电解+薄膜电容，被动元件涨价传导</td><td>MLCC涨价传导验证</td><td>跟随MLCC板块走强</td></tr>
+    <tr><td><strong>国瓷材料</strong></td><td>300285.SZ</td><td>MLCC上游陶瓷粉体，涨价链最上游</td><td>MLCC产能扩张带动上游</td><td>估值相对合理</td></tr>
+    <tr><td><strong>雅克科技</strong></td><td>002409.SZ</td><td>电子特气+前驱体，半导体关键材料</td><td>六氟化钨涨价催化</td><td>6月股价异常波动</td></tr>
+  </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ===== 风险提示 ===== -->
+<div class="section-title"><span>⚠️</span> 供应风险与市场风险</div>
+<div class="grid grid-2">
+  <div class="card risk-card risk-high">
+    <h4>🔴 存储芯片 — 超级涨价周期</h4>
+    <p>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850（+325%）。NAND Flash产值年增280%。供需缺口预计延续至2027Q4。风险：若AI CapEx回报不及预期，2028年后需求可能萎缩。</p>
+  </div>
+  <div class="card risk-card risk-high">
+    <h4>🔴 MLCC — 超级周期启动</h4>
+    <p>村田7月涨价10-40%，三星全线涨10-20%。库存仅剩30天，原厂订单满足率仅30-40%。AI服务器MLCC用量翻20倍。风险：资本壁垒低（产线<10亿$），产能释放过快可能逆转供需。</p>
+  </div>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 PCB — 涨价+扩产双热潮</h4>
+    <p>13家PCB厂商发布扩产公告，规划投资近590亿元。铜箔+CCL持续涨价，AI服务器高端板材需求爆发。风险：扩产潮可能导致2-3年后产能过剩。</p>
+  </div>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 电子特气 — 六氟化钨引爆</h4>
+    <p>6月以来雅克科技、昊华科技、中船特气等股价异常波动。六氟化钨成行情"导火索"。风险：短期涨幅过大，基本面支撑需验证。</p>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px;border-left:3px solid var(--orange)">
+  <h4 style="font-size:14px;font-weight:600;margin-bottom:6px">⚠️ 投资风险提示</h4>
+  <p style="font-size:13px;color:var(--muted);line-height:1.7">
+    1. <strong>估值风险</strong>：SW电子板块PE(TTM) 103倍，远高于历史均值55倍<br>
+    2. <strong>MLCC产能</strong>：资本壁垒远低于存储，新建产线<10亿美元，供需可能逆转<br>
+    3. <strong>AI需求</strong>：若云厂商CapEx回报不及预期，存储/被动元件需求2028年后可能萎缩<br>
+    4. <strong>碳酸锂</strong>：近一月跌16.8%，短期磨底中，高盛Q4预测需需求验证<br>
+    5. <strong>半导体减持</strong>：年内93家半导体公司遭减持，高位回调风险
+  </p>
+</div>
+
+<!-- ===== 涨价资讯 ===== -->
+<div class="section-title"><span>📰</span> 关键涨价资讯</div>
+<div class="card" style="overflow-x:auto">
+<table>
+<thead><tr><th>物料</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
+<tbody>
+<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。MLC NAND从$3.2涨至$12.9。NAND Flash产值年增280%。</td><td>TrendForce/第一财经</td><td>2026.06</td></tr>
+<tr><td><strong>MLCC</strong></td><td>村田7月起AI/车规MLCC涨价10-40%。风华暂停0402/0603接单。库存仅30天，现货"一天一价"。</td><td>上海证券报/东方财富</td><td>2026.06</td></tr>
+<tr><td><strong>PCB/CCL</strong></td><td>英伟达抢购HVLP4铜箔，2026年缺口1500吨。建滔涨价，13家PCB厂商590亿扩产。</td><td>新浪财经/界面新闻</td><td>2026.06</td></tr>
+<tr><td><strong>电子特气</strong></td><td>六氟化钨涨价引爆行情，雅克科技/昊华科技/中船特气连续异动。</td><td>东方财富</td><td>2026.06</td></tr>
+<tr><td><strong>碳酸锂</strong></td><td>现货涨至16.65万/吨。高盛预测Q4冲击25万，储能需求接棒电动车。</td><td>华尔街见闻</td><td>2026.06</td></tr>
+<tr><td><strong>晶圆代工</strong></td><td>8寸产能利用率85-90%，代工价上调5-20%，封测成本涨近30%。</td><td>电子工程专辑</td><td>2026.05</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="footer">
+  供应链每日数据看板 · 数据来源：公开市场报价 / 券商研报 / 行业资讯 · 仅供参考<br>
+  投资推荐基于公开信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
+  生成时间：2026-06-17
+</div>
+</div>
+
+<script>
+// ===== 存储芯片价格走势 =====
+const months = ['2025.09','2026.01','2026.02','2026.03','2026.06'];
+new Chart(document.getElementById('storageChart'), {
+  type: 'line',
+  data: {
+    labels: months,
+    datasets: [{
+      label: 'DRAM 2+16 (¥)',
+      data: [79.67, 237.30, 252.04, 313.69, 344.76],
+      borderColor: '#ef4444', backgroundColor:'rgba(239,68,68,.08)', fill:true, tension:0.3, pointRadius:5
+    },{
+      label: 'DRAM 1+8 (¥)',
+      data: [47.8, 84, 104.55, 159.62, 189.84],
+      borderColor: '#f97316', fill:false, tension:0.3, pointRadius:4, borderDash:[4,2]
+    },{
+      label: '64G TF卡 (¥)',
+      data: [20.3, 42.9, 52.4, 77.3, 45.5],
+      borderColor: '#a855f7', fill:false, tension:0.3, pointRadius:4
+    },{
+      label: '32G TF卡 (¥)',
+      data: [14.9, 27.5, 33.1, 48, 29.9],
+      borderColor: '#f59e0b', fill:false, tension:0.3, pointRadius:4, borderDash:[4,2]
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#9ca3af',font:{size:12}}},
+      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': ¥'+ctx.parsed.y.toFixed(2)}}},
+    scales:{
+      x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.05)'}},
+      y:{ticks:{color:'#9ca3af',callback:v=>'¥'+v},grid:{color:'rgba(255,255,255,.05)'},beginAtZero:false}
+    }
+  }
+});
+
+// ===== 被动元件 & PCB =====
+new Chart(document.getElementById('passiveChart'), {
+  type: 'line',
+  data: {
+    labels: months,
+    datasets: [{
+      label: '0201阻容/万片 (¥)',
+      data: [22, 27, 30, 32, 38],
+      borderColor: '#22c55e', backgroundColor:'rgba(34,197,94,.08)', fill:true, tension:0.3, pointRadius:5
+    },{
+      label: 'PCB光板 (¥)',
+      data: [8, 10, 10.5, 11.2, 13.2],
+      borderColor: '#3b82f6', fill:false, tension:0.3, pointRadius:4
+    },{
+      label: '碳酸锂 (万/吨，÷1000)',
+      data: [5.8/1000*100, 8/1000*100, 12/1000*100, 18/1000*100, 16.65/1000*100],
+      borderColor: '#ef4444', fill:false, tension:0.3, pointRadius:4, borderDash:[6,3]
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{legend:{labels:{color:'#9ca3af',font:{size:12}}}},
+    scales:{
+      x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.05)'}},
+      y:{ticks:{color:'#9ca3af',callback:v=>'¥'+v},grid:{color:'rgba(255,255,255,.05)'},beginAtZero:false}
+    }
+  }
+});
+</script>
+</body>
+</html>
