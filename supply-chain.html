@@ -61,9 +61,45 @@ tr:hover{background:rgba(59,130,246,.05)}
 <h1>🧠 AI算力产业概览</h1>
 <p class="subtitle">覆盖 AI 算力全链路：算力芯片 → 存储 → PCB/MLCC → 光互连(CPO/光纤) → 供电(800V) → 散热 · 数据更新至 2026年6月17日</p>
 
-<!-- ===== 产业板块速览 ===== -->
-<div class="section-title"><span>🏷️</span> 覆盖板块</div>
-<div style="margin-bottom:20px">
+<!-- ===== 产业链全景（置顶） ===== -->
+<div class="section-title"><span>🔗</span> AI算力产业链全景</div>
+<div class="card">
+  <div class="chain-flow">
+    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
+      <div style="font-size:11px;color:var(--muted)">算力芯片</div>
+      <div style="font-size:13px;font-weight:600;color:var(--red)">GPU/TPU</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
+      <div style="font-size:11px;color:var(--muted)">存储</div>
+      <div style="font-size:13px;font-weight:600;color:var(--purple)">HBM/DRAM</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
+      <div style="font-size:11px;color:var(--muted)">封装/PCB</div>
+      <div style="font-size:13px;font-weight:600;color:var(--orange)">MLCC/PCB</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
+      <div style="font-size:11px;color:var(--muted)">光互连</div>
+      <div style="font-size:13px;font-weight:600;color:var(--cyan)">CPO/光纤</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3)">
+      <div style="font-size:11px;color:var(--muted)">供电</div>
+      <div style="font-size:13px;font-weight:600;color:var(--accent)">800V HVDC</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
+      <div style="font-size:11px;color:var(--muted)">散热</div>
+      <div style="font-size:13px;font-weight:600;color:var(--green)">液冷</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">AI算力从芯片→存储→封装→互连→供电→散热全链路景气，每个环节都有涨价/扩产逻辑</p>
+</div>
+
+<!-- ===== 覆盖板块 ===== -->
+<div style="margin-bottom:20px;margin-top:16px">
   <span class="sector-tag" style="background:rgba(239,68,68,.12);color:var(--red)">🔴 存储芯片</span>
   <span class="sector-tag" style="background:rgba(245,158,11,.12);color:var(--orange)">🟡 PCB/CCL</span>
   <span class="sector-tag" style="background:rgba(168,85,247,.12);color:var(--purple)">🟣 MLCC被动元件</span>
@@ -100,6 +136,34 @@ tr:hover{background:rgba(59,130,246,.05)}
     <h3>⚡ 800V HVDC</h3>
     <div class="big" style="color:var(--accent)">启动</div>
     <div class="delta" style="color:var(--accent)">英伟达定义新标准</div>
+  </div>
+</div>
+
+<!-- ===== 存储 DRAM ===== -->
+<div class="section-title"><span>🔴</span> 存储 DRAM</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：AI服务器需求爆发，HBM（高带宽存储）挤占传统DRAM产能。三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。<br><br>
+      <strong>涨价幅度</strong>：Q1服务器DRAM涨价60-70%。HBM3从$200涨至$850（+325%）。MLC NAND从$3.2涨至$12.9（+300%）。NAND Flash全球产值年增280.7%。<br><br>
+      <strong>供需缺口</strong>：三星/SK海力士2026年DRAM产量增速仅5-8%，远低于需求增速。瑞银预测供需缺口延续至<strong>2027Q4</strong>。SK海力士市值突破万亿美元，单季利润率72%。<br><br>
+      <strong>国产替代</strong>：兆易创新港股上市（03986.HK），长鑫IPO催化。澜起科技、佰维存储等受益于国产替代加速。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>兆易创新</strong></td><td>603986.SH</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动，长鑫IPO催化</td><td>港股上市，存储涨价受益</td></tr>
+      <tr><td><strong>佰维存储</strong></td><td>688525.SH</td><td>存储模组，受益NAND涨价+AI终端存储升级</td><td>高位震荡</td></tr>
+      <tr><td><strong>江波龙</strong></td><td>301308.SZ</td><td>存储品牌商，嵌入式存储+消费存储双主线</td><td>存储涨价核心受益</td></tr>
+      <tr><td><strong>澜起科技</strong></td><td>688008.SH</td><td>内存接口芯片全球龙头，DDR5渗透加速</td><td>6月涨超11%</td></tr>
+      <tr><td><strong>普冉股份</strong></td><td>688766.SH</td><td>NOR Flash+EEPROM，消费电子+AI终端</td><td>6月涨幅超16%</td></tr>
+      <tr><td><strong>太极实业</strong></td><td>600667.SH</td><td>SK海力士封测合作商，绑定存储巨头</td><td>SK海力士概念股</td></tr>
+    </tbody>
+    </table>
   </div>
 </div>
 
@@ -185,44 +249,7 @@ tr:hover{background:rgba(59,130,246,.05)}
   </div>
 </div>
 
-<!-- ===== 产业链全景 ===== -->
-<div class="section-title"><span>🔗</span> AI算力产业链全景</div>
-<div class="card">
-  <div class="chain-flow">
-    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
-      <div style="font-size:11px;color:var(--muted)">算力芯片</div>
-      <div style="font-size:13px;font-weight:600;color:var(--red)">GPU/TPU</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
-      <div style="font-size:11px;color:var(--muted)">存储</div>
-      <div style="font-size:13px;font-weight:600;color:var(--purple)">HBM/DRAM</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
-      <div style="font-size:11px;color:var(--muted)">封装/PCB</div>
-      <div style="font-size:13px;font-weight:600;color:var(--orange)">MLCC/PCB</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
-      <div style="font-size:11px;color:var(--muted)">光互连</div>
-      <div style="font-size:13px;font-weight:600;color:var(--cyan)">CPO/光纤</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3)">
-      <div style="font-size:11px;color:var(--muted)">供电</div>
-      <div style="font-size:13px;font-weight:600;color:var(--accent)">800V HVDC</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
-      <div style="font-size:11px;color:var(--muted)">散热</div>
-      <div style="font-size:13px;font-weight:600;color:var(--green)">液冷</div>
-    </div>
-  </div>
-  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">AI算力从芯片→存储→封装→互连→供电→散热全链路景气，每个环节都有涨价/扩产逻辑</p>
-</div>
-
-<!-- ===== 存储/PCB/MLCC 涨价明细 ===== -->
+<!-- ===== 涨价明细 ===== -->
 <div class="section-title"><span>📋</span> 涨价板块明细</div>
 <div class="card" style="overflow-x:auto">
 <table>
@@ -272,7 +299,7 @@ tr:hover{background:rgba(59,130,246,.05)}
   <tbody>
     <tr><td><strong>新易盛</strong></td><td>300502.SZ</td><td>🔵 CPO</td><td>光模块龙头，股价突破800元，筹划H股</td><td>港股上市进展；1.6T光模块放量</td></tr>
     <tr><td><strong>天孚通信</strong></td><td>300394.SZ</td><td>🔵 CPO</td><td>光无源器件龙头，已递交港股申请</td><td>CPO渗透率提升节奏</td></tr>
-    <tr><td><td><strong>四方股份</strong></td><td>601126.SH</td><td>⚡ 800V</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>800V数据中心规模化验证(2027-28)</td></tr>
+    <tr><td><strong>四方股份</strong></td><td>601126.SH</td><td>⚡ 800V</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>800V数据中心规模化验证(2027-28)</td></tr>
     <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>⚡ 800V</td><td>超级电容+薄膜电容，被动元件+800V双主线</td><td>GPU瞬时功率缓冲需求验证</td></tr>
     <tr><td><strong>天岳先进</strong></td><td>688234.SH</td><td>⚡ 800V</td><td>碳化硅衬底，SST功率器件核心材料</td><td>SST方案商业化进度</td></tr>
     <tr><td><strong>北方华创</strong></td><td>002371.SZ</td><td>🔩 设备</td><td>半导体设备龙头，存储扩产+国产替代</td><td>Q3设备订单验证</td></tr>
@@ -310,10 +337,10 @@ tr:hover{background:rgba(59,130,246,.05)}
 <table>
 <thead><tr><th>板块</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
 <tbody>
+<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850。SK海力士市值破万亿美元，单季利润率72%。NAND Flash产值年增280%。</td><td>TrendForce/36氪</td><td>2026.06</td></tr>
 <tr><td><strong>CPO</strong></td><td>英伟达 Spectrum-X 以太网硅光技术全面量产，基于 CPO 构建，能效提升5倍。迈威尔科技隔夜涨超32%。</td><td>英伟达/COMPUTEX</td><td>2026.06</td></tr>
 <tr><td><strong>光纤</strong></td><td>亚马逊与康宁签署数十亿美元光纤采购协议。亨通光电海外AI订单在手290亿+。长飞光纤Q1净利+400-520%。智算服务器光纤需求是传统的200倍。</td><td>证券时报/新闻联播</td><td>2026.06</td></tr>
 <tr><td><strong>800V</strong></td><td>英伟达定义800V HVDC为下一代AI数据中心供电标准。Rubin Ultra单机柜600-700kW。安森美与纳微半导体合作推进800V至6V直流方案。</td><td>钛媒体/COMPUTEX</td><td>2026.05-06</td></tr>
-<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850。NAND Flash产值年增280%。</td><td>TrendForce</td><td>2026.06</td></tr>
 <tr><td><strong>MLCC</strong></td><td>村田7月起AI/车规MLCC涨价10-40%。库存仅30天，现货"一天一价"。</td><td>上海证券报</td><td>2026.06</td></tr>
 <tr><td><strong>PCB</strong></td><td>13家PCB厂商590亿扩产。英伟达抢购HVLP4铜箔，2026年缺口1500吨。</td><td>界面新闻</td><td>2026.06</td></tr>
 <tr><td><strong>碳酸锂</strong></td><td>现货16.65万/吨。高盛预测Q4冲击25万，储能需求接棒电动车。</td><td>华尔街见闻</td><td>2026.06</td></tr>
@@ -327,63 +354,5 @@ tr:hover{background:rgba(59,130,246,.05)}
   生成时间：2026-06-17
 </div>
 </div>
-
-<script>
-// ===== 存储芯片价格走势 =====
-const months = ['2025.09','2026.01','2026.02','2026.03','2026.06'];
-new Chart(document.getElementById('storageChart'), {
-  type: 'line',
-  data: {
-    labels: months,
-    datasets: [{
-      label: 'DRAM 2+16 (¥)',
-      data: [79.67, 237.30, 252.04, 313.69, 344.76],
-      borderColor: '#ef4444', backgroundColor:'rgba(239,68,68,.08)', fill:true, tension:0.3, pointRadius:5
-    },{
-      label: 'DRAM 1+8 (¥)',
-      data: [47.8, 84, 104.55, 159.62, 189.84],
-      borderColor: '#f97316', fill:false, tension:0.3, pointRadius:4, borderDash:[4,2]
-    },{
-      label: '64G TF卡 (¥)',
-      data: [20.3, 42.9, 52.4, 77.3, 45.5],
-      borderColor: '#a855f7', fill:false, tension:0.3, pointRadius:4
-    }]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#9ca3af',font:{size:12}}},
-      tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': ¥'+ctx.parsed.y.toFixed(2)}}},
-    scales:{
-      x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.05)'}},
-      y:{ticks:{color:'#9ca3af',callback:v=>'¥'+v},grid:{color:'rgba(255,255,255,.05)'},beginAtZero:false}
-    }
-  }
-});
-
-// ===== 被动元件 & PCB =====
-new Chart(document.getElementById('passiveChart'), {
-  type: 'line',
-  data: {
-    labels: months,
-    datasets: [{
-      label: '0201阻容/万片 (¥)',
-      data: [22, 27, 30, 32, 38],
-      borderColor: '#22c55e', backgroundColor:'rgba(34,197,94,.08)', fill:true, tension:0.3, pointRadius:5
-    },{
-      label: 'PCB光板 (¥)',
-      data: [8, 10, 10.5, 11.2, 13.2],
-      borderColor: '#3b82f6', fill:false, tension:0.3, pointRadius:4
-    }]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{legend:{labels:{color:'#9ca3af',font:{size:12}}}},
-    scales:{
-      x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.05)'}},
-      y:{ticks:{color:'#9ca3af',callback:v=>'¥'+v},grid:{color:'rgba(255,255,255,.05)'},beginAtZero:false}
-    }
-  }
-});
-</script>
 </body>
 </html>
