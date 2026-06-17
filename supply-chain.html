@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>供应链每日数据看板</title>
+<title>AI算力产业概览</title>
 <script src="chart.min.js"></script>
 <style>
 :root{--bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e4e4e7;--muted:#9ca3af;--accent:#3b82f6;--red:#ef4444;--green:#22c55e;--orange:#f59e0b;--purple:#a855f7;--cyan:#06b6d4}
@@ -22,12 +22,13 @@ h1{font-size:28px;font-weight:700;margin-bottom:6px}
 .badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
 .badge-blue{background:rgba(59,130,246,.15);color:var(--accent)}
 .grid{display:grid;gap:16px;margin-bottom:20px}
+.grid-5{grid-template-columns:repeat(5,1fr)}
 .grid-4{grid-template-columns:repeat(4,1fr)}
 .grid-3{grid-template-columns:repeat(3,1fr)}
 .grid-2{grid-template-columns:repeat(2,1fr)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
 .card h3{font-size:14px;color:var(--muted);margin-bottom:8px;font-weight:500}
-.card .big{font-size:32px;font-weight:700}
+.card .big{font-size:28px;font-weight:700}
 .card .delta{font-size:14px;margin-top:4px}
 .card .delta.up{color:var(--red)}
 .card .delta.down{color:var(--green)}
@@ -40,6 +41,7 @@ td{padding:10px 12px;border-bottom:1px solid var(--border)}
 tr:hover{background:rgba(59,130,246,.05)}
 .section-title{font-size:18px;font-weight:600;margin:28px 0 14px;display:flex;align-items:center;gap:8px}
 .section-title span{font-size:20px}
+.sector-tag{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:600;margin:0 4px 8px 0}
 .risk-card{padding:16px;border-left:3px solid}
 .risk-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
 .risk-card p{font-size:13px;color:var(--muted);line-height:1.7}
@@ -47,121 +49,215 @@ tr:hover{background:rgba(59,130,246,.05)}
 .risk-mid{border-color:var(--orange)}
 .risk-low{border-color:var(--green)}
 .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border)}
-.chain-flow{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;padding:10px 0}
-.chain-box{border-radius:8px;padding:10px 16px;text-align:center;min-width:120px}
-.chain-arrow{font-size:20px;color:var(--muted)}
-@media(max-width:900px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}.chart-wrap{height:240px}}
+.chain-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px 0}
+.chain-box{border-radius:8px;padding:8px 14px;text-align:center;min-width:100px}
+.chain-arrow{font-size:18px;color:var(--muted)}
+@media(max-width:900px){.grid-5,.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}.chart-wrap{height:240px}}
 </style>
 </head>
 <body>
 <div class="container">
 <a href="index.html" class="nav-link">📟 切换到胸牌成本追踪</a>
-<h1>📊 供应链每日数据看板</h1>
-<p class="subtitle">基于 BOM 成本结构 + 公开市场报价 + 行业涨价资讯 · 覆盖原材料→元器件→终端全链路</p>
+<h1>🧠 AI算力产业概览</h1>
+<p class="subtitle">覆盖 AI 算力全链路：算力芯片 → 存储 → PCB/MLCC → 光互连(CPO/光纤) → 供电(800V) → 散热 · 数据更新至 2026年6月17日</p>
+
+<!-- ===== 产业板块速览 ===== -->
+<div class="section-title"><span>🏷️</span> 覆盖板块</div>
+<div style="margin-bottom:20px">
+  <span class="sector-tag" style="background:rgba(239,68,68,.12);color:var(--red)">🔴 存储芯片</span>
+  <span class="sector-tag" style="background:rgba(245,158,11,.12);color:var(--orange)">🟡 PCB/CCL</span>
+  <span class="sector-tag" style="background:rgba(168,85,247,.12);color:var(--purple)">🟣 MLCC被动元件</span>
+  <span class="sector-tag" style="background:rgba(6,182,212,.12);color:var(--cyan)">🔵 CPO共封装光学</span>
+  <span class="sector-tag" style="background:rgba(34,197,94,.12);color:var(--green)">🟢 光纤光缆</span>
+  <span class="sector-tag" style="background:rgba(59,130,246,.12);color:var(--accent)">⚡ 800V高压直流供电</span>
+  <span class="sector-tag" style="background:rgba(168,85,247,.08);color:var(--muted)">🔩 电子特气/材料</span>
+  <span class="sector-tag" style="background:rgba(239,68,68,.08);color:var(--muted)">🔋 锂电池/储能</span>
+</div>
 
 <!-- ===== KPI ===== -->
-<div class="grid grid-4">
+<div class="grid grid-5">
   <div class="card">
-    <h3>🔴 存储 2+16</h3>
-    <div class="big" style="color:var(--red)">¥344.76</div>
+    <h3>🔴 存储 DRAM</h3>
+    <div class="big" style="color:var(--red)">¥344</div>
     <div class="delta up">↑ +589% vs 基准</div>
   </div>
   <div class="card">
-    <h3>🟡 PCB 光板</h3>
-    <div class="big" style="color:var(--orange)">¥13.20</div>
-    <div class="delta up">↑ +65% vs 基准</div>
-  </div>
-  <div class="card">
-    <h3>🟡 MLCC/阻容</h3>
+    <h3>🟡 MLCC阻容</h3>
     <div class="big" style="color:var(--orange)">¥38</div>
     <div class="delta up">↑ +73% vs 基准</div>
   </div>
   <div class="card">
-    <h3>🔴 碳酸锂</h3>
-    <div class="big" style="color:var(--red)">16.65万/吨</div>
-    <div class="delta up">↑ +187% vs 低点5.8万</div>
+    <h3>🟢 光纤景气度</h3>
+    <div class="big" style="color:var(--green)">极高</div>
+    <div class="delta" style="color:var(--green)">订单排至2027年</div>
+  </div>
+  <div class="card">
+    <h3>🔵 CPO/光模块</h3>
+    <div class="big" style="color:var(--cyan)">爆发</div>
+    <div class="delta" style="color:var(--cyan)">"易中天"齐创新高</div>
+  </div>
+  <div class="card">
+    <h3>⚡ 800V HVDC</h3>
+    <div class="big" style="color:var(--accent)">启动</div>
+    <div class="delta" style="color:var(--accent)">英伟达定义新标准</div>
   </div>
 </div>
 
-<!-- ===== 原材料价格追踪 ===== -->
-<div class="section-title"><span>📈</span> 原材料与元器件价格趋势</div>
+<!-- ===== CPO 共封装光学 ===== -->
+<div class="section-title"><span>🔵</span> CPO 共封装光学</div>
 <div class="grid grid-2">
-  <div class="card chart-card">
-    <h2>存储芯片价格走势</h2>
-    <div class="chart-wrap"><canvas id="storageChart"></canvas></div>
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：英伟达 Spectrum-X 以太网硅光技术全面量产，基于 CPO 构建新一代交换机，支持 Vera Rubin 平台。相比传统收发器，<strong>能效提升5倍，AI正常运行时间提升5倍</strong>。<br><br>
+      <strong>市场格局</strong>：中际旭创、新易盛、天孚通信（"易中天"）合计占创业板人工智能指数权重近50%，6月齐创历史新高。新易盛股价突破800元，天孚突破500元。<br><br>
+      <strong>资金动向</strong>：6月2日东山精密主力净流入26.53亿元，新易盛、天孚通信、中际旭创均获大额资金流入。三巨头均在谋划港股上市。
+    </p>
   </div>
-  <div class="card chart-card">
-    <h2>被动元件 & PCB 价格走势</h2>
-    <div class="chart-wrap"><canvas id="passiveChart"></canvas></div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>中际旭创</strong></td><td>300308.SZ</td><td>光模块全球龙头，800G/1.6T放量</td><td>历史新高，筹划港股</td></tr>
+      <tr><td><strong>新易盛</strong></td><td>300502.SZ</td><td>光模块龙头，股价突破800元</td><td>历史新高，筹划H股</td></tr>
+      <tr><td><strong>天孚通信</strong></td><td>300394.SZ</td><td>光无源器件龙头，CPO核心供应商</td><td>已递交港股申请</td></tr>
+      <tr><td><strong>东山精密</strong></td><td>002384.SZ</td><td>PCB+光模块双主线，CPO算力核心</td><td>近期涨停</td></tr>
+      <tr><td><strong>源杰科技</strong></td><td>688498.SH</td><td>光芯片，CPO上游核心器件</td><td>6月涨近18%创新高</td></tr>
+      <tr><td><strong>光库科技</strong></td><td>300620.SZ</td><td>光纤激光器件，CPO概念</td><td>6月涨超13%</td></tr>
+    </tbody>
+    </table>
   </div>
 </div>
 
-<!-- ===== 涨价明细表 ===== -->
-<div class="section-title"><span>📋</span> 关键物料涨价明细</div>
+<!-- ===== 光纤光缆 ===== -->
+<div class="section-title"><span>🟢</span> 光纤光缆</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：AI数据中心建设驱动，智算服务器需要的光纤数量是传统服务器的<strong>200倍以上</strong>。2025Q4以来全球光纤光缆"量价共振"。<br><br>
+      <strong>供给紧张</strong>：光棒产能扩产周期18-24个月，头部企业满负荷生产，订单排产已到<strong>2027年</strong>。长飞光纤Q1净利润预增400%-520%。<br><br>
+      <strong>海外爆发</strong>：亚马逊与康宁签署数十亿美元光纤采购协议。亨通光电海外AI订单爆发，在手订单超290亿元，海外收入占比86%。<br><br>
+      <strong>概念股年内平均涨99.87%</strong>，6股翻倍：通鼎互联、长飞光纤、亨通光电、中天科技、法尔胜、永鼎股份。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>长飞光纤</strong></td><td>601869.SH</td><td>全球第一，产能1.4亿芯公里/年，Q1净利+400-520%</td><td>年内涨超180%，一年涨10倍</td></tr>
+      <tr><td><strong>亨通光电</strong></td><td>600487.SH</td><td>海外AI订单爆发，在手订单290亿+，海外占比86%</td><td>6天3板，市值突破2500亿</td></tr>
+      <tr><td><strong>中天科技</strong></td><td>600522.SH</td><td>光纤+海缆双主线，军工特种光缆40%份额</td><td>年内翻倍</td></tr>
+      <tr><td><strong>烽火通信</strong></td><td>600498.SH</td><td>光通信国家队，光棒+光纤+光缆全产业链</td><td>6月涨超8%</td></tr>
+      <tr><td><strong>通鼎互联</strong></td><td>002491.SZ</td><td>光纤光缆+数据中心布线</td><td>年内翻倍</td></tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== 800V 高压直流供电 ===== -->
+<div class="section-title"><span>⚡</span> 800V 高压直流供电（HVDC）</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：英伟达 Rubin Ultra 单机柜功率达 600-700kW，传统 50V 低压供电架构触及物理极限。800V HVDC + SST（固态变压器）成为下一代 AI 数据中心终极供电方案。<br><br>
+      <strong>架构变革</strong>：从交流体系切换到高压直流体系的系统性重构。800V→12V 和 800V→50V 两套方案并行推进，2027-2028年规模化验证。<br><br>
+      <strong>市场空间</strong>：预计8年增长百倍。5月27日"800VDC"概念股集体爆发，四方股份涨停。<br><br>
+      <strong>产业链</strong>：SST固态变压器→高压直流母线→机架级DC-DC→超级电容/薄膜电容（瞬时储能滤波）。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>四方股份</strong></td><td>601126.SH</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>5/27涨停</td></tr>
+      <tr><td><strong>金盘科技</strong></td><td>688676.SH</td><td>干式变压器+数据中心供电方案</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>超级电容+高压薄膜电容，GPU瞬时功率缓冲</td><td>被动元件+800V双主线</td></tr>
+      <tr><td><strong>可立克</strong></td><td>002782.SZ</td><td>磁性元器件，SST/DC-DC核心部件</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>伊戈尔</strong></td><td>002922.SZ</td><td>高频变压器，数据中心供电</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>天岳先进</strong></td><td>688234.SH</td><td>碳化硅衬底，SST功率器件核心材料</td><td>5/27涨超8%</td></tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== 产业链全景 ===== -->
+<div class="section-title"><span>🔗</span> AI算力产业链全景</div>
+<div class="card">
+  <div class="chain-flow">
+    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
+      <div style="font-size:11px;color:var(--muted)">算力芯片</div>
+      <div style="font-size:13px;font-weight:600;color:var(--red)">GPU/TPU</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
+      <div style="font-size:11px;color:var(--muted)">存储</div>
+      <div style="font-size:13px;font-weight:600;color:var(--purple)">HBM/DRAM</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
+      <div style="font-size:11px;color:var(--muted)">封装/PCB</div>
+      <div style="font-size:13px;font-weight:600;color:var(--orange)">MLCC/PCB</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
+      <div style="font-size:11px;color:var(--muted)">光互连</div>
+      <div style="font-size:13px;font-weight:600;color:var(--cyan)">CPO/光纤</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3)">
+      <div style="font-size:11px;color:var(--muted)">供电</div>
+      <div style="font-size:13px;font-weight:600;color:var(--accent)">800V HVDC</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
+      <div style="font-size:11px;color:var(--muted)">散热</div>
+      <div style="font-size:13px;font-weight:600;color:var(--green)">液冷</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">AI算力从芯片→存储→封装→互连→供电→散热全链路景气，每个环节都有涨价/扩产逻辑</p>
+</div>
+
+<!-- ===== 存储/PCB/MLCC 涨价明细 ===== -->
+<div class="section-title"><span>📋</span> 涨价板块明细</div>
 <div class="card" style="overflow-x:auto">
 <table>
-<thead><tr><th>分类</th><th>物料</th><th>基准价</th><th>当前价</th><th>涨幅</th><th>驱动因素</th><th>趋势</th></tr></thead>
+<thead><tr><th>板块</th><th>物料/标的</th><th>基准</th><th>当前</th><th>涨幅</th><th>驱动因素</th><th>趋势</th></tr></thead>
 <tbody>
 <tr><td>存储</td><td><strong>DRAM 2+16</strong></td><td>¥50</td><td>¥344.76</td><td class="delta up">+589%</td><td>AI服务器挤占产能，HBM需求爆发</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
-<tr><td>存储</td><td><strong>DRAM 1+8</strong></td><td>¥47.8</td><td>¥189.84</td><td class="delta up">+297%</td><td>同上，低端产能被压缩</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
-<tr><td>存储</td><td><strong>NAND 64G TF卡</strong></td><td>¥20.3</td><td>¥45.5</td><td class="delta up">+124%</td><td>NAND Flash产值+280%，3月高点¥77.3回调</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
-<tr><td>存储</td><td><strong>NAND 32G TF卡</strong></td><td>¥14.9</td><td>¥29.9</td><td class="delta up">+101%</td><td>同上</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
-<tr><td>PCB</td><td><strong>PCB 光板</strong></td><td>¥8</td><td>¥13.2</td><td class="delta up">+65%</td><td>铜箔+CCL涨价，AI服务器抢购HVLP4铜箔</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
-<tr><td>被动元件</td><td><strong>0201阻容/万片</strong></td><td>¥22</td><td>¥38</td><td class="delta up">+73%</td><td>MLCC超级周期，村田7月涨价10-40%</td><td><span class="badge badge-red">🔴 加速</span></td></tr>
-<tr><td>电池</td><td><strong>碳酸锂</strong></td><td>5.8万/吨</td><td>16.65万/吨</td><td class="delta up">+187%</td><td>储能接棒电动车，高盛Q4预测25万</td><td><span class="badge badge-orange">🟡 震荡</span></td></tr>
-<tr><td>晶圆</td><td><strong>8寸晶圆代工</strong></td><td>基准</td><td>+5~20%</td><td class="delta up">+12%</td><td>产能利用率85-90%，100+原厂涨价</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
-<tr><td>电子特气</td><td><strong>六氟化钨</strong></td><td>基准</td><td>大幅上涨</td><td class="delta up">涨幅未公开</td><td>半导体制造关键材料，国产替代加速</td><td><span class="badge badge-orange">🟡 热炒</span></td></tr>
+<tr><td>存储</td><td><strong>DRAM 1+8</strong></td><td>¥47.8</td><td>¥189.84</td><td class="delta up">+297%</td><td>低端产能被压缩</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
+<tr><td>存储</td><td><strong>NAND 64G TF卡</strong></td><td>¥20.3</td><td>¥45.5</td><td class="delta up">+124%</td><td>NAND Flash产值+280%</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
+<tr><td>MLCC</td><td><strong>0201阻容/万片</strong></td><td>¥22</td><td>¥38</td><td class="delta up">+73%</td><td>村田7月涨价10-40%，AI用量翻20倍</td><td><span class="badge badge-red">🔴 加速</span></td></tr>
+<tr><td>PCB</td><td><strong>PCB 光板</strong></td><td>¥8</td><td>¥13.2</td><td class="delta up">+65%</td><td>铜箔+CCL涨价，590亿扩产潮</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
+<tr><td>CPO</td><td><strong>光模块 "易中天"</strong></td><td>—</td><td>历史新高</td><td class="delta up">年内+100%+</td><td>英伟达Spectrum-X硅光量产</td><td><span class="badge badge-cyan">🔵 爆发</span></td></tr>
+<tr><td>光纤</td><td><strong>光纤光缆</strong></td><td>—</td><td>量价齐升</td><td class="delta up">年内均+99.87%</td><td>AI数据中心光纤需求200倍，订单排至2027</td><td><span class="badge badge-green">🟢 景气</span></td></tr>
+<tr><td>800V</td><td><strong>数据中心供电</strong></td><td>50V AC</td><td>800V HVDC</td><td class="delta up">架构变革</td><td>Rubin Ultra单机柜600-700kW</td><td><span class="badge badge-blue">⚡ 启动</span></td></tr>
+<tr><td>特气</td><td><strong>六氟化钨</strong></td><td>基准</td><td>大幅上涨</td><td class="delta up">涨幅未公开</td><td>半导体制造关键材料</td><td><span class="badge badge-orange">🟡 热炒</span></td></tr>
+<tr><td>锂电</td><td><strong>碳酸锂</strong></td><td>5.8万/吨</td><td>16.65万/吨</td><td class="delta up">+187%</td><td>储能接棒电动车，高盛Q4预测25万</td><td><span class="badge badge-orange">🟡 震荡</span></td></tr>
 </tbody>
 </table>
 </div>
 
-<!-- ===== 涨价传导链 ===== -->
-<div class="section-title"><span>🔗</span> 供应链涨价传导链</div>
-<div class="card">
-  <div class="chain-flow">
-    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
-      <div style="font-size:12px;color:var(--muted)">AI需求爆发</div>
-      <div style="font-size:14px;font-weight:600;color:var(--red)">GPU→HBM→存储</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
-      <div style="font-size:12px;color:var(--muted)">产能挤占</div>
-      <div style="font-size:14px;font-weight:600;color:var(--orange)">DRAM/NAND涨价</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
-      <div style="font-size:12px;color:var(--muted)">PCB/MLCC</div>
-      <div style="font-size:14px;font-weight:600;color:var(--purple)">被动元件涨价</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
-      <div style="font-size:12px;color:var(--muted)">上游材料</div>
-      <div style="font-size:14px;font-weight:600;color:var(--cyan)">铜箔/陶瓷粉/特气</div>
-    </div>
-    <div class="chain-arrow">→</div>
-    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
-      <div style="font-size:12px;color:var(--muted)">设备端</div>
-      <div style="font-size:14px;font-weight:600;color:var(--green)">半导体设备扩产</div>
-    </div>
-  </div>
-  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">涨价从终端需求→芯片→被动元件→上游材料逐级传导，每环节滞后1-2个季度</p>
-</div>
-
 <!-- ===== 投资机会 ===== -->
-<div class="section-title"><span>💰</span> 供应链投资机会</div>
+<div class="section-title"><span>💰</span> 投资机会</div>
 
 <div class="card" style="margin-bottom:20px">
   <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">🎯 未来7-30天重点关注</h3>
-  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">基于供应链涨价传导链 + AI需求爆发 + 机构共识，筛选确定性最高的标的</p>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">基于AI算力全链路涨价传导 + 机构共识，筛选确定性最高的标的</p>
   <div style="overflow-x:auto">
   <table>
-  <thead><tr><th>优先级</th><th>股票</th><th>代码</th><th>主线逻辑</th><th>催化剂</th><th>风险提示</th></tr></thead>
+  <thead><tr><th>优先级</th><th>股票</th><th>代码</th><th>板块</th><th>主线逻辑</th><th>催化剂</th><th>风险提示</th></tr></thead>
   <tbody>
-    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>三环集团</strong></td><td>300408.SZ</td><td>MLCC涨价超级周期，AI服务器用量翻20倍</td><td>7月日系厂商第二轮涨价落地</td><td>PE 100x+，短期回调风险</td></tr>
-    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>生益科技</strong></td><td>600183.SH</td><td>覆铜板龙头，PCB涨价年核心标的</td><td>13家PCB厂商590亿扩产潮</td><td>股价已创历史新高</td></tr>
-    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>兆易创新</strong></td><td>603986.SH</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动</td><td>存储涨价持续至2027Q4</td><td>DRAM缺口2028年后可能收窄</td></tr>
-    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>风华高科</strong></td><td>000636.SZ</td><td>MLCC国产替代，暂停中低端接单引爆涨价</td><td>Q1营收+18.9%、净利+37.1%</td><td>6/12跌停-8%，波动大</td></tr>
-    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>天齐锂业</strong></td><td>002466.SZ</td><td>碳酸锂涨价周期，高盛Q4预测25万/吨</td><td>储能需求接棒电动车</td><td>近一月跌16.8%，短期磨底</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>亨通光电</strong></td><td>600487.SH</td><td>🟢 光纤</td><td>海外AI订单爆发，在手290亿+，海外占比86%</td><td>亚马逊+康宁数十亿美元光纤协议</td><td>6天3板，短期涨幅大</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>三环集团</strong></td><td>300408.SZ</td><td>🟣 MLCC</td><td>MLCC涨价超级周期，AI服务器用量翻20倍</td><td>7月日系厂商第二轮涨价落地</td><td>PE 100x+，短期回调风险</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>中际旭创</strong></td><td>300308.SZ</td><td>🔵 CPO</td><td>光模块全球龙头，800G/1.6T放量，CPO核心</td><td>英伟达Spectrum-X硅光量产</td><td>股价已创历史新高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>生益科技</strong></td><td>600183.SH</td><td>🟡 PCB</td><td>覆铜板龙头，PCB涨价年核心标的</td><td>13家PCB厂商590亿扩产潮</td><td>股价已创历史新高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>长飞光纤</strong></td><td>601869.SH</td><td>🟢 光纤</td><td>全球第一，Q1净利+400-520%，订单排至2027</td><td>智算光纤需求200倍增长</td><td>一年涨10倍，估值极高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>兆易创新</strong></td><td>603986.SH</td><td>🔴 存储</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动</td><td>存储涨价持续至2027Q4</td><td>DRAM缺口2028年后可能收窄</td></tr>
   </tbody>
   </table>
   </div>
@@ -172,69 +268,61 @@ tr:hover{background:rgba(59,130,246,.05)}
   <p style="font-size:12px;color:var(--muted);margin-bottom:14px">中长期逻辑确认、等待回调介入或趋势验证的标的</p>
   <div style="overflow-x:auto">
   <table>
-  <thead><tr><th>股票</th><th>代码</th><th>主线逻辑</th><th>关注节点</th><th>当前状态</th></tr></thead>
+  <thead><tr><th>股票</th><th>代码</th><th>板块</th><th>主线逻辑</th><th>关注节点</th></tr></thead>
   <tbody>
-    <tr><td><strong>北方华创</strong></td><td>002371.SZ</td><td>半导体设备龙头，存储扩产+国产替代</td><td>Q3设备订单验证</td><td>股价刷新历史新高</td></tr>
-    <tr><td><strong>东山精密</strong></td><td>002384.SZ</td><td>PCB+光模块双主线，CPO算力核心</td><td>AI服务器订单兑现</td><td>近期涨停，涨幅较大</td></tr>
-    <tr><td><strong>佰维存储</strong></td><td>688525.SH</td><td>存储模组，受益NAND涨价+AI终端升级</td><td>NAND价格走势验证</td><td>高位震荡</td></tr>
-    <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>铝电解+薄膜电容，被动元件涨价传导</td><td>MLCC涨价传导验证</td><td>跟随MLCC板块走强</td></tr>
-    <tr><td><strong>国瓷材料</strong></td><td>300285.SZ</td><td>MLCC上游陶瓷粉体，涨价链最上游</td><td>MLCC产能扩张带动上游</td><td>估值相对合理</td></tr>
-    <tr><td><strong>雅克科技</strong></td><td>002409.SZ</td><td>电子特气+前驱体，半导体关键材料</td><td>六氟化钨涨价催化</td><td>6月股价异常波动</td></tr>
+    <tr><td><strong>新易盛</strong></td><td>300502.SZ</td><td>🔵 CPO</td><td>光模块龙头，股价突破800元，筹划H股</td><td>港股上市进展；1.6T光模块放量</td></tr>
+    <tr><td><strong>天孚通信</strong></td><td>300394.SZ</td><td>🔵 CPO</td><td>光无源器件龙头，已递交港股申请</td><td>CPO渗透率提升节奏</td></tr>
+    <tr><td><td><strong>四方股份</strong></td><td>601126.SH</td><td>⚡ 800V</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>800V数据中心规模化验证(2027-28)</td></tr>
+    <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>⚡ 800V</td><td>超级电容+薄膜电容，被动元件+800V双主线</td><td>GPU瞬时功率缓冲需求验证</td></tr>
+    <tr><td><strong>天岳先进</strong></td><td>688234.SH</td><td>⚡ 800V</td><td>碳化硅衬底，SST功率器件核心材料</td><td>SST方案商业化进度</td></tr>
+    <tr><td><strong>北方华创</strong></td><td>002371.SZ</td><td>🔩 设备</td><td>半导体设备龙头，存储扩产+国产替代</td><td>Q3设备订单验证</td></tr>
+    <tr><td><strong>风华高科</strong></td><td>000636.SZ</td><td>🟣 MLCC</td><td>MLCC国产替代，暂停中低端接单引爆涨价</td><td>Q1净利+37.1%持续性验证</td></tr>
+    <tr><td><strong>国瓷材料</strong></td><td>300285.SZ</td><td>🟣 MLCC</td><td>MLCC上游陶瓷粉体，涨价链最上游</td><td>MLCC产能扩张带动上游需求</td></tr>
   </tbody>
   </table>
   </div>
 </div>
 
 <!-- ===== 风险提示 ===== -->
-<div class="section-title"><span>⚠️</span> 供应风险与市场风险</div>
+<div class="section-title"><span>⚠️</span> 风险提示</div>
 <div class="grid grid-2">
   <div class="card risk-card risk-high">
-    <h4>🔴 存储芯片 — 超级涨价周期</h4>
-    <p>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850（+325%）。NAND Flash产值年增280%。供需缺口预计延续至2027Q4。风险：若AI CapEx回报不及预期，2028年后需求可能萎缩。</p>
-  </div>
-  <div class="card risk-card risk-high">
-    <h4>🔴 MLCC — 超级周期启动</h4>
-    <p>村田7月涨价10-40%，三星全线涨10-20%。库存仅剩30天，原厂订单满足率仅30-40%。AI服务器MLCC用量翻20倍。风险：资本壁垒低（产线<10亿$），产能释放过快可能逆转供需。</p>
+    <h4>🔴 估值风险</h4>
+    <p>SW电子板块PE(TTM) 103倍，远高于历史均值55倍。年内93家半导体公司遭减持。"易中天"、长飞光纤等涨幅巨大，高位回调风险显著。</p>
   </div>
   <div class="card risk-card risk-mid">
-    <h4>🟡 PCB — 涨价+扩产双热潮</h4>
-    <p>13家PCB厂商发布扩产公告，规划投资近590亿元。铜箔+CCL持续涨价，AI服务器高端板材需求爆发。风险：扩产潮可能导致2-3年后产能过剩。</p>
+    <h4>🟡 光纤/CPO持续性</h4>
+    <p>光纤行业扩产相对容易（不同于PCB），若产能释放过快供需可能逆转。CPO技术路线仍在演进，800G→1.6T→3.2T代际切换中存在不确定性。</p>
   </div>
   <div class="card risk-card risk-mid">
-    <h4>🟡 电子特气 — 六氟化钨引爆</h4>
-    <p>6月以来雅克科技、昊华科技、中船特气等股价异常波动。六氟化钨成行情"导火索"。风险：短期涨幅过大，基本面支撑需验证。</p>
+    <h4>🟡 800V HVDC 尚早</h4>
+    <p>800V→12V和800V→50V两套方案并行，2027-2028年才规模化验证。当前概念股多为题材炒作，业绩兑现需等待。SST方案商业化仍有不确定性。</p>
   </div>
-</div>
-
-<div class="card" style="margin-bottom:20px;border-left:3px solid var(--orange)">
-  <h4 style="font-size:14px;font-weight:600;margin-bottom:6px">⚠️ 投资风险提示</h4>
-  <p style="font-size:13px;color:var(--muted);line-height:1.7">
-    1. <strong>估值风险</strong>：SW电子板块PE(TTM) 103倍，远高于历史均值55倍<br>
-    2. <strong>MLCC产能</strong>：资本壁垒远低于存储，新建产线<10亿美元，供需可能逆转<br>
-    3. <strong>AI需求</strong>：若云厂商CapEx回报不及预期，存储/被动元件需求2028年后可能萎缩<br>
-    4. <strong>碳酸锂</strong>：近一月跌16.8%，短期磨底中，高盛Q4预测需需求验证<br>
-    5. <strong>半导体减持</strong>：年内93家半导体公司遭减持，高位回调风险
-  </p>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 AI需求验证</h4>
+    <p>若亚马逊/微软/谷歌等AI CapEx回报不及预期，势必缩减投资规模。三星前总裁预警：2028年后全球存储芯片需求可能萎缩。</p>
+  </div>
 </div>
 
 <!-- ===== 涨价资讯 ===== -->
-<div class="section-title"><span>📰</span> 关键涨价资讯</div>
+<div class="section-title"><span>📰</span> 关键资讯</div>
 <div class="card" style="overflow-x:auto">
 <table>
-<thead><tr><th>物料</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
+<thead><tr><th>板块</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
 <tbody>
-<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。MLC NAND从$3.2涨至$12.9。NAND Flash产值年增280%。</td><td>TrendForce/第一财经</td><td>2026.06</td></tr>
-<tr><td><strong>MLCC</strong></td><td>村田7月起AI/车规MLCC涨价10-40%。风华暂停0402/0603接单。库存仅30天，现货"一天一价"。</td><td>上海证券报/东方财富</td><td>2026.06</td></tr>
-<tr><td><strong>PCB/CCL</strong></td><td>英伟达抢购HVLP4铜箔，2026年缺口1500吨。建滔涨价，13家PCB厂商590亿扩产。</td><td>新浪财经/界面新闻</td><td>2026.06</td></tr>
-<tr><td><strong>电子特气</strong></td><td>六氟化钨涨价引爆行情，雅克科技/昊华科技/中船特气连续异动。</td><td>东方财富</td><td>2026.06</td></tr>
-<tr><td><strong>碳酸锂</strong></td><td>现货涨至16.65万/吨。高盛预测Q4冲击25万，储能需求接棒电动车。</td><td>华尔街见闻</td><td>2026.06</td></tr>
-<tr><td><strong>晶圆代工</strong></td><td>8寸产能利用率85-90%，代工价上调5-20%，封测成本涨近30%。</td><td>电子工程专辑</td><td>2026.05</td></tr>
+<tr><td><strong>CPO</strong></td><td>英伟达 Spectrum-X 以太网硅光技术全面量产，基于 CPO 构建，能效提升5倍。迈威尔科技隔夜涨超32%。</td><td>英伟达/COMPUTEX</td><td>2026.06</td></tr>
+<tr><td><strong>光纤</strong></td><td>亚马逊与康宁签署数十亿美元光纤采购协议。亨通光电海外AI订单在手290亿+。长飞光纤Q1净利+400-520%。智算服务器光纤需求是传统的200倍。</td><td>证券时报/新闻联播</td><td>2026.06</td></tr>
+<tr><td><strong>800V</strong></td><td>英伟达定义800V HVDC为下一代AI数据中心供电标准。Rubin Ultra单机柜600-700kW。安森美与纳微半导体合作推进800V至6V直流方案。</td><td>钛媒体/COMPUTEX</td><td>2026.05-06</td></tr>
+<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850。NAND Flash产值年增280%。</td><td>TrendForce</td><td>2026.06</td></tr>
+<tr><td><strong>MLCC</strong></td><td>村田7月起AI/车规MLCC涨价10-40%。库存仅30天，现货"一天一价"。</td><td>上海证券报</td><td>2026.06</td></tr>
+<tr><td><strong>PCB</strong></td><td>13家PCB厂商590亿扩产。英伟达抢购HVLP4铜箔，2026年缺口1500吨。</td><td>界面新闻</td><td>2026.06</td></tr>
+<tr><td><strong>碳酸锂</strong></td><td>现货16.65万/吨。高盛预测Q4冲击25万，储能需求接棒电动车。</td><td>华尔街见闻</td><td>2026.06</td></tr>
 </tbody>
 </table>
 </div>
 
 <div class="footer">
-  供应链每日数据看板 · 数据来源：公开市场报价 / 券商研报 / 行业资讯 · 仅供参考<br>
+  AI算力产业概览 · 数据来源：公开市场报价 / 券商研报 / 行业资讯 · 仅供参考<br>
   投资推荐基于公开信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
   生成时间：2026-06-17
 </div>
@@ -259,10 +347,6 @@ new Chart(document.getElementById('storageChart'), {
       label: '64G TF卡 (¥)',
       data: [20.3, 42.9, 52.4, 77.3, 45.5],
       borderColor: '#a855f7', fill:false, tension:0.3, pointRadius:4
-    },{
-      label: '32G TF卡 (¥)',
-      data: [14.9, 27.5, 33.1, 48, 29.9],
-      borderColor: '#f59e0b', fill:false, tension:0.3, pointRadius:4, borderDash:[4,2]
     }]
   },
   options: {
@@ -289,10 +373,6 @@ new Chart(document.getElementById('passiveChart'), {
       label: 'PCB光板 (¥)',
       data: [8, 10, 10.5, 11.2, 13.2],
       borderColor: '#3b82f6', fill:false, tension:0.3, pointRadius:4
-    },{
-      label: '碳酸锂 (万/吨，÷1000)',
-      data: [5.8/1000*100, 8/1000*100, 12/1000*100, 18/1000*100, 16.65/1000*100],
-      borderColor: '#ef4444', fill:false, tension:0.3, pointRadius:4, borderDash:[6,3]
     }]
   },
   options: {
