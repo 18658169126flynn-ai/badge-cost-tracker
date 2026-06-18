@@ -1,446 +1,387 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI算力产业链全景看板</title>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(135deg,#0a0e1a 0%,#0f1628 50%,#0a1020 100%);color:#e0e6ed;min-height:100vh}
-        .header{background:linear-gradient(90deg,rgba(99,102,241,.12) 0%,rgba(16,185,129,.08) 50%,rgba(59,130,246,.1) 100%);border-bottom:1px solid rgba(99,102,241,.25);padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
-        .header h1{font-size:20px;font-weight:800;letter-spacing:2px;background:linear-gradient(90deg,#818cf8,#34d399,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .header .sub{color:#64748b;font-size:12px;margin-top:2px}
-        .header .update-time{color:#64748b;font-size:12px;text-align:right}
-        .header .update-time span{color:#34d399;font-weight:600}
-        .header .source{color:#475569;font-size:11px;margin-top:2px}
-        .main{padding:14px;display:grid;gap:14px}
-        .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;backdrop-filter:blur(8px)}
-        .card-title{font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-        .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
-        .dot.purple{background:#818cf8;box-shadow:0 0 6px #818cf8}
-        .dot.green{background:#34d399;box-shadow:0 0 6px #34d399}
-        .dot.blue{background:#60a5fa;box-shadow:0 0 6px #60a5fa}
-        .dot.red{background:#f87171;box-shadow:0 0 6px #f87171}
-        .dot.yellow{background:#fbbf24;box-shadow:0 0 6px #fbbf24}
-        .dot.cyan{background:#22d3ee;box-shadow:0 0 6px #22d3ee}
-        .dot.orange{background:#fb923c;box-shadow:0 0 6px #fb923c}
-        .chain-overview{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-        .chain-layer{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:12px;text-align:center;position:relative;transition:all .3s}
-        .chain-layer:hover{border-color:rgba(99,102,241,.4);transform:translateY(-2px)}
-        .chain-layer .layer-icon{font-size:28px;margin-bottom:6px}
-        .chain-layer .layer-name{font-size:13px;font-weight:700;margin-bottom:4px}
-        .chain-layer .layer-desc{font-size:10px;color:#64748b;line-height:1.4}
-        .chain-layer .layer-market{font-size:11px;color:#818cf8;font-weight:600;margin-top:6px}
-        .chain-arrow{position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:#475569;font-size:16px;z-index:1}
-        .price-section{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-        .price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
-        .price-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px;padding:10px;text-align:center;transition:all .3s}
-        .price-card:hover{border-color:rgba(99,102,241,.3);background:rgba(99,102,241,.04)}
-        .price-card .name{font-size:11px;color:#64748b;margin-bottom:3px}
-        .price-card .ticker{font-size:9px;color:#475569;margin-bottom:4px}
-        .price-card .value{font-size:18px;font-weight:800;font-family:'DIN','Roboto Mono',monospace}
-        .price-card .change{font-size:11px;font-weight:600;margin-top:2px}
-        .price-card .unit{font-size:9px;color:#3a4060;margin-top:1px}
-        .up{color:#34d399}.down{color:#f87171}
-        .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-        .chart-box{height:280px}
-        .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-        .metric-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px}
-        .metric-icon{font-size:24px;flex-shrink:0}
-        .metric-info .metric-label{font-size:11px;color:#64748b}
-        .metric-info .metric-value{font-size:16px;font-weight:800;font-family:'DIN',monospace}
-        .metric-info .metric-change{font-size:10px;margin-top:1px}
-        .news-row{display:grid;grid-template-columns:1.2fr 0.8fr;gap:14px}
-        .news-list{max-height:480px;overflow-y:auto}
-        .news-item{padding:10px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .2s}
-        .news-item:hover{background:rgba(255,255,255,.02)}
-        .news-item .title{font-size:13px;font-weight:600;margin-bottom:4px;line-height:1.5}
-        .news-item .meta{font-size:11px;color:#475569;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-        .news-item .tag{display:inline-block;padding:1px 7px;border-radius:8px;font-size:10px}
-        .tag-gpu{background:rgba(99,102,241,.2);color:#a5b4fc}
-        .tag-hbm{background:rgba(16,185,129,.2);color:#6ee7b7}
-        .tag-packaging{background:rgba(236,72,153,.2);color:#f9a8d4}
-        .tag-server{background:rgba(59,130,246,.2);color:#93c5fd}
-        .tag-cooling{background:rgba(34,211,238,.2);color:#67e8f9}
-        .tag-optical{background:rgba(251,146,60,.2);color:#fdba74}
-        .tag-domestic{background:rgba(244,63,94,.2);color:#fda4af}
-        .tag-policy{background:rgba(168,85,247,.2);color:#d8b4fe}
-        .tag-material{background:rgba(245,158,11,.2);color:#fde68a}
-        .news-item .impact{font-size:10px;padding:1px 6px;border-radius:6px}
-        .impact-critical{background:rgba(239,68,68,.2);color:#fca5a5}
-        .impact-high{background:rgba(245,158,11,.2);color:#fcd34d}
-        .impact-medium{background:rgba(59,130,246,.2);color:#93c5fd}
-        .supply-map-row{display:grid;grid-template-columns:1fr;gap:14px}
-        .map-box{height:320px}
-        .footer{text-align:center;padding:14px;color:#334155;font-size:11px;border-top:1px solid rgba(255,255,255,.04)}
-        ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
-        /* Investment cards */
-        .invest-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-        .invest-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px}
-        .invest-card h3{font-size:14px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-        .invest-card .sector-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;margin-bottom:8px}
-        .invest-card table{width:100%;border-collapse:collapse;font-size:12px}
-        .invest-card th{text-align:left;padding:6px 4px;color:#64748b;font-weight:500;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}
-        .invest-card td{padding:6px 4px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
-        .invest-card tr:hover{background:rgba(99,102,241,.04)}
-        .badge-bull{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;background:rgba(16,185,129,.15);color:#6ee7b7}
-        .badge-bear{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;background:rgba(239,68,68,.15);color:#fca5a5}
-        .badge-warn{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10px;background:rgba(245,158,11,.15);color:#fcd34d}
-        .invest-note{font-size:11px;color:#64748b;line-height:1.6;margin-top:8px;padding:8px;background:rgba(255,255,255,.02);border-radius:6px;border-left:3px solid rgba(99,102,241,.3)}
-        @media(max-width:1200px){.chain-overview{grid-template-columns:repeat(3,1fr)}.charts-row,.invest-grid,.price-section,.news-row{grid-template-columns:1fr}}
-        @media(max-width:768px){.chain-overview{grid-template-columns:1fr 1fr}.price-grid{grid-template-columns:repeat(2,1fr)}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI算力产业概览</title>
+<script src="chart.min.js"></script>
+<style>
+:root{--bg:#0f1117;--card:#1a1d27;--border:#2a2d3a;--text:#e4e4e7;--muted:#9ca3af;--accent:#3b82f6;--red:#ef4444;--green:#22c55e;--orange:#f59e0b;--purple:#a855f7;--cyan:#06b6d4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:20px}
+.container{max-width:1400px;margin:0 auto}
+h1{font-size:28px;font-weight:700;margin-bottom:6px}
+.subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:600}
+.badge-red{background:rgba(239,68,68,.15);color:var(--red)}
+.badge-orange{background:rgba(245,158,11,.15);color:var(--orange)}
+.badge-green{background:rgba(34,197,94,.15);color:var(--green)}
+.badge-purple{background:rgba(168,85,247,.15);color:var(--purple)}
+.badge-cyan{background:rgba(6,182,212,.15);color:var(--cyan)}
+.badge-blue{background:rgba(59,130,246,.15);color:var(--accent)}
+.grid{display:grid;gap:16px;margin-bottom:20px}
+.grid-5{grid-template-columns:repeat(5,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px}
+.card h3{font-size:14px;color:var(--muted);margin-bottom:8px;font-weight:500}
+.card .big{font-size:28px;font-weight:700}
+.card .delta{font-size:14px;margin-top:4px}
+.card .delta.up{color:var(--red)}
+.card .delta.down{color:var(--green)}
+.chart-card{padding:20px}
+.chart-card h2{font-size:16px;font-weight:600;margin-bottom:16px}
+.chart-wrap{position:relative;height:300px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:12px}
+td{padding:10px 12px;border-bottom:1px solid var(--border)}
+tr:hover{background:rgba(59,130,246,.05)}
+.section-title{font-size:18px;font-weight:600;margin:28px 0 14px;display:flex;align-items:center;gap:8px}
+.section-title span{font-size:20px}
+.sector-tag{display:inline-block;padding:4px 12px;border-radius:6px;font-size:13px;font-weight:600;margin:0 4px 8px 0}
+.risk-card{padding:16px;border-left:3px solid}
+.risk-card h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.risk-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.risk-high{border-color:var(--red)}
+.risk-mid{border-color:var(--orange)}
+.risk-low{border-color:var(--green)}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:32px;padding-top:20px;border-top:1px solid var(--border)}
+.chain-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:10px 0}
+.chain-box{border-radius:8px;padding:8px 14px;text-align:center;min-width:100px}
+.chain-arrow{font-size:18px;color:var(--muted)}
+@media(max-width:900px){.grid-5,.grid-4,.grid-3,.grid-2{grid-template-columns:1fr}.chart-wrap{height:240px}}
+</style>
 </head>
 <body>
-    <div class="header">
-        <div>
-            <h1>⚡ AI算力产业链全景看板</h1>
-            <div class="sub">GPU → HBM → CoWoS → 服务器 → 液冷 → 光模块 → 云计算</div>
-        </div>
-        <div>
-            <div class="update-time">数据更新: <span id="updateTime">--</span></div>
-            <div class="source">数据源: Yahoo Finance / TrendForce / 行业新闻</div>
-        </div>
+<div class="container">
+<h1>🧠 AI算力产业概览</h1>
+<p class="subtitle">覆盖 AI 算力全链路：算力芯片 → 存储 → PCB/MLCC → 光互连(CPO/光纤) → 供电(800V) → 散热 · 数据更新至 2026年6月17日</p>
+
+<!-- ===== 产业链全景（置顶） ===== -->
+<div class="section-title"><span>🔗</span> AI算力产业链全景</div>
+<div class="card">
+  <div class="chain-flow">
+    <div class="chain-box" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3)">
+      <div style="font-size:11px;color:var(--muted)">算力芯片</div>
+      <div style="font-size:13px;font-weight:600;color:var(--red)">GPU/TPU</div>
     </div>
-    <div class="main">
-        <!-- 产业链五层 -->
-        <div class="card">
-            <div class="card-title"><span class="dot purple"></span>AI算力产业链全景图</div>
-            <div class="chain-overview" id="chainOverview"></div>
-        </div>
-        <!-- 核心指标 -->
-        <div class="card">
-            <div class="card-title"><span class="dot green"></span>产业链核心指标</div>
-            <div class="metrics-grid" id="metricsGrid"></div>
-        </div>
-        <!-- 价格 -->
-        <div class="price-section">
-            <div class="card">
-                <div class="card-title"><span class="dot blue"></span>美股AI算力核心标的</div>
-                <div class="price-grid" id="usStocksGrid"></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><span class="dot yellow"></span>关键大宗商品价格</div>
-                <div class="price-grid" id="commoditiesGrid"></div>
-            </div>
-        </div>
-        <!-- 图表: 涨跌幅 | 市场空间 -->
-        <div class="charts-row">
-            <div class="card">
-                <div class="card-title"><span class="dot cyan"></span>AI算力股涨跌幅</div>
-                <div class="chart-box" id="changeChart"></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><span class="dot orange"></span>产业链各环节市场空间</div>
-                <div class="chart-box" id="marketChart"></div>
-            </div>
-        </div>
-        <!-- 全球供应链地图 -->
-        <div class="card">
-            <div class="card-title"><span class="dot purple"></span>全球AI算力供应链地图</div>
-            <div class="map-box" id="worldMap"></div>
-        </div>
-        <!-- ★ 各品类投资建议与风险 -->
-        <div class="card">
-            <div class="card-title"><span class="dot green"></span>📊 各品类投资建议与风险</div>
-            <div class="invest-grid" id="investGrid"></div>
-        </div>
-        <!-- 新闻 -->
-        <div class="news-row">
-            <div class="card">
-                <div class="card-title"><span class="dot blue"></span>本周AI算力产业链要闻</div>
-                <div class="news-list" id="newsList"></div>
-            </div>
-            <div class="card">
-                <div class="card-title"><span class="dot green"></span>产业链关键节点监测</div>
-                <div id="nodeMonitor"></div>
-            </div>
-        </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3)">
+      <div style="font-size:11px;color:var(--muted)">存储</div>
+      <div style="font-size:13px;font-weight:600;color:var(--purple)">HBM/DRAM</div>
     </div>
-    <div class="footer">AI算力产业链看板 · 覆盖GPU/HBM/CoWoS/服务器/液冷/光模块/云计算全链路 · 数据仅供参考，不构成投资建议</div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3)">
+      <div style="font-size:11px;color:var(--muted)">封装/PCB</div>
+      <div style="font-size:13px;font-weight:600;color:var(--orange)">MLCC/PCB</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.3)">
+      <div style="font-size:11px;color:var(--muted)">光互连</div>
+      <div style="font-size:13px;font-weight:600;color:var(--cyan)">CPO/光纤</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3)">
+      <div style="font-size:11px;color:var(--muted)">供电</div>
+      <div style="font-size:13px;font-weight:600;color:var(--accent)">800V HVDC</div>
+    </div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3)">
+      <div style="font-size:11px;color:var(--muted)">散热</div>
+      <div style="font-size:13px;font-weight:600;color:var(--green)">液冷</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">AI算力从芯片→存储→封装→互连→供电→散热全链路景气，每个环节都有涨价/扩产逻辑</p>
+</div>
 
-<script>
-const updateTime='2026-06-18 13:00 CST';
+<!-- ===== 覆盖板块 ===== -->
+<div style="margin-bottom:20px;margin-top:16px">
+  <span class="sector-tag" style="background:rgba(239,68,68,.12);color:var(--red)">🔴 存储芯片</span>
+  <span class="sector-tag" style="background:rgba(245,158,11,.12);color:var(--orange)">🟡 PCB/CCL</span>
+  <span class="sector-tag" style="background:rgba(168,85,247,.12);color:var(--purple)">🟣 MLCC被动元件</span>
+  <span class="sector-tag" style="background:rgba(6,182,212,.12);color:var(--cyan)">🔵 CPO共封装光学</span>
+  <span class="sector-tag" style="background:rgba(34,197,94,.12);color:var(--green)">🟢 光纤光缆</span>
+  <span class="sector-tag" style="background:rgba(59,130,246,.12);color:var(--accent)">⚡ 800V高压直流供电</span>
+  <span class="sector-tag" style="background:rgba(168,85,247,.08);color:var(--muted)">🔩 电子特气/材料</span>
+  <span class="sector-tag" style="background:rgba(239,68,68,.08);color:var(--muted)">🔋 锂电池/储能</span>
+</div>
 
-const chainLayers=[
-    {icon:'🧠',name:'芯片设计',desc:'GPU/AI ASIC/NPU',market:'~$1200亿(2026E)',players:'NVIDIA · AMD · Broadcom · 寒武纪 · 海光',color:'#818cf8'},
-    {icon:'🏭',name:'制造/封测',desc:'先进制程+封装',market:'CoWoS 12-14万片/月',players:'TSMC · Samsung · ASE · 日月光',color:'#f472b6'},
-    {icon:'💾',name:'存储/互联',desc:'HBM · DDR5 · CXL',market:'HBM ~$380亿(2026E)',players:'SK Hynix · Samsung · Micron',color:'#34d399'},
-    {icon:'🖥️',name:'服务器/网络',desc:'AI服务器+交换机',market:'~$3500亿(2026E)',players:'Dell · HPE · SMCI · 浪潮 · 中兴',color:'#60a5fa'},
-    {icon:'☁️',name:'云计算/应用',desc:'IaaS + MaaS + Agent',market:'~$2800亿(2026E)',players:'AWS · Azure · GCP · 阿里云',color:'#22d3ee'}
-];
+<!-- ===== KPI ===== -->
+<div class="grid grid-5">
+  <div class="card">
+    <h3>🔴 存储 DRAM</h3>
+    <div class="big" style="color:var(--red)">¥344</div>
+    <div class="delta up">↑ +589% vs 基准</div>
+  </div>
+  <div class="card">
+    <h3>🟡 MLCC阻容</h3>
+    <div class="big" style="color:var(--orange)">¥38</div>
+    <div class="delta up">↑ +73% vs 基准</div>
+  </div>
+  <div class="card">
+    <h3>🟢 光纤景气度</h3>
+    <div class="big" style="color:var(--green)">极高</div>
+    <div class="delta" style="color:var(--green)">订单排至2027年</div>
+  </div>
+  <div class="card">
+    <h3>🔵 CPO/光模块</h3>
+    <div class="big" style="color:var(--cyan)">爆发</div>
+    <div class="delta" style="color:var(--cyan)">"易中天"齐创新高</div>
+  </div>
+  <div class="card">
+    <h3>⚡ 800V HVDC</h3>
+    <div class="big" style="color:var(--accent)">启动</div>
+    <div class="delta" style="color:var(--accent)">英伟达定义新标准</div>
+  </div>
+</div>
 
-const keyMetrics=[
-    {icon:'🔥',label:'GB200 NVL72云价格',value:'$17.85/hr/GPU',change:'+35% YoY',up:true},
-    {icon:'📈',label:'HBM投片占比(2027E)',value:'30%',change:'vs 2025年18%',up:true},
-    {icon:'🏗️',label:'TSMC CoWoS月产能',value:'12-14万片',change:'满载至2027',up:true},
-    {icon:'⚡',label:'GB300 NVL72机架功率',value:'120kW+',change:'液冷成为刚需',up:true},
-    {icon:'🔌',label:'光模块迭代',value:'800G→1.6T',change:'CPO 2026H2导入',up:true},
-    {icon:'🇨🇳',label:'国产芯片市占率',value:'41%',change:'边缘推理为主',up:true},
-    {icon:'💹',label:'推理算力占比',value:'68%',change:'vs 训练32%',up:true},
-    {icon:'🧊',label:'HBM短缺预期',value:'至2028年',change:'Goldman Sachs预测',up:false}
-];
+<!-- ===== 存储 DRAM ===== -->
+<div class="section-title"><span>🔴</span> 存储 DRAM</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：AI服务器需求爆发，HBM（高带宽存储）挤占传统DRAM产能。三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。<br><br>
+      <strong>涨价幅度</strong>：Q1服务器DRAM涨价60-70%。HBM3从$200涨至$850（+325%）。MLC NAND从$3.2涨至$12.9（+300%）。NAND Flash全球产值年增280.7%。<br><br>
+      <strong>供需缺口</strong>：三星/SK海力士2026年DRAM产量增速仅5-8%，远低于需求增速。瑞银预测供需缺口延续至<strong>2027Q4</strong>。SK海力士市值突破万亿美元，单季利润率72%。<br><br>
+      <strong>国产替代</strong>：兆易创新港股上市（03986.HK），长鑫IPO催化。澜起科技、佰维存储等受益于国产替代加速。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>兆易创新</strong></td><td>603986.SH</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动，长鑫IPO催化</td><td>港股上市，存储涨价受益</td></tr>
+      <tr><td><strong>佰维存储</strong></td><td>688525.SH</td><td>存储模组，受益NAND涨价+AI终端存储升级</td><td>高位震荡</td></tr>
+      <tr><td><strong>江波龙</strong></td><td>301308.SZ</td><td>存储品牌商，嵌入式存储+消费存储双主线</td><td>存储涨价核心受益</td></tr>
+      <tr><td><strong>澜起科技</strong></td><td>688008.SH</td><td>内存接口芯片全球龙头，DDR5渗透加速</td><td>6月涨超11%</td></tr>
+      <tr><td><strong>普冉股份</strong></td><td>688766.SH</td><td>NOR Flash+EEPROM，消费电子+AI终端</td><td>6月涨幅超16%</td></tr>
+      <tr><td><strong>太极实业</strong></td><td>600667.SH</td><td>SK海力士封测合作商，绑定存储巨头</td><td>SK海力士概念股</td></tr>
+    </tbody>
+    </table>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.15);border-radius:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--red);margin-bottom:6px">📦 推荐基金（一键配置存储板块）</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>半导体ETF国联安</strong>（512480）— 覆盖芯片全产业链，存储+设备+设计均衡配置<br>
+        <strong>芯片ETF华夏</strong>（159995）— 国证芯片指数，市值前30芯片股<br>
+        <strong>消费电子ETF平安</strong>（561600）— 含兆易创新+澜起科技+三环集团，MLCC+存储双暴露
+      </div>
+    </div>
+  </div>
+</div>
 
-const usStocks=[
-    {ticker:'NVDA',name:'NVIDIA',price:204.65,change:2.11},
-    {ticker:'AMD',name:'AMD',price:512.48,change:13.28},
-    {ticker:'TSM',name:'TSMC',price:432.15,change:5.72},
-    {ticker:'AVGO',name:'Broadcom',price:392.90,change:5.59},
-    {ticker:'MU',name:'Micron',price:1043.19,change:16.97},
-    {ticker:'INTC',name:'Intel',price:121.10,change:13.14},
-    {ticker:'ASML',name:'ASML',price:1867.83,change:7.71},
-    {ticker:'DELL',name:'Dell',price:419.32,change:13.38},
-    {ticker:'SMCI',name:'Super Micro',price:27.78,change:-5.09},
-    {ticker:'HPE',name:'HPE',price:48.20,change:5.96},
-    {ticker:'KLAC',name:'KLA',price:238.73,change:11.78},
-    {ticker:'LRCX',name:'Lam Research',price:374.18,change:16.28},
-    {ticker:'CRDO',name:'Credo Tech',price:249.33,change:4.90}
-];
+<!-- ===== CPO 共封装光学 ===== -->
+<div class="section-title"><span>🔵</span> CPO 共封装光学</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：英伟达 Spectrum-X 以太网硅光技术全面量产，基于 CPO 构建新一代交换机，支持 Vera Rubin 平台。相比传统收发器，<strong>能效提升5倍，AI正常运行时间提升5倍</strong>。<br><br>
+      <strong>市场格局</strong>：中际旭创、新易盛、天孚通信（"易中天"）合计占创业板人工智能指数权重近50%，6月齐创历史新高。新易盛股价突破800元，天孚突破500元。<br><br>
+      <strong>资金动向</strong>：6月2日东山精密主力净流入26.53亿元，新易盛、天孚通信、中际旭创均获大额资金流入。三巨头均在谋划港股上市。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>中际旭创</strong></td><td>300308.SZ</td><td>光模块全球龙头，800G/1.6T放量</td><td>历史新高，筹划港股</td></tr>
+      <tr><td><strong>新易盛</strong></td><td>300502.SZ</td><td>光模块龙头，股价突破800元</td><td>历史新高，筹划H股</td></tr>
+      <tr><td><strong>天孚通信</strong></td><td>300394.SZ</td><td>光无源器件龙头，CPO核心供应商</td><td>已递交港股申请</td></tr>
+      <tr><td><strong>东山精密</strong></td><td>002384.SZ</td><td>PCB+光模块双主线，CPO算力核心</td><td>近期涨停</td></tr>
+      <tr><td><strong>源杰科技</strong></td><td>688498.SH</td><td>光芯片，CPO上游核心器件</td><td>6月涨近18%创新高</td></tr>
+      <tr><td><strong>光库科技</strong></td><td>300620.SZ</td><td>光纤激光器件，CPO概念</td><td>6月涨超13%</td></tr>
+    </tbody>
+    </table>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.15);border-radius:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--cyan);margin-bottom:6px">📦 推荐基金（一键配置CPO/光模块）</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>创业板人工智能ETF华宝</strong>（159363）— CPO含量超50%，“易中天”高含量，成交额领跑AI主题ETF<br>
+        <strong>创业板人工智能ETF华夏</strong>（159381）— 半数权重集中光模块CPO，另覆盖AI应用<br>
+        <strong>通信ETF华夏</strong>（515050）— CPO+PCB权重合计超80%，全市场第一，覆盖存储+PCB+光模块全链条
+      </div>
+    </div>
+  </div>
+</div>
 
-const commodities=[
-    {name:'黄金',price:4330.90,change:2.75,unit:'USD/盎司',symbol:'GC=F'},
-    {name:'白银',price:68.94,change:1.59,unit:'USD/盎司',symbol:'SI=F'},
-    {name:'铜期货',price:6.38,change:-0.79,unit:'USD/磅',symbol:'HG=F'},
-    {name:'WTI原油',price:74.89,change:-11.77,unit:'USD/桶',symbol:'CL=F'}
-];
+<!-- ===== 光纤光缆 ===== -->
+<div class="section-title"><span>🟢</span> 光纤光缆</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：AI数据中心建设驱动，智算服务器需要的光纤数量是传统服务器的<strong>200倍以上</strong>。2025Q4以来全球光纤光缆"量价共振"。<br><br>
+      <strong>供给紧张</strong>：光棒产能扩产周期18-24个月，头部企业满负荷生产，订单排产已到<strong>2027年</strong>。长飞光纤Q1净利润预增400%-520%。<br><br>
+      <strong>海外爆发</strong>：亚马逊与康宁签署数十亿美元光纤采购协议。亨通光电海外AI订单爆发，在手订单超290亿元，海外收入占比86%。<br><br>
+      <strong>概念股年内平均涨99.87%</strong>，6股翻倍：通鼎互联、长飞光纤、亨通光电、中天科技、法尔胜、永鼎股份。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>长飞光纤</strong></td><td>601869.SH</td><td>全球第一，产能1.4亿芯公里/年，Q1净利+400-520%</td><td>年内涨超180%，一年涨10倍</td></tr>
+      <tr><td><strong>亨通光电</strong></td><td>600487.SH</td><td>海外AI订单爆发，在手订单290亿+，海外占比86%</td><td>6天3板，市值突破2500亿</td></tr>
+      <tr><td><strong>中天科技</strong></td><td>600522.SH</td><td>光纤+海缆双主线，军工特种光缆40%份额</td><td>年内翻倍</td></tr>
+      <tr><td><strong>烽火通信</strong></td><td>600498.SH</td><td>光通信国家队，光棒+光纤+光缆全产业链</td><td>6月涨超8%</td></tr>
+      <tr><td><strong>通鼎互联</strong></td><td>002491.SZ</td><td>光纤光缆+数据中心布线</td><td>年内翻倍</td></tr>
+    </tbody>
+    </table>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px">📦 推荐基金（一键配置光纤/通信）</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>通信ETF华夏</strong>（515050）— CPO+PCB+光纤光缆全覆盖，规模163亿，前十大含亨通光电<br>
+        <strong>通信ETF广发</strong>（159507）— 国证通信指数，光纤光缆权重高，6月5日涨超4%<br>
+        <strong>通信ETF国泰</strong>（515880）— 光模块+服务器+光纤+铜连接合计权重超80%
+      </div>
+    </div>
+  </div>
+</div>
 
-// ★ 各品类投资建议与风险
-const investSectors=[
-    {
-        name:'GPU/AI芯片',icon:'🧠',color:'#818cf8',
-        stocks:[
-            {name:'寒武纪',code:'688256',logic:'国产AI芯片龙头，思元370 7nm+Chiplet，256TOPS',signal:'bull',note:'股价创历史新高，估值极高(PE 500x+)，追高风险大'},
-            {name:'海光信息',code:'688041',logic:'x86授权源自AMD，国产GPU替代核心标的',signal:'bull',note:'业绩确定性强，但估值已较高'},
-            {name:'景嘉微',code:'300474',logic:'国产GPU，军工+民用双赛道',signal:'warn',note:'军工业务稳定，民用GPU尚在追赶阶段'}
-        ],
-        risk:'NVIDIA/AMD持续迭代，国产GPU生态差距仍大。制裁升级可能影响先进制程获取。估值泡沫风险。'
-    },
-    {
-        name:'HBM/存储',icon:'💾',color:'#34d399',
-        stocks:[
-            {name:'兆易创新',code:'603986',logic:'NOR Flash+DRAM双轮驱动，长鑫IPO催化',signal:'bull',note:'存储涨价核心受益，NOR Flash半年涨100%+'},
-            {name:'江波龙',code:'301308',logic:'存储品牌商，涨价周期弹性最大',signal:'bull',note:'Q1营收大幅增长，但NAND价格波动风险'},
-            {name:'北京君正',code:'300223',logic:'DRAM设计，ISSI并表',signal:'bull',note:'DRAM涨价直接利好，但DRAM周期可能2028年后收窄'},
-            {name:'佰维存储',code:'688525',logic:'存储模组，受益NAND涨价+AI终端存储升级',signal:'warn',note:'高位震荡，需等回调确认'}
-        ],
-        risk:'HBM短缺至2028年是确定性机会，但DRAM/NAND价格波动剧烈。三星/SK海力士产能转向HBM，通用存储供给结构性收缩。'
-    },
-    {
-        name:'先进封装/CoWoS',icon:'🏭',color:'#f472b6',
-        stocks:[
-            {name:'长电科技',code:'600584',logic:'国内封测龙头，CoWoS溢出受益',signal:'bull',note:'TSMC CoWoS满载至2027，ASE/日月光承接溢出订单'},
-            {name:'通富微电',code:'002156',logic:'AMD封测合作伙伴，先进封装能力提升',signal:'bull',note:'AMD涨13.28%，直接利好通富'},
-            {name:'甬矽电子',code:'688362',logic:'FC-BGA封装，AI芯片封装新势力',signal:'warn',note:'规模较小，但成长空间大'}
-        ],
-        risk:'CoWoS产能瓶颈持续至2027，但国产封测厂在CoWoS技术上仍有差距。TSMC加速玻璃基板技术可能改变竞争格局。'
-    },
-    {
-        name:'AI服务器/网络',icon:'🖥️',color:'#60a5fa',
-        stocks:[
-            {name:'浪潮信息',code:'000977',logic:'国产AI服务器龙头，受益国内算力建设',signal:'bull',note:'Dell涨13.38%，服务器板块情绪外溢'},
-            {name:'中科曙光',code:'603019',logic:'服务器整机+海光生态协同',signal:'bull',note:'海光信息大股东，双重受益'},
-            {name:'中兴通讯',code:'000063',logic:'网络设备受益AI数据中心建设',signal:'bull',note:'Broadcom涨5.59%，网络设备需求联动'},
-            {name:'紫光股份',code:'000938',logic:'服务器+网络设备双线布局',signal:'warn',note:'业务线较多，AI服务器占比待提升'}
-        ],
-        risk:'SMCI跌5.09%可能短期压制服务器板块情绪。国内AI服务器竞争加剧，利润率承压。GPU供应受限影响出货节奏。'
-    },
-    {
-        name:'半导体设备',icon:'⚙️',color:'#fb923c',
-        stocks:[
-            {name:'北方华创',code:'002371',logic:'国产半导体设备龙头，存储扩产+国产替代双重驱动',signal:'bull',note:'ASML涨7.71%，设备景气度持续'},
-            {name:'中微公司',code:'688012',logic:'刻蚀设备龙头，先进制程核心设备',signal:'bull',note:'5nm以下刻蚀设备验证进展顺利'},
-            {name:'拓荆科技',code:'688072',logic:'薄膜沉积设备，CVD/PVD国产替代',signal:'bull',note:'Lam Research涨16.28%，设备板块强势'}
-        ],
-        risk:'大基金三期投资节奏不确定。美国出口管制可能限制设备零部件获取。估值已处历史高位。'
-    },
-    {
-        name:'液冷/散热',icon:'❄️',color:'#22d3ee',
-        stocks:[
-            {name:'飞荣达',code:'300602',logic:'散热材料+液冷方案提供商',signal:'bull',note:'GB300/Rubin 120kW+机架功率，液冷成刚需'},
-            {name:'申菱环境',code:'301018',logic:'数据中心温控，液冷系统集成',signal:'bull',note:'A股液冷概念涨超10%'},
-            {name:'达瑞电子',code:'300976',logic:'液冷连接器，光模块液冷散热专利',signal:'warn',note:'细分赛道，弹性大但确定性待验证'}
-        ],
-        risk:'液冷技术路线尚未完全统一(冷板式vs浸没式)。行业标准缺失，早期参与者可能面临技术迭代风险。'
-    },
-    {
-        name:'光模块/CPO',icon:'🔌',color:'#a78bfa',
-        stocks:[
-            {name:'中际旭创',code:'300308',logic:'800G光模块全球龙头，1.6T产品导入',signal:'bull',note:'800G放量中，1.6T预计2026H2导入'},
-            {name:'新易盛',code:'300502',logic:'光模块核心供应商，CPO布局',signal:'bull',note:'CPO 2026H2小规模验证，2027扩产'},
-            {name:'天孚通信',code:'300394',logic:'光无源器件龙头，CPO上游受益',signal:'warn',note:'NVIDIA澄清CPO进度，短期估值消化压力'}
-        ],
-        risk:'NVIDIA澄清CPO与可插拔光模块将长期共存，CPO替代节奏慢于市场预期。短期估值消化压力。'
-    },
-    {
-        name:'PCB/CCL材料',icon:'📋',color:'#fbbf24',
-        stocks:[
-            {name:'生益科技',code:'600183',logic:'CCL龙头，AI服务器高端板材需求爆发',signal:'bull',note:'建滔年内涨价4次累计超40%，6月再涨20%'},
-            {name:'深南电路',code:'002916',logic:'高端PCB龙头，AI服务器PCB核心供应商',signal:'bull',note:'PCB超级周期确立，HVLP4铜箔被NVIDIA抢购'},
-            {name:'南亚新材',code:'688519',logic:'高频高速CCL，受益AI服务器板材升级',signal:'warn',note:'股价已创历史新高，追高需谨慎'}
-        ],
-        risk:'CCL涨价持续性取决于AI服务器需求。铜箔供应紧张可能缓解。PCB厂商资本开支增加可能导致远期供给过剩。'
-    }
-];
+<!-- ===== 800V 高压直流供电 ===== -->
+<div class="section-title"><span>⚡</span> 800V 高压直流供电（HVDC）</div>
+<div class="grid grid-2">
+  <div class="card">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📡 行业概况</h3>
+    <p style="font-size:13px;color:var(--muted);line-height:1.8">
+      <strong>核心逻辑</strong>：英伟达 Rubin Ultra 单机柜功率达 600-700kW，传统 50V 低压供电架构触及物理极限。800V HVDC + SST（固态变压器）成为下一代 AI 数据中心终极供电方案。<br><br>
+      <strong>架构变革</strong>：从交流体系切换到高压直流体系的系统性重构。800V→12V 和 800V→50V 两套方案并行推进，2027-2028年规模化验证。<br><br>
+      <strong>市场空间</strong>：预计8年增长百倍。5月27日"800VDC"概念股集体爆发，四方股份涨停。<br><br>
+      <strong>产业链</strong>：SST固态变压器→高压直流母线→机架级DC-DC→超级电容/薄膜电容（瞬时储能滤波）。
+    </p>
+  </div>
+  <div class="card" style="overflow-x:auto">
+    <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px">📊 核心标的</h3>
+    <table>
+    <thead><tr><th>股票</th><th>代码</th><th>核心看点</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><strong>四方股份</strong></td><td>601126.SH</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>5/27涨停</td></tr>
+      <tr><td><strong>金盘科技</strong></td><td>688676.SH</td><td>干式变压器+数据中心供电方案</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>超级电容+高压薄膜电容，GPU瞬时功率缓冲</td><td>被动元件+800V双主线</td></tr>
+      <tr><td><strong>可立克</strong></td><td>002782.SZ</td><td>磁性元器件，SST/DC-DC核心部件</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>伊戈尔</strong></td><td>002922.SZ</td><td>高频变压器，数据中心供电</td><td>800VDC概念跟涨</td></tr>
+      <tr><td><strong>天岳先进</strong></td><td>688234.SH</td><td>碳化硅衬底，SST功率器件核心材料</td><td>5/27涨超8%</td></tr>
+    </tbody>
+    </table>
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px">
+      <div style="font-size:12px;font-weight:600;color:var(--accent);margin-bottom:6px">📦 推荐基金（一键配置电力设备/800V）</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.8">
+        <strong>电网ETF</strong>（561380）— 电网设备占比60%+通信线缆26%，覆盖变压器/换流阀/线缆龙头<br>
+        <strong>电网设备ETF华夏</strong>（159326）— 中证电网设备指数，聚焦高压设备龙头
+      </div>
+    </div>
+  </div>
+</div>
 
-const news=[
-    {title:'SK Hynix清州P&T6工厂扩产HBM4封装线，为NVIDIA Rubin量产做准备',summary:'SK Hynix正加速HBM4量产准备。Goldman Sachs预测HBM短缺将持续至2028年。',category:'HBM',impact:'critical',source:'Digitimes',time:'06-16',products:'HBM4/Rubin GPU'},
-    {title:'TSMC CoWoS产能扩至12-14万片/月，满载至2027年',summary:'TSMC三个先进封装后端工厂产能全部售罄至2027年。',category:'封装',impact:'critical',source:'IndMoney',time:'06-18',products:'CoWoS/GB200/Rubin'},
-    {title:'NVIDIA GB300 NVL72每兆瓦可运行20倍AI Agent',summary:'2026年9月下旬开始出货。',category:'GPU',impact:'high',source:'NVIDIA',time:'06-18',products:'GB300 NVL72'},
-    {title:'Vera Rubin NVL72预计H2 2026出货，初始溢价30-50%',summary:'电源/散热设计全面升级。',category:'GPU',impact:'high',source:'Spheron',time:'06-13',products:'Vera Rubin'},
-    {title:'银河证券：AI算力爆发推动存储长周期涨价，HBM投片比升至30%',summary:'Rubin Ultra单颗GPU配384GB HBM。',category:'HBM',impact:'high',source:'证券时报',time:'06-16',products:'HBM/DRAM'},
-    {title:'A股液冷概念集体走强，AI推动液冷成刚需',summary:'达瑞电子、飞荣达、申菱环境涨超10%。',category:'液冷',impact:'high',source:'证券时报',time:'06-15',products:'液冷服务器'},
-    {title:'NVIDIA澄清CPO进度：2026H2导入，2027扩产',summary:'CPO与可插拔光模块将长期共存。',category:'光模块',impact:'medium',source:'新浪',time:'06-11',products:'CPO/光模块'},
-    {title:'TSMC加速玻璃基板技术，突破CoWoS尺寸限制',summary:'Feynman架构可能采用CoPoS封装。',category:'封装',impact:'medium',source:'CloudNews',time:'06-17',products:'玻璃基板/CoPoS'},
-    {title:'寒武纪涨超6%再创历史新高，国产算力持续火热',summary:'思元370芯片采用7nm+Chiplet技术。',category:'国产算力',impact:'medium',source:'商业时报',time:'06-12',products:'寒武纪/思元370'},
-    {title:'华为昇腾910C支持1.6万亿参数大模型训练',summary:'CANN全面开源，Mind系列工具链同步开源。',category:'国产算力',impact:'high',source:'ScenSmart',time:'06-15',products:'昇腾910C'},
-    {title:'CCL/MLCC等AI材料持续暴涨',summary:'覆铜板和MLCC涨价潮持续。',category:'材料',impact:'high',source:'同花顺',time:'06-17',products:'CCL/MLCC/电源'},
-    {title:'DRAM/HBM预计稀缺至2030年',summary:'SK Hynix计划2034年前将DRAM产能扩大3倍。',category:'HBM',impact:'critical',source:'Notebookcheck',time:'06-14',products:'DRAM/HBM'}
-];
+<!-- ===== 涨价明细 ===== -->
+<div class="section-title"><span>📋</span> 涨价板块明细</div>
+<div class="card" style="overflow-x:auto">
+<table>
+<thead><tr><th>板块</th><th>物料/标的</th><th>基准</th><th>当前</th><th>涨幅</th><th>驱动因素</th><th>趋势</th></tr></thead>
+<tbody>
+<tr><td>存储</td><td><strong>DRAM 2+16</strong></td><td>¥50</td><td>¥344.76</td><td class="delta up">+589%</td><td>AI服务器挤占产能，HBM需求爆发</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
+<tr><td>存储</td><td><strong>DRAM 1+8</strong></td><td>¥47.8</td><td>¥189.84</td><td class="delta up">+297%</td><td>低端产能被压缩</td><td><span class="badge badge-red">🔴 暴涨</span></td></tr>
+<tr><td>存储</td><td><strong>NAND 64G TF卡</strong></td><td>¥20.3</td><td>¥45.5</td><td class="delta up">+124%</td><td>NAND Flash产值+280%</td><td><span class="badge badge-orange">🟡 高位</span></td></tr>
+<tr><td>MLCC</td><td><strong>0201阻容/万片</strong></td><td>¥22</td><td>¥38</td><td class="delta up">+73%</td><td>村田7月涨价10-40%，AI用量翻20倍</td><td><span class="badge badge-red">🔴 加速</span></td></tr>
+<tr><td>PCB</td><td><strong>PCB 光板</strong></td><td>¥8</td><td>¥13.2</td><td class="delta up">+65%</td><td>铜箔+CCL涨价，590亿扩产潮</td><td><span class="badge badge-orange">🟡 上涨</span></td></tr>
+<tr><td>CPO</td><td><strong>光模块 "易中天"</strong></td><td>—</td><td>历史新高</td><td class="delta up">年内+100%+</td><td>英伟达Spectrum-X硅光量产</td><td><span class="badge badge-cyan">🔵 爆发</span></td></tr>
+<tr><td>光纤</td><td><strong>光纤光缆</strong></td><td>—</td><td>量价齐升</td><td class="delta up">年内均+99.87%</td><td>AI数据中心光纤需求200倍，订单排至2027</td><td><span class="badge badge-green">🟢 景气</span></td></tr>
+<tr><td>800V</td><td><strong>数据中心供电</strong></td><td>50V AC</td><td>800V HVDC</td><td class="delta up">架构变革</td><td>Rubin Ultra单机柜600-700kW</td><td><span class="badge badge-blue">⚡ 启动</span></td></tr>
+<tr><td>特气</td><td><strong>六氟化钨</strong></td><td>基准</td><td>大幅上涨</td><td class="delta up">涨幅未公开</td><td>半导体制造关键材料</td><td><span class="badge badge-orange">🟡 热炒</span></td></tr>
+<tr><td>锂电</td><td><strong>碳酸锂</strong></td><td>5.8万/吨</td><td>16.65万/吨</td><td class="delta up">+187%</td><td>储能接棒电动车，高盛Q4预测25万</td><td><span class="badge badge-orange">🟡 震荡</span></td></tr>
+</tbody>
+</table>
+</div>
 
-const nodeMonitor=[
-    {node:'GPU芯片',status:'🔴',statusText:'供不应求',detail:'NVIDIA GB300 9月出货，Rubin H2 2026。',trend:'需求爆发'},
-    {node:'HBM4',status:'🔴',statusText:'极度紧缺',detail:'SK Hynix扩产中，短缺至2028年。',trend:'结构性短缺'},
-    {node:'CoWoS封装',status:'🔴',statusText:'产能满载',detail:'TSMC 12-14万片/月，满载至2027。',trend:'持续紧张'},
-    {node:'EUV光刻',status:'🟡',statusText:'供应紧张',detail:'ASML High-NA EUV交付中。',trend:'稳步扩产'},
-    {node:'液冷系统',status:'🔴',statusText:'需求爆发',detail:'GB300/Rubin 120kW+，液冷成刚需。',trend:'从0到1'},
-    {node:'800G/1.6T光模块',status:'🟡',statusText:'快速迭代',detail:'800G放量，1.6T导入。CPO 2026H2验证。',trend:'高速迭代'},
-    {node:'AI服务器整机',status:'🟢',statusText:'供应改善',detail:'Dell/HPE/SMCI产能提升。',trend:'逐步放量'},
-    {node:'DDR5内存',status:'🟡',statusText:'涨价持续',detail:'DDR5涨171%。AI服务器内存需求激增。',trend:'长周期涨价'},
-    {node:'MLCC/CCL',status:'🟡',statusText:'涨价传导',detail:'村田MLCC涨10-40%。覆铜板单周涨10-20%。',trend:'成本传导'}
-];
+<!-- ===== 投资机会 ===== -->
+<div class="section-title"><span>💰</span> 投资机会</div>
 
-const worldEvents=[
-    {name:'台湾TSMC',coord:[121.5,25.0],desc:'CoWoS封装核心\n12-14万片/月满载',impact:'critical'},
-    {name:'韩国SK Hynix',coord:[127.0,37.5],desc:'HBM4量产核心\n全球HBM供应60%+',impact:'critical'},
-    {name:'韩国Samsung',coord:[127.0,37.5],desc:'HBM3E/HBM4\nDRAM产能扩张',impact:'critical'},
-    {name:'美国NVIDIA',coord:[-122.0,37.4],desc:'GB300/Rubin平台\nGPU设计龙头',impact:'critical'},
-    {name:'荷兰ASML',coord:[5.5,51.5],desc:'EUV光刻机垄断\nAI芯片制造核心',impact:'critical'},
-    {name:'日本MLCC',coord:[139.7,35.7],desc:'村田/太阳诱电\nMLCC涨10-40%',impact:'high'},
-    {name:'中国封测',coord:[120.5,31.3],desc:'ASE/长电科技\nCoWoS溢出受益',impact:'high'},
-    {name:'美国Micron',coord:[-116.2,43.6],desc:'HBM3E量产\nDRAM供应紧张',impact:'high'},
-    {name:'华为昇腾',coord:[114.1,22.5],desc:'昇腾910C\n1.6万亿参数训练',impact:'high'},
-    {name:'寒武纪',coord:[116.4,39.9],desc:'思元370 7nm+Chiplet\n股价创历史新高',impact:'high'},
-    {name:'美国Broadcom',coord:[-122.1,37.4],desc:'AI ASIC定制芯片\n网络交换芯片',impact:'high'},
-    {name:'CCL/PCB',coord:[113.3,23.1],desc:'建滔/生益科技\n覆铜板涨10-20%/周',impact:'high'}
-];
+<div class="card" style="margin-bottom:20px">
+  <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">🎯 未来7-30天重点关注</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">基于AI算力全链路涨价传导 + 机构共识，筛选确定性最高的标的</p>
+  <div style="overflow-x:auto">
+  <table>
+  <thead><tr><th>优先级</th><th>股票</th><th>代码</th><th>板块</th><th>主线逻辑</th><th>催化剂</th><th>风险提示</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>亨通光电</strong></td><td>600487.SH</td><td>🟢 光纤</td><td>海外AI订单爆发，在手290亿+，海外占比86%</td><td>亚马逊+康宁数十亿美元光纤协议</td><td>6天3板，短期涨幅大</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>三环集团</strong></td><td>300408.SZ</td><td>🟣 MLCC</td><td>MLCC涨价超级周期，AI服务器用量翻20倍</td><td>7月日系厂商第二轮涨价落地</td><td>PE 100x+，短期回调风险</td></tr>
+    <tr><td><span class="badge badge-red">⭐⭐⭐</span></td><td><strong>中际旭创</strong></td><td>300308.SZ</td><td>🔵 CPO</td><td>光模块全球龙头，800G/1.6T放量，CPO核心</td><td>英伟达Spectrum-X硅光量产</td><td>股价已创历史新高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>生益科技</strong></td><td>600183.SH</td><td>🟡 PCB</td><td>覆铜板龙头，PCB涨价年核心标的</td><td>13家PCB厂商590亿扩产潮</td><td>股价已创历史新高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>长飞光纤</strong></td><td>601869.SH</td><td>🟢 光纤</td><td>全球第一，Q1净利+400-520%，订单排至2027</td><td>智算光纤需求200倍增长</td><td>一年涨10倍，估值极高</td></tr>
+    <tr><td><span class="badge badge-orange">⭐⭐</span></td><td><strong>兆易创新</strong></td><td>603986.SH</td><td>🔴 存储</td><td>存储芯片龙头，NOR Flash+DRAM双轮驱动</td><td>存储涨价持续至2027Q4</td><td>DRAM缺口2028年后可能收窄</td></tr>
+  </tbody>
+  </table>
+  </div>
+</div>
 
-const marketData=[
-    {name:'GPU/AI芯片',value:1200,color:'#818cf8'},
-    {name:'HBM存储',value:380,color:'#34d399'},
-    {name:'CoWoS封装',value:250,color:'#f472b6'},
-    {name:'AI服务器',value:3500,color:'#60a5fa'},
-    {name:'液冷散热',value:180,color:'#22d3ee'},
-    {name:'光模块',value:220,color:'#fb923c'},
-    {name:'云计算IaaS',value:2800,color:'#a78bfa'},
-    {name:'AI软件/应用',value:1500,color:'#fbbf24'}
-];
+<div class="card" style="margin-bottom:20px">
+  <h3 style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px">🔭 未来1-3个月持续关注</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">中长期逻辑确认、等待回调介入或趋势验证的标的</p>
+  <div style="overflow-x:auto">
+  <table>
+  <thead><tr><th>股票</th><th>代码</th><th>板块</th><th>主线逻辑</th><th>关注节点</th></tr></thead>
+  <tbody>
+    <tr><td><strong>新易盛</strong></td><td>300502.SZ</td><td>🔵 CPO</td><td>光模块龙头，股价突破800元，筹划H股</td><td>港股上市进展；1.6T光模块放量</td></tr>
+    <tr><td><strong>天孚通信</strong></td><td>300394.SZ</td><td>🔵 CPO</td><td>光无源器件龙头，已递交港股申请</td><td>CPO渗透率提升节奏</td></tr>
+    <tr><td><strong>四方股份</strong></td><td>601126.SH</td><td>⚡ 800V</td><td>电力设备龙头，HVDC/SST核心供应商</td><td>800V数据中心规模化验证(2027-28)</td></tr>
+    <tr><td><strong>江海股份</strong></td><td>002484.SZ</td><td>⚡ 800V</td><td>超级电容+薄膜电容，被动元件+800V双主线</td><td>GPU瞬时功率缓冲需求验证</td></tr>
+    <tr><td><strong>天岳先进</strong></td><td>688234.SH</td><td>⚡ 800V</td><td>碳化硅衬底，SST功率器件核心材料</td><td>SST方案商业化进度</td></tr>
+    <tr><td><strong>北方华创</strong></td><td>002371.SZ</td><td>🔩 设备</td><td>半导体设备龙头，存储扩产+国产替代</td><td>Q3设备订单验证</td></tr>
+    <tr><td><strong>风华高科</strong></td><td>000636.SZ</td><td>🟣 MLCC</td><td>MLCC国产替代，暂停中低端接单引爆涨价</td><td>Q1净利+37.1%持续性验证</td></tr>
+    <tr><td><strong>国瓷材料</strong></td><td>300285.SZ</td><td>🟣 MLCC</td><td>MLCC上游陶瓷粉体，涨价链最上游</td><td>MLCC产能扩张带动上游需求</td></tr>
+  </tbody>
+  </table>
+  </div>
+</div>
 
-// ========== RENDER ==========
-function renderChainOverview(){
-    document.getElementById('chainOverview').innerHTML=chainLayers.map((l,i)=>`
-        <div class="chain-layer" style="border-top:3px solid ${l.color}">
-            ${i<4?'<span class="chain-arrow">→</span>':''}
-            <div class="layer-icon">${l.icon}</div>
-            <div class="layer-name">${l.name}</div>
-            <div class="layer-desc">${l.desc}</div>
-            <div class="layer-market">${l.market}</div>
-            <div style="font-size:9px;color:#475569;margin-top:4px;line-height:1.4">${l.players}</div>
-        </div>`).join('');
-}
+<!-- ===== 风险提示 ===== -->
+<div class="section-title"><span>⚠️</span> 风险提示</div>
+<div class="grid grid-2">
+  <div class="card risk-card risk-high">
+    <h4>🔴 估值风险</h4>
+    <p>SW电子板块PE(TTM) 103倍，远高于历史均值55倍。年内93家半导体公司遭减持。"易中天"、长飞光纤等涨幅巨大，高位回调风险显著。</p>
+  </div>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 光纤/CPO持续性</h4>
+    <p>光纤行业扩产相对容易（不同于PCB），若产能释放过快供需可能逆转。CPO技术路线仍在演进，800G→1.6T→3.2T代际切换中存在不确定性。</p>
+  </div>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 800V HVDC 尚早</h4>
+    <p>800V→12V和800V→50V两套方案并行，2027-2028年才规模化验证。当前概念股多为题材炒作，业绩兑现需等待。SST方案商业化仍有不确定性。</p>
+  </div>
+  <div class="card risk-card risk-mid">
+    <h4>🟡 AI需求验证</h4>
+    <p>若亚马逊/微软/谷歌等AI CapEx回报不及预期，势必缩减投资规模。三星前总裁预警：2028年后全球存储芯片需求可能萎缩。</p>
+  </div>
+</div>
 
-function renderMetrics(){
-    document.getElementById('metricsGrid').innerHTML=keyMetrics.map(m=>`
-        <div class="metric-card">
-            <div class="metric-icon">${m.icon}</div>
-            <div class="metric-info">
-                <div class="metric-label">${m.label}</div>
-                <div class="metric-value">${m.value}</div>
-                <div class="metric-change ${m.up?'up':'down'}">${m.change}</div>
-            </div>
-        </div>`).join('');
-}
+<!-- ===== 涨价资讯 ===== -->
+<div class="section-title"><span>📰</span> 关键资讯</div>
+<div class="card" style="overflow-x:auto">
+<table>
+<thead><tr><th>板块</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
+<tbody>
+<tr><td><strong>存储</strong></td><td>三星/SK海力士Q1服务器DRAM涨价60-70%。HBM从$200涨至$850。SK海力士市值破万亿美元，单季利润率72%。NAND Flash产值年增280%。</td><td>TrendForce/36氪</td><td>2026.06</td></tr>
+<tr><td><strong>CPO</strong></td><td>英伟达 Spectrum-X 以太网硅光技术全面量产，基于 CPO 构建，能效提升5倍。迈威尔科技隔夜涨超32%。</td><td>英伟达/COMPUTEX</td><td>2026.06</td></tr>
+<tr><td><strong>光纤</strong></td><td>亚马逊与康宁签署数十亿美元光纤采购协议。亨通光电海外AI订单在手290亿+。长飞光纤Q1净利+400-520%。智算服务器光纤需求是传统的200倍。</td><td>证券时报/新闻联播</td><td>2026.06</td></tr>
+<tr><td><strong>800V</strong></td><td>英伟达定义800V HVDC为下一代AI数据中心供电标准。Rubin Ultra单机柜600-700kW。安森美与纳微半导体合作推进800V至6V直流方案。</td><td>钛媒体/COMPUTEX</td><td>2026.05-06</td></tr>
+<tr><td><strong>MLCC</strong></td><td>村田7月起AI/车规MLCC涨价10-40%。库存仅30天，现货"一天一价"。</td><td>上海证券报</td><td>2026.06</td></tr>
+<tr><td><strong>PCB</strong></td><td>13家PCB厂商590亿扩产。英伟达抢购HVLP4铜箔，2026年缺口1500吨。</td><td>界面新闻</td><td>2026.06</td></tr>
+<tr><td><strong>碳酸锂</strong></td><td>现货16.65万/吨。高盛预测Q4冲击25万，储能需求接棒电动车。</td><td>华尔街见闻</td><td>2026.06</td></tr>
+</tbody>
+</table>
+</div>
 
-function renderPrices(){
-    document.getElementById('usStocksGrid').innerHTML=usStocks.map(s=>{
-        const u=s.change>=0;
-        return`<div class="price-card"><div class="name">${s.name}</div><div class="ticker">${s.ticker}</div><div class="value ${u?'up':'down'}">${s.price.toLocaleString()}</div><div class="change ${u?'up':'down'}">${u?'▲':'▼'} ${Math.abs(s.change)}%</div></div>`;
-    }).join('');
-    document.getElementById('commoditiesGrid').innerHTML=commodities.map(c=>{
-        const u=c.change>=0;
-        return`<div class="price-card"><div class="name">${c.name}</div><div class="ticker">${c.symbol}</div><div class="value ${u?'up':'down'}">${c.price.toLocaleString()}</div><div class="change ${u?'up':'down'}">${u?'▲':'▼'} ${Math.abs(c.change)}%</div><div class="unit">${c.unit}</div></div>`;
-    }).join('');
-}
-
-function renderNews(){
-    const tagMap={GPU:'tag-gpu',HBM:'tag-hbm',封装:'tag-packaging',服务器:'tag-server',液冷:'tag-cooling',光模块:'tag-optical',国产算力:'tag-domestic',政策:'tag-policy',材料:'tag-material'};
-    document.getElementById('newsList').innerHTML=news.map(n=>{
-        const tc=tagMap[n.category]||'tag-gpu';
-        const ic=n.impact==='critical'?'impact-critical':n.impact==='high'?'impact-high':'impact-medium';
-        return`<div class="news-item"><div class="title">${n.title}</div><div class="meta"><span class="tag ${tc}">${n.category}</span><span class="impact ${ic}">${n.impact==='critical'?'🔴极高':'🟡高'}</span><span>📰 ${n.source}</span><span>🕐 ${n.time}</span></div><div style="font-size:11px;color:#64748b;margin-top:4px;line-height:1.5">${n.summary}</div><div style="font-size:10px;color:#3a4060;margin-top:3px">影响: ${n.products}</div></div>`;
-    }).join('');
-}
-
-function renderNodeMonitor(){
-    document.getElementById('nodeMonitor').innerHTML=`<div style="max-height:480px;overflow-y:auto">`+nodeMonitor.map(n=>`
-        <div style="padding:8px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:10px">
-            <span style="font-size:16px;flex-shrink:0">${n.status}</span>
-            <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700">${n.node} <span style="font-weight:400;color:#64748b;font-size:10px">${n.statusText}</span></div><div style="font-size:10px;color:#64748b;line-height:1.4;margin-top:2px">${n.detail}</div></div>
-            <span style="font-size:10px;color:#818cf8;flex-shrink:0;padding:2px 6px;background:rgba(99,102,241,.1);border-radius:4px">${n.trend}</span>
-        </div>`).join('')+'</div>';
-}
-
-function renderInvest(){
-    const grid=document.getElementById('investGrid');
-    grid.innerHTML=investSectors.map(s=>{
-        const rows=s.stocks.map(st=>{
-            const badge=st.signal==='bull'?'badge-bull':st.signal==='bear'?'badge-bear':'badge-warn';
-            const sig=st.signal==='bull'?'🟢看多':st.signal==='bear'?'🔴看空':'🟡关注';
-            return`<tr><td><strong>${st.name}</strong><br><span style="color:#475569;font-size:10px">${st.code}</span></td><td style="font-size:11px;color:#94a3b8">${st.logic}</td><td><span class="${badge}">${sig}</span></td><td style="font-size:11px;color:#64748b">${st.note}</td></tr>`;
-        }).join('');
-        return`<div class="invest-card" style="border-top:3px solid ${s.color}">
-            <h3>${s.icon} ${s.name}</h3>
-            <table><thead><tr><th>标的</th><th>逻辑</th><th>信号</th><th>备注</th></tr></thead><tbody>${rows}</tbody></table>
-            <div class="invest-note">⚠️ 风险提示：${s.risk}</div>
-        </div>`;
-    }).join('');
-}
-
-function renderCharts(){
-    const changeChart=echarts.init(document.getElementById('changeChart'));
-    const sorted=[...usStocks].sort((a,b)=>b.change-a.change);
-    changeChart.setOption({
-        tooltip:{trigger:'axis',backgroundColor:'rgba(15,22,40,.95)',borderColor:'rgba(99,102,241,.3)',textStyle:{color:'#e0e6ed',fontSize:11}},
-        grid:{left:55,right:10,top:10,bottom:50},
-        xAxis:{type:'category',data:sorted.map(s=>s.ticker),axisLabel:{color:'#64748b',fontSize:9,rotate:45},axisLine:{lineStyle:{color:'rgba(255,255,255,.06)'}}},
-        yAxis:{type:'value',axisLabel:{color:'#64748b',fontSize:9,formatter:'{value}%'},splitLine:{lineStyle:{color:'rgba(255,255,255,.04)'}},axisLine:{show:false}},
-        series:[{type:'bar',data:sorted.map(s=>({value:s.change,itemStyle:{color:s.change>=0?'#34d399':'#f87171',borderRadius:[3,3,0,0]}})),barWidth:18,label:{show:true,position:'top',formatter:'{c}%',color:'#64748b',fontSize:8}}]
-    });
-    const marketChart=echarts.init(document.getElementById('marketChart'));
-    marketChart.setOption({
-        tooltip:{trigger:'item',backgroundColor:'rgba(15,22,40,.95)',borderColor:'rgba(99,102,241,.3)',textStyle:{color:'#e0e6ed',fontSize:11},formatter:p=>`${p.name}<br/>市场规模: $${p.value}亿<br/>占比: ${p.percent}%`},
-        series:[{type:'pie',radius:['35%','65%'],center:['50%','50%'],data:marketData.map(d=>({name:d.name,value:d.value,itemStyle:{color:d.color}})),label:{color:'#94a3b8',fontSize:9,formatter:'{b}\n${c}亿'},labelLine:{lineStyle:{color:'#334155'}},emphasis:{itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,.5)'}}}]
-    });
-    window.addEventListener('resize',()=>{changeChart.resize();marketChart.resize()});
-}
-
-async function renderWorldMap(){
-    const mapChart=echarts.init(document.getElementById('worldMap'));
-    try{const r=await fetch('world.geo.json');const j=await r.json();echarts.registerMap('world',j)}catch(e){console.error('地图加载失败:',e);return}
-    mapChart.setOption({
-        backgroundColor:'transparent',
-        tooltip:{trigger:'item',backgroundColor:'rgba(10,14,26,.95)',borderColor:'rgba(99,102,241,.4)',textStyle:{color:'#e0e6ed',fontSize:11},formatter:function(p){if(p.data&&p.data.desc){const i=p.data.impact==='critical'?'🔴':p.data.impact==='high'?'🟡':'🔵';return`<b>${i} ${p.data.name}</b><br/>${p.data.desc.replace(/\n/g,'<br/')}`}return''}},
-        geo:{map:'world',roam:false,zoom:1.15,center:[20,30],itemStyle:{areaColor:'rgba(15,22,40,.6)',borderColor:'rgba(99,102,241,.15)',borderWidth:.5},emphasis:{itemStyle:{areaColor:'rgba(99,102,241,.1)'},label:{show:false}},label:{show:false}},
-        series:[{type:'effectScatter',coordinateSystem:'geo',data:worldEvents.map(e=>({name:e.name,value:[...e.coord,1],desc:e.desc,impact:e.impact,symbolSize:e.impact==='critical'?16:e.impact==='high'?12:8,itemStyle:{color:e.impact==='critical'?'#f87171':e.impact==='high'?'#fbbf24':'#60a5fa',shadowBlur:15,shadowColor:e.impact==='critical'?'rgba(239,68,68,.6)':'rgba(251,191,36,.4)'}})),rippleEffect:{brushType:'stroke',scale:3,period:4},label:{show:true,position:'right',formatter:'{b}',color:'#94a3b8',fontSize:9,textBorderColor:'rgba(10,14,26,.8)',textBorderWidth:2}}]
-    });
-    window.addEventListener('resize',()=>mapChart.resize());
-}
-
-function init(){
-    document.getElementById('updateTime').textContent=updateTime;
-    renderChainOverview();renderMetrics();renderPrices();renderNews();renderNodeMonitor();renderInvest();renderCharts();renderWorldMap();
-}
-init();
-</script>
+<div class="footer">
+  AI算力产业概览 · 数据来源：公开市场报价 / 券商研报 / 行业资讯 · 仅供参考<br>
+  投资推荐基于公开信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
+  生成时间：2026-06-17
+</div>
+</div>
 </body>
 </html>
+<!-- cache-bust 1781662097 -->
