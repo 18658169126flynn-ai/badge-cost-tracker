@@ -56,7 +56,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年6月16日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年6月18日</p>
 
 <!-- KPI Cards -->
 <div class="grid grid-3">
@@ -277,7 +277,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <div class="footer">
   胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
   投资推荐基于公开市场信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
-  生成时间：2026-06-17
+  生成时间：2026-06-18
 </div>
 </div>
 
@@ -297,7 +297,8 @@ const trendData = [
   { date:'2026-01', label:'2026年1月', storage:237.30, storage18:84, pcb:10, cap:27, tfcard:42.9, tfcard32:27.5 },
   { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.4, tfcard32:33.1 },
   { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.3, tfcard32:48 },
-  { date:'2026-06', label:'2026年6月', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.5, tfcard32:29.9 },
+  { date:'2026-06a', label:'2026年6月初', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.5, tfcard32:29.9 },
+  { date:'2026-06b', label:'2026年6月中', storage:382, storage18:215, pcb:15.2, cap:42, tfcard:52, tfcard32:34 },
 ];
 
 // 基准值（最新成本表）
@@ -490,13 +491,13 @@ new Chart(document.getElementById('componentChart'), {
 // ============ BOM TABLE ============
 // 基于最新成本表数据
 const bomItems = [
-  { cat:'电子料', name:'存储 2+16', base:50, current:344.76, risk:'high', note:'AI需求驱动，暴涨。基准报价50→344，涨幅+589%' },
-  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:45.5, risk:'mid', note:'3月高点¥77.3后回落至¥45.5，随NAND波动' },
-  { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:78, risk:'mid', note:'8寸晶圆代工涨价5-20%' },
-  { cat:'PCB', name:'PCB光板', base:8, current:13.2, risk:'mid', note:'铜箔+CCL涨价传导，+65%' },
-  { cat:'电子料', name:'电子料及产测', base:32, current:38, risk:'mid', note:'MLCC涨价15-20%，含电容/电阻等' },
+  { cat:'电子料', name:'存储 2+16', base:50, current:382, risk:'high', note:'DRAM危机持续！Q1合约价环比涨90-95%，6月中继续上行至¥382。三星/SK海力士产能转向HBM。' },
+  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:52, risk:'mid', note:'NAND Q1合约价涨55-60%，NOR Flash/SLC NAND半年涨100%+。6月TF卡回升至¥52。' },
+  { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:82, risk:'mid', note:'8寸晶圆代工涨价5-20%，封测成本涨近30%。展锐平台供应相对稳定。' },
+  { cat:'PCB', name:'PCB光板', base:8, current:15.2, risk:'high', note:'CCL年内已涨价4次累计超40%！建滔6月再涨20%。HVLP4铜箔被NVIDIA抢购。' },
+  { cat:'电子料', name:'电子料及产测', base:32, current:42, risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
   { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
-  { cat:'电池', name:'1800mA电池', base:10.8, current:16, risk:'high', note:'碳酸锂涨250%+，需重做3C' },
+  { cat:'电池', name:'1800mA电池', base:10.8, current:14.5, risk:'mid', note:'碳酸锂从20.5万高点回落至16.95万/吨（SMM），电池成本略降。高盛Q4预测20-25万。' },
   { cat:'光学', name:'摄像头模组', base:12, current:13, risk:'low', note:'图源顺，CMOS供应充足' },
   { cat:'射频', name:'天线(LTE+三合一+分集)', base:2.53, current:2.53, risk:'low', note:'3月转产合同价，换厂需重新调试' },
   { cat:'声学', name:'喇叭+MIC', base:2, current:2.2, risk:'low', note:'小幅波动' },
@@ -530,19 +531,19 @@ document.getElementById('bomTable').innerHTML = bomHTML;
 const risks = [
   {
     title: '🔴 存储芯片 2+16', cls:'risk-high',
-    text: '基准报价¥50涨至¥344.76（+589%）。AI服务器需求挤占产能，三星/SK海力士将先进制程转向HBM，通用DRAM供给严重紧缩。MLC NAND价格从$3.2涨至$12.9。预计2026年中见顶。建议：尽早锁价或备货6个月用量。'
+    text: '基准报价¥50涨至¥382（+664%）。DRAM危机持续，Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM，通用DRAM供给严重紧缩。德国32GB内存条价格已涨4倍+。建议：尽早锁价或备货6个月用量。'
   },
   {
-    title: '🔴 锂电池 1800mA', cls:'risk-high',
-    text: '碳酸锂价格从5.8万/吨暴涨至20.5万/吨（+250%），电池成本上升约48%（¥10.8→¥16）。需重做3C认证（起订量5K），认证周期和费用需额外考虑。建议：评估3C认证分摊成本，考虑备货策略。'
+    title: '🟡 锂电池 1800mA', cls:'risk-mid',
+    text: '碳酸锂从20.5万高点回落至16.95万/吨（SMM 6月最新），电池成本略降至¥14.5。高盛预测Q4价格中枢20万/吨，峰值25万。储能成为锂电池第一增长引擎。建议：关注碳酸锂走势，适时备货。'
   },
   {
-    title: '🟡 PCB 光板', cls:'risk-mid',
-    text: '铜箔+CCL涨价传导，PCB价格从¥8涨至¥13.2（+65%）。AI服务器抢购HVLP4铜箔，2026年缺口1500吨。建滔等CCL厂商集体涨价，2026年被定义为"涨价年"。建议：与PCB厂商签订季度框架协议锁定价格。'
+    title: '🔴 PCB 光板', cls:'risk-high',
+    text: '建滔CCL年内已涨价4次累计超40%，6月再涨20%！铜箔HVLP4被NVIDIA抢购，2026年缺口1500吨。电子布翻倍暴涨，T-glass缺口超40%。PCB价格从¥8涨至¥15.2（+90%）。建议：尽快与PCB厂商签订季度锁价协议。'
   },
   {
     title: '🟡 MLCC/电容', cls:'risk-mid',
-    text: 'MLCC现货价格普遍涨15-20%，AI服务器用高容产品涨50-60%。村田、太阳诱电、三星电机集体调价，交期延长至4个月。7月日系厂商第二轮涨价即将落地。建议：提前下单锁定交期。'
+    text: 'MLCC史诗级涨价潮！消费类涨15-20%，累计涨幅65%。0201规格104缺货严重，村田/三星电机稼动率90%+。7月日系厂商第二轮涨价即将落地。华强北多款高端型号断货。建议：提前下单锁定交期。'
   },
   {
     title: '🟡 主控芯片 SL8541E', cls:'risk-mid',
@@ -569,13 +570,13 @@ document.getElementById('riskCards').innerHTML = riskHTML;
 
 // ============ NEWS TABLE ============
 const news = [
-  { comp:'存储', text:'三星/SK海力士计划2026Q1将服务器DRAM价格提升60-70%。MLC NAND从$3.2涨至$12.9（+300%）。', src:'第一财经/TrendForce', time:'2026.06' },
-  { comp:'存储', text:'移动DRAM涨价，智能手机平均DRAM容量8.5GB，低端机利润空间几乎消失。IDC预测全球出货量降12.9%。', src:'新浪科技', time:'2026.05' },
-  { comp:'PCB/CCL', text:'英伟达亲自下场抢购HVLP4铜箔，2026年缺口1500吨。T-glass玻纤布缺口超40%。', src:'新浪财经', time:'2026.06' },
-  { comp:'PCB/CCL', text:'建滔积层板涨价，CCL行业进入集体提价周期。2026年被定义为"涨价年"。', src:'第一财经', time:'2026.04' },
-  { comp:'MLCC', text:'MLCC现货价格普涨15-20%，AI服务器用高容产品涨50-60%，部分型号翻倍。交期延至4个月。', src:'金融界', time:'2026.06' },
-  { comp:'MLCC', text:'国巨2月起消费级电阻涨价15-20%，华新科跟涨。7月日系厂商第二轮涨价即将落地。', src:'新浪财经', time:'2026.06' },
-  { comp:'电池', text:'碳酸锂价格从5.8万/吨涨至20.5万/吨（+250%），磷酸铁锂正极材料同步涨100%。', src:'中国产业发展研究网', time:'2026.05' },
+  { comp:'存储', text:'DRAM危机持续！Q1合约价环比涨90-95%创历史新高，德国32GB内存条价格涨4倍+。HBM投片占比升至30%，通用DRAM供给严重紧缩。', src:'Notebookcheck/TrendForce', time:'2026.06' },
+  { comp:'存储', text:'NOR Flash/SLC NAND半年涨幅突破100%！存储巨头产能战略转移带来供给永久性收缩，与2023年周期反弹本质不同。', src:'网易/TrendForce', time:'2026.06' },
+  { comp:'PCB/CCL', text:'建滔CCL年内已涨价4次累计超40%，6月再涨20%。NVIDIA亲自抢购HVLP4铜箔，2026年缺口1500吨。PCB超级周期确立。', src:'东方财富/OFweek', time:'2026.06' },
+  { comp:'PCB/CCL', text:'电子布翻倍暴涨，T-glass玻纤布缺口超40%。覆铜板从M7/M8进阶至M9级别，Rubin Ultra正交背板达78层。', src:'雪球/国金证券', time:'2026.06' },
+  { comp:'MLCC', text:'MLCC史诗级涨价潮！消费类涨15-20%，AI服务器用高容涨50-60%。村田/三星电机稼动率90%+，华强北多款断货。7月日系第二轮涨价即将落地。', src:'36氪/证券市场周刊', time:'2026.06' },
+  { comp:'MLCC', text:'国巨旗下基美6月再次涨价，累计涨幅较去年达65%。涨价从中小厂→龙头、国产→国际巨头逐步扩散。', src:'36氪', time:'2026.06' },
+  { comp:'电池', text:'碳酸锂从20.5万高点回落至16.95万/吨，高盛预测Q4价格中枢20万/吨峰值25万。储能成为锂电池第一增长引擎。', src:'SMM/澎湃新闻', time:'2026.06' },
   { comp:'电源IC', text:'8英寸晶圆产能利用率85-90%，代工价上调5-20%，封测成本涨近30%。100+家原厂发布涨价通知。', src:'新浪科技/电子工程专辑', time:'2026.05' },
 ];
 let newsHTML = '';
