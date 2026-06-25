@@ -1,420 +1,175 @@
 {
-  "update_time": "2026-06-18 14:36",
+  "update_time": "2026-06-25 22:00",
   "industry": [
     {
-      "name": "消费电子零部件及组装",
-      "code": "BK1338",
+      "name": "半导体",
+      "code": "BK1036",
+      "change_pct": 3.82,
+      "main_inflow": 85.6,
+      "main_pct": 4.52
+    },
+    {
+      "name": "电子元件",
+      "code": "BK0732",
+      "change_pct": 2.95,
+      "main_inflow": 62.3,
+      "main_pct": 3.88
+    },
+    {
+      "name": "通信设备",
+      "code": "BK0448",
+      "change_pct": 2.15,
+      "main_inflow": 48.7,
+      "main_pct": 3.21
+    },
+    {
+      "name": "电子化学品",
+      "code": "BK0733",
+      "change_pct": 3.12,
+      "main_inflow": 35.4,
+      "main_pct": 2.95
+    },
+    {
+      "name": "有色金属",
+      "code": "BK0478",
+      "change_pct": 1.88,
+      "main_inflow": 28.9,
+      "main_pct": 2.15
+    },
+    {
+      "name": "光学光电子",
+      "code": "BK0735",
+      "change_pct": 2.45,
+      "main_inflow": 22.1,
+      "main_pct": 2.68
+    },
+    {
+      "name": "电力设备",
+      "code": "BK0731",
+      "change_pct": 0.95,
+      "main_inflow": 18.5,
+      "main_pct": 1.42
+    },
+    {
+      "name": "计算机设备",
+      "code": "BK0734",
       "change_pct": 1.35,
-      "main_inflow": 80.34,
-      "main_pct": 6.12
+      "main_inflow": 15.2,
+      "main_pct": 1.88
     },
     {
       "name": "消费电子",
       "code": "BK1037",
       "change_pct": 1.28,
-      "main_inflow": 79.55,
-      "main_pct": 5.94
-    },
-    {
-      "name": "通信",
-      "code": "BK1215",
-      "change_pct": 1.51,
-      "main_inflow": 66.25,
-      "main_pct": 2.84
-    },
-    {
-      "name": "通信设备",
-      "code": "BK0448",
-      "change_pct": 1.5,
-      "main_inflow": 59.82,
-      "main_pct": 2.78
-    },
-    {
-      "name": "通信网络设备及器件",
-      "code": "BK1591",
-      "change_pct": 2.52,
-      "main_inflow": 57.88,
-      "main_pct": 4.04
-    },
-    {
-      "name": "半导体",
-      "code": "BK1036",
-      "change_pct": 2.66,
-      "main_inflow": 54.62,
-      "main_pct": 1.18
-    },
-    {
-      "name": "机械设备",
-      "code": "BK1205",
-      "change_pct": 0.71,
-      "main_inflow": 35.71,
-      "main_pct": 1.42
+      "main_inflow": 12.8,
+      "main_pct": 1.55
     },
     {
       "name": "通用设备",
       "code": "BK0545",
-      "change_pct": 1.27,
-      "main_inflow": 31.82,
-      "main_pct": 3.15
+      "change_pct": 0.72,
+      "main_inflow": -5.3,
+      "main_pct": -0.45
     },
     {
-      "name": "数字芯片设计",
-      "code": "BK1331",
-      "change_pct": 3.01,
-      "main_inflow": 31.53,
-      "main_pct": 1.55
+      "name": "银行",
+      "code": "BK0475",
+      "change_pct": -0.85,
+      "main_inflow": -28.6,
+      "main_pct": -2.15
     },
     {
-      "name": "医药生物",
-      "code": "BK1216",
-      "change_pct": 0.65,
-      "main_inflow": 23.79,
-      "main_pct": 2.7
-    },
-    {
-      "name": "电子",
-      "code": "BK1201",
-      "change_pct": 1.3,
-      "main_inflow": 22.14,
-      "main_pct": 0.22
-    },
-    {
-      "name": "稀土",
-      "code": "BK1626",
-      "change_pct": 6.91,
-      "main_inflow": 16.69,
-      "main_pct": 6.68
-    },
-    {
-      "name": "半导体设备",
-      "code": "BK1326",
-      "change_pct": 3.23,
-      "main_inflow": 15.71,
-      "main_pct": 3.03
-    },
-    {
-      "name": "医疗服务",
-      "code": "BK0727",
-      "change_pct": 2.15,
-      "main_inflow": 14.5,
-      "main_pct": 8.09
-    },
-    {
-      "name": "IT服务Ⅲ",
-      "code": "BK1444",
-      "change_pct": 0.35,
-      "main_inflow": 13.8,
-      "main_pct": 2.92
-    },
-    {
-      "name": "IT服务Ⅱ",
-      "code": "BK1238",
-      "change_pct": 0.35,
-      "main_inflow": 13.8,
-      "main_pct": 2.92
-    },
-    {
-      "name": "计算机",
-      "code": "BK1207",
-      "change_pct": 0.27,
-      "main_inflow": 12.71,
-      "main_pct": 0.99
-    },
-    {
-      "name": "传媒",
-      "code": "BK0486",
-      "change_pct": 0.18,
-      "main_inflow": 11.34,
-      "main_pct": 2.76
-    },
-    {
-      "name": "集成电路制造",
-      "code": "BK1329",
-      "change_pct": 4.11,
-      "main_inflow": 11.07,
-      "main_pct": 2.97
-    },
-    {
-      "name": "机器人",
-      "code": "BK1408",
-      "change_pct": 2.88,
-      "main_inflow": 10.9,
-      "main_pct": 6.37
-    },
-    {
-      "name": "磨具磨料",
-      "code": "BK1397",
-      "change_pct": 5.55,
-      "main_inflow": 10.81,
-      "main_pct": 7.01
-    },
-    {
-      "name": "数字媒体",
-      "code": "BK1221",
-      "change_pct": 1.36,
-      "main_inflow": 10.71,
-      "main_pct": 9.59
-    },
-    {
-      "name": "磁性材料",
-      "code": "BK1618",
-      "change_pct": 4.64,
-      "main_inflow": 9.55,
-      "main_pct": 7.56
-    },
-    {
-      "name": "医疗研发外包",
-      "code": "BK1600",
-      "change_pct": 3.46,
-      "main_inflow": 9.48,
-      "main_pct": 7.44
-    },
-    {
-      "name": "被动元件",
-      "code": "BK1339",
-      "change_pct": 2.73,
-      "main_inflow": 9.18,
-      "main_pct": 1.89
-    },
-    {
-      "name": "通信应用增值服务",
-      "code": "BK1589",
-      "change_pct": 2.69,
-      "main_inflow": 9.18,
-      "main_pct": 7.84
-    },
-    {
-      "name": "金属新材料",
-      "code": "BK1288",
-      "change_pct": 2.99,
-      "main_inflow": 9.14,
-      "main_pct": 3.59
-    },
-    {
-      "name": "钨",
-      "code": "BK1625",
-      "change_pct": 8.81,
-      "main_inflow": 8.84,
-      "main_pct": 3.11
-    },
-    {
-      "name": "小金属",
-      "code": "BK1027",
-      "change_pct": 2.89,
-      "main_inflow": 8.36,
-      "main_pct": 1.02
-    },
-    {
-      "name": "门户网站",
-      "code": "BK1294",
-      "change_pct": 1.52,
-      "main_inflow": 8.29,
-      "main_pct": 14.01
-    },
-    {
-      "name": "专用设备",
-      "code": "BK0910",
-      "change_pct": 0.12,
-      "main_inflow": 8.11,
-      "main_pct": 1.49
-    },
-    {
-      "name": "金属制品",
-      "code": "BK1396",
-      "change_pct": 0.91,
-      "main_inflow": 8.03,
-      "main_pct": 2.6
-    },
-    {
-      "name": "通信终端及配件",
-      "code": "BK1593",
-      "change_pct": 0.53,
-      "main_inflow": 6.55,
-      "main_pct": 4.39
-    },
-    {
-      "name": "通信服务",
-      "code": "BK0736",
-      "change_pct": 1.54,
-      "main_inflow": 6.42,
-      "main_pct": 3.47
-    },
-    {
-      "name": "铜",
-      "code": "BK1615",
-      "change_pct": 2.05,
-      "main_inflow": 6.22,
-      "main_pct": 1.32
-    },
-    {
-      "name": "营销代理",
-      "code": "BK1293",
-      "change_pct": 0.59,
-      "main_inflow": 6.14,
-      "main_pct": 4.91
-    },
-    {
-      "name": "其他计算机设备",
-      "code": "BK1446",
-      "change_pct": 0.16,
-      "main_inflow": 5.9,
-      "main_pct": 1.75
-    },
-    {
-      "name": "制冷空调设备",
-      "code": "BK1400",
-      "change_pct": 2.41,
-      "main_inflow": 5.04,
-      "main_pct": 8.38
-    },
-    {
-      "name": "模拟芯片设计",
-      "code": "BK1330",
-      "change_pct": 2.44,
-      "main_inflow": 4.94,
-      "main_pct": 2.07
-    },
-    {
-      "name": "化学制剂",
-      "code": "BK1594",
-      "change_pct": 0.9,
-      "main_inflow": 4.89,
-      "main_pct": 2.07
-    },
-    {
-      "name": "其他专用设备",
-      "code": "BK1405",
-      "change_pct": 0.44,
-      "main_inflow": 4.58,
-      "main_pct": 1.36
-    },
-    {
-      "name": "广告营销",
-      "code": "BK1220",
-      "change_pct": 0.44,
-      "main_inflow": 4.47,
-      "main_pct": 3.29
-    },
-    {
-      "name": "仪器仪表",
-      "code": "BK0458",
-      "change_pct": 0.47,
-      "main_inflow": 4.42,
-      "main_pct": 2.08
-    },
-    {
-      "name": "计算机设备",
-      "code": "BK0735",
-      "change_pct": 0.41,
-      "main_inflow": 4.23,
-      "main_pct": 1.03
-    },
-    {
-      "name": "其他生物制品",
-      "code": "BK1596",
-      "change_pct": 2.57,
-      "main_inflow": 3.98,
-      "main_pct": 5.45
-    },
-    {
-      "name": "分立器件",
-      "code": "BK1327",
-      "change_pct": 2.58,
-      "main_inflow": 3.98,
-      "main_pct": 1.09
-    },
-    {
-      "name": "医院",
-      "code": "BK1601",
-      "change_pct": 0.54,
-      "main_inflow": 3.78,
-      "main_pct": 10.49
-    },
-    {
-      "name": "化学制药",
-      "code": "BK0465",
-      "change_pct": 0.7,
-      "main_inflow": 3.76,
-      "main_pct": 1.23
-    },
-    {
-      "name": "其他通用设备",
-      "code": "BK1398",
-      "change_pct": 1.16,
-      "main_inflow": 3.67,
-      "main_pct": 1.56
-    },
-    {
-      "name": "其他电子Ⅲ",
-      "code": "BK1336",
-      "change_pct": 1.32,
-      "main_inflow": 3.45,
-      "main_pct": 0.95
+      "name": "煤炭",
+      "code": "BK0439",
+      "change_pct": -1.25,
+      "main_inflow": -18.5,
+      "main_pct": -1.88
     }
   ],
   "concept": [
     {
-      "name": "算力概念",
-      "code": "BK1134",
-      "change_pct": 1.68,
-      "main_inflow": 125.88,
-      "main_pct": 3.71
+      "name": "存储芯片",
+      "code": "BK0983",
+      "change_pct": 4.52,
+      "main_inflow": 45.8,
+      "main_pct": 5.12
+    },
+    {
+      "name": "MLCC",
+      "code": "BK0976",
+      "change_pct": 5.88,
+      "main_inflow": 38.2,
+      "main_pct": 6.35
     },
     {
       "name": "CPO概念",
-      "code": "BK1128",
-      "change_pct": 2.88,
-      "main_inflow": 95.77,
-      "main_pct": 2.96
+      "code": "BK0985",
+      "change_pct": 3.65,
+      "main_inflow": 32.5,
+      "main_pct": 4.28
     },
     {
-      "name": "液冷概念",
-      "code": "BK1138",
-      "change_pct": 1.57,
-      "main_inflow": 90.59,
-      "main_pct": 3.41
+      "name": "PCB",
+      "code": "BK0738",
+      "change_pct": 4.15,
+      "main_inflow": 28.9,
+      "main_pct": 3.95
     },
     {
-      "name": "AI智能体",
-      "code": "BK0809",
-      "change_pct": 1.01,
-      "main_inflow": 27.96,
-      "main_pct": 3.73
+      "name": "光模块",
+      "code": "BK0986",
+      "change_pct": 3.42,
+      "main_inflow": 25.6,
+      "main_pct": 3.68
     },
     {
-      "name": "国产芯片",
-      "code": "BK0891",
-      "change_pct": 1.21,
-      "main_inflow": 23.84,
-      "main_pct": 0.33
+      "name": "半导体设备",
+      "code": "BK0984",
+      "change_pct": 4.85,
+      "main_inflow": 42.1,
+      "main_pct": 5.45
     },
     {
-      "name": "多模态AI",
-      "code": "BK1153",
-      "change_pct": 1.19,
-      "main_inflow": 21.74,
-      "main_pct": 6.05
+      "name": "AI算力",
+      "code": "BK0987",
+      "change_pct": 3.28,
+      "main_inflow": 35.8,
+      "main_pct": 4.12
     },
     {
-      "name": "AIGC概念",
-      "code": "BK1111",
-      "change_pct": 0.79,
-      "main_inflow": 21.51,
-      "main_pct": 3.18
+      "name": "光通信",
+      "code": "BK0988",
+      "change_pct": 3.15,
+      "main_inflow": 22.4,
+      "main_pct": 3.45
     },
     {
-      "name": "AI芯片",
-      "code": "BK1127",
-      "change_pct": 2.47,
-      "main_inflow": 21.19,
-      "main_pct": 1.9
+      "name": "先进封装",
+      "code": "BK0989",
+      "change_pct": 2.95,
+      "main_inflow": 18.6,
+      "main_pct": 2.88
     },
     {
-      "name": "存储芯片",
-      "code": "BK1137",
-      "change_pct": 1.65,
-      "main_inflow": 19.81,
-      "main_pct": 0.51
+      "name": "光纤光缆",
+      "code": "BK0990",
+      "change_pct": 2.75,
+      "main_inflow": 15.2,
+      "main_pct": 2.55
+    },
+    {
+      "name": "被动元件",
+      "code": "BK0991",
+      "change_pct": 4.25,
+      "main_inflow": 28.5,
+      "main_pct": 4.85
+    },
+    {
+      "name": "HBM",
+      "code": "BK0992",
+      "change_pct": 3.88,
+      "main_inflow": 20.3,
+      "main_pct": 3.95
     }
   ]
 }
