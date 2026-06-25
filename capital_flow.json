@@ -1,175 +1,160 @@
 {
-  "update_time": "2026-06-25 22:00",
+  "update_time": "2026-06-25 23:13",
   "industry": [
     {
-      "name": "半导体",
-      "code": "BK1036",
-      "change_pct": 3.82,
-      "main_inflow": 85.6,
-      "main_pct": 4.52
+      "name": "电子支付",
+      "code": "sz300077",
+      "change_pct": 3.9,
+      "main_inflow": 53.37,
+      "main_pct": 10.22
     },
     {
-      "name": "电子元件",
-      "code": "BK0732",
-      "change_pct": 2.95,
-      "main_inflow": 62.3,
-      "main_pct": 3.88
-    },
-    {
-      "name": "通信设备",
-      "code": "BK0448",
-      "change_pct": 2.15,
-      "main_inflow": 48.7,
-      "main_pct": 3.21
-    },
-    {
-      "name": "电子化学品",
-      "code": "BK0733",
-      "change_pct": 3.12,
-      "main_inflow": 35.4,
-      "main_pct": 2.95
-    },
-    {
-      "name": "有色金属",
-      "code": "BK0478",
-      "change_pct": 1.88,
-      "main_inflow": 28.9,
-      "main_pct": 2.15
-    },
-    {
-      "name": "光学光电子",
-      "code": "BK0735",
-      "change_pct": 2.45,
-      "main_inflow": 22.1,
-      "main_pct": 2.68
-    },
-    {
-      "name": "电力设备",
-      "code": "BK0731",
-      "change_pct": 0.95,
-      "main_inflow": 18.5,
-      "main_pct": 1.42
-    },
-    {
-      "name": "计算机设备",
-      "code": "BK0734",
-      "change_pct": 1.35,
-      "main_inflow": 15.2,
-      "main_pct": 1.88
+      "name": "汽车电子",
+      "code": "sz000823",
+      "change_pct": 1.79,
+      "main_inflow": 19.39,
+      "main_pct": 4.48
     },
     {
       "name": "消费电子",
-      "code": "BK1037",
-      "change_pct": 1.28,
-      "main_inflow": 12.8,
-      "main_pct": 1.55
+      "code": "sz300136",
+      "change_pct": 2.61,
+      "main_inflow": 6.49,
+      "main_pct": 0.54
     },
     {
-      "name": "通用设备",
-      "code": "BK0545",
-      "change_pct": 0.72,
-      "main_inflow": -5.3,
-      "main_pct": -0.45
+      "name": "军工航天",
+      "code": "sz002303",
+      "change_pct": 0.33,
+      "main_inflow": 103.01,
+      "main_pct": 6.0
     },
     {
-      "name": "银行",
-      "code": "BK0475",
-      "change_pct": -0.85,
-      "main_inflow": -28.6,
-      "main_pct": -2.15
+      "name": "国防军工",
+      "code": "sz002303",
+      "change_pct": 0.36,
+      "main_inflow": 95.11,
+      "main_pct": 4.45
     },
     {
-      "name": "煤炭",
-      "code": "BK0439",
-      "change_pct": -1.25,
-      "main_inflow": -18.5,
-      "main_pct": -1.88
-    }
-  ],
-  "concept": [
-    {
-      "name": "存储芯片",
-      "code": "BK0983",
-      "change_pct": 4.52,
-      "main_inflow": 45.8,
-      "main_pct": 5.12
+      "name": "触摸屏",
+      "code": "sz002056",
+      "change_pct": 4.3,
+      "main_inflow": 83.92,
+      "main_pct": 8.82
     },
     {
-      "name": "MLCC",
-      "code": "BK0976",
-      "change_pct": 5.88,
-      "main_inflow": 38.2,
-      "main_pct": 6.35
+      "name": "融资融券",
+      "code": "sz000100",
+      "change_pct": -0.58,
+      "main_inflow": 82.84,
+      "main_pct": 1.91
     },
     {
-      "name": "CPO概念",
-      "code": "BK0985",
-      "change_pct": 3.65,
-      "main_inflow": 32.5,
-      "main_pct": 4.28
+      "name": "光伏概念",
+      "code": "sz002056",
+      "change_pct": 1.49,
+      "main_inflow": 79.58,
+      "main_pct": 3.66
     },
     {
-      "name": "PCB",
-      "code": "BK0738",
-      "change_pct": 4.15,
-      "main_inflow": 28.9,
-      "main_pct": 3.95
+      "name": "智能穿戴",
+      "code": "sz300223",
+      "change_pct": 4.32,
+      "main_inflow": 77.12,
+      "main_pct": 13.87
     },
     {
-      "name": "光模块",
-      "code": "BK0986",
-      "change_pct": 3.42,
-      "main_inflow": 25.6,
+      "name": "绿色照明",
+      "code": "sz300323",
+      "change_pct": 3.96,
+      "main_inflow": 69.0,
+      "main_pct": 8.15
+    },
+    {
+      "name": "华为概念",
+      "code": "sz300136",
+      "change_pct": 3.27,
+      "main_inflow": 68.86,
       "main_pct": 3.68
     },
     {
-      "name": "半导体设备",
-      "code": "BK0984",
-      "change_pct": 4.85,
-      "main_inflow": 42.1,
-      "main_pct": 5.45
+      "name": "业绩预降",
+      "code": "sz300223",
+      "change_pct": -0.3,
+      "main_inflow": 64.95,
+      "main_pct": 3.35
     },
     {
-      "name": "AI算力",
-      "code": "BK0987",
-      "change_pct": 3.28,
-      "main_inflow": 35.8,
-      "main_pct": 4.12
+      "name": "参股金融",
+      "code": "sz000100",
+      "change_pct": -0.23,
+      "main_inflow": 63.51,
+      "main_pct": 3.47
     },
     {
-      "name": "光通信",
-      "code": "BK0988",
-      "change_pct": 3.15,
-      "main_inflow": 22.4,
-      "main_pct": 3.45
+      "name": "光伏",
+      "code": "sz000100",
+      "change_pct": 0.11,
+      "main_inflow": 61.45,
+      "main_pct": 2.29
     },
     {
-      "name": "先进封装",
-      "code": "BK0989",
-      "change_pct": 2.95,
-      "main_inflow": 18.6,
-      "main_pct": 2.88
+      "name": "券商重仓",
+      "code": "sz000823",
+      "change_pct": 1.35,
+      "main_inflow": 61.27,
+      "main_pct": 5.65
     },
     {
-      "name": "光纤光缆",
-      "code": "BK0990",
-      "change_pct": 2.75,
-      "main_inflow": 15.2,
-      "main_pct": 2.55
+      "name": "华为海思",
+      "code": "sh600584",
+      "change_pct": 3.65,
+      "main_inflow": 54.73,
+      "main_pct": 6.29
     },
     {
-      "name": "被动元件",
-      "code": "BK0991",
-      "change_pct": 4.25,
-      "main_inflow": 28.5,
-      "main_pct": 4.85
+      "name": "小米概念",
+      "code": "sz300408",
+      "change_pct": 3.52,
+      "main_inflow": 54.6,
+      "main_pct": 5.73
     },
     {
-      "name": "HBM",
-      "code": "BK0992",
-      "change_pct": 3.88,
-      "main_inflow": 20.3,
-      "main_pct": 3.95
+      "name": "专精特新",
+      "code": "sh688025",
+      "change_pct": 1.27,
+      "main_inflow": 45.54,
+      "main_pct": 1.61
+    },
+    {
+      "name": "业绩预升",
+      "code": "sz002303",
+      "change_pct": 0.01,
+      "main_inflow": 38.56,
+      "main_pct": 1.85
+    },
+    {
+      "name": "股权激励",
+      "code": "sz300195",
+      "change_pct": 1.06,
+      "main_inflow": 37.64,
+      "main_pct": 1.11
+    },
+    {
+      "name": "循环经济",
+      "code": "sz000100",
+      "change_pct": -0.0,
+      "main_inflow": 36.5,
+      "main_pct": 11.93
+    },
+    {
+      "name": "金融改革",
+      "code": "sh600330",
+      "change_pct": -0.43,
+      "main_inflow": 35.34,
+      "main_pct": 8.59
     }
-  ]
+  ],
+  "concept": []
 }
