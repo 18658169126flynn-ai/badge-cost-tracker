@@ -437,7 +437,8 @@ risks.forEach(r => {
 document.getElementById('riskCards').innerHTML = riskHTML;
 
 // ============ NEWS TABLE ============
-const news = [
+// 默认新闻（JSON加载失败时使用）
+const defaultNews = [
   { comp:'存储', text:'美光Q3营收414.6亿美元创历史新高（同比+346%），毛利率81%。DDR5 16G现货从$5.5飙至$40+，存储供需紧平衡延续至2027年底。', src:'美光财报/TrendForce', time:'2026.06.25' },
   { comp:'存储', text:'2026上半年NOR Flash合约价累积涨幅100-120%，SLC NAND涨幅130-150%。下半年高容量NOR Flash仍有60-65%上涨空间。', src:'集邦咨询/东方财富', time:'2026.06.23' },
   { comp:'PCB/CCL', text:'建滔积层板6/16第5次涨价+15%，间隔仅20天创最短纪录，年内累计超55%。HVLP4铜箔月产不足1000吨，有效缺口超28%。', src:'建滔涨价函/新浪财经', time:'2026.06.16' },
@@ -448,11 +449,20 @@ const news = [
   { comp:'晶圆/IC', text:'晶圆代工全面涨价：联电、世界先进、力积电、晶合集成相继调价。IC设计涨价潮启动，电源管理IC等100+原厂发布涨价通知。', src:'钛媒体/投资界', time:'2026.06.25' },
   { comp:'存储', text:'存储芯片现货涨幅最高突破300%，成本压力传导至整机和DIY配件市场。三星/SK海力士因美国监管暂停扩产，供给持续紧张。', src:'新浪科技', time:'2026.06.22' },
 ];
-let newsHTML = '';
-news.forEach(n => {
-  newsHTML += `<tr><td><strong>${n.comp}</strong></td><td>${n.text}</td><td style="color:var(--muted)">${n.src}</td><td style="color:var(--muted)">${n.time}</td></tr>`;
-});
-document.getElementById('newsTable').innerHTML = newsHTML;
+
+function renderNews(newsArr) {
+  let newsHTML = '';
+  newsArr.forEach(n => {
+    newsHTML += `<tr><td><strong>${n.comp}</strong></td><td>${n.text}</td><td style="color:var(--muted)">${n.src}</td><td style="color:var(--muted)">${n.time}</td></tr>`;
+  });
+  document.getElementById('newsTable').innerHTML = newsHTML;
+}
+
+// 优先从JSON加载，失败则用默认数据
+fetch('badge_news.json?t=' + Date.now())
+  .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+  .then(data => { if (data.news && data.news.length > 0) renderNews(data.news); else renderNews(defaultNews); })
+  .catch(() => renderNews(defaultNews));
 </script>
 </body>
 </html>
