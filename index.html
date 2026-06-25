@@ -357,9 +357,9 @@ new Chart(document.getElementById('componentChart'), {
 // 基于最新成本表数据
 const bomItems = [
   { cat:'电子料', name:'存储 2+16', base:50, current:382, risk:'high', note:'DRAM危机持续！Q1合约价环比涨90-95%，6月中继续上行至¥382。三星/SK海力士产能转向HBM。' },
-  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:52, risk:'mid', note:'NAND Q1合约价涨55-60%，NOR Flash/SLC NAND半年涨100%+。6月TF卡回升至¥52。' },
+  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:65, risk:'high', note:'NAND Q2合约价继续上涨，TF卡从¥52涨至¥65。美光Q3营收414.6亿美元，存储供需紧平衡至2027年底。' },
   { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:82, risk:'mid', note:'8寸晶圆代工涨价5-20%，封测成本涨近30%。展锐平台供应相对稳定。' },
-  { cat:'PCB', name:'PCB光板', base:8, current:17.5, risk:'high', note:'建滔6/16第5次涨价+15%！年内累计超55%。铜价高位+玻璃布紧缺。' },
+  { cat:'PCB', name:'PCB光板', base:8, current:21, risk:'high', note:'建滔年内第5次涨价+15%，间隔仅20天创最短纪录。年内累计超55%。' },
   { cat:'电子料', name:'电子料及产测', base:32, current:42, risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
   { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
   { cat:'电池', name:'1800mA电池', base:10.8, current:14.5, risk:'mid', note:'碳酸锂从20.5万高点回落至16.95万/吨（SMM），电池成本略降。高盛Q4预测20-25万。' },
@@ -415,8 +415,8 @@ const risks = [
     text: '8英寸晶圆产能持续收缩，产能利用率攀升至85-90%，代工价格上调5-20%，封测成本涨幅接近30%。展锐平台供应相对稳定，但上游成本压力在传导。建议：确认展锐长协价是否覆盖本次涨价周期。'
   },
   {
-    title: '🟡 64G TF卡（客供）', cls:'risk-mid',
-    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至3月高点¥77.3（+280%），6月回落至¥45.5（+124%）。随NAND价格剧烈波动，3月冲高后回调。建议：关注NAND走势，适时锁价备货。'
+    title: '🔴 64G TF卡（客供）', cls:'risk-high',
+    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至¥65（+220%）。NAND Q2合约价继续上涨，美光Q3营收414.6亿美元创新高，存储供需紧平衡至2027年底。建议：尽快锁价备货。'
   },
   {
     title: '🟢 水墨屏 2.13寸', cls:'risk-low',
