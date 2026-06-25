@@ -355,12 +355,13 @@ new Chart(document.getElementById('componentChart'), {
 
 // ============ BOM TABLE ============
 // 基于最新成本表数据
+// 有trendKey的项，current自动从trendData最后一条取值，无需手动维护
 const bomItems = [
-  { cat:'电子料', name:'存储 2+16', base:50, current:382, risk:'high', note:'DRAM危机持续！Q1合约价环比涨90-95%，6月中继续上行至¥382。三星/SK海力士产能转向HBM。' },
-  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:65, risk:'high', note:'NAND Q2合约价继续上涨，TF卡从¥52涨至¥65。美光Q3营收414.6亿美元，存储供需紧平衡至2027年底。' },
+  { cat:'电子料', name:'存储 2+16', base:50, trendKey:'storage', risk:'high', note:'DRAM危机持续！Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM。' },
+  { cat:'电子料', name:'64G TF卡（客供）', base:20.3, trendKey:'tfcard', risk:'high', note:'NAND Q2合约价继续上涨。美光Q3营收414.6亿美元，存储供需紧平衡至2027年底。' },
   { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:82, risk:'mid', note:'8寸晶圆代工涨价5-20%，封测成本涨近30%。展锐平台供应相对稳定。' },
-  { cat:'PCB', name:'PCB光板', base:8, current:21, risk:'high', note:'建滔年内第5次涨价+15%，间隔仅20天创最短纪录。年内累计超55%。' },
-  { cat:'电子料', name:'电子料及产测', base:32, current:42, risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
+  { cat:'PCB', name:'PCB光板', base:8, trendKey:'pcb', risk:'high', note:'建滔年内第5次涨价+15%，间隔仅20天创最短纪录。年内累计超55%。' },
+  { cat:'电子料', name:'电子料及产测', base:32, trendKey:'cap', risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
   { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
   { cat:'电池', name:'1800mA电池', base:10.8, current:14.5, risk:'mid', note:'碳酸锂从20.5万高点回落至16.95万/吨（SMM），电池成本略降。高盛Q4预测20-25万。' },
   { cat:'光学', name:'摄像头模组', base:12, current:13, risk:'low', note:'图源顺，CMOS供应充足' },
@@ -373,8 +374,10 @@ const bomItems = [
 ];
 
 let bomHTML = '';
+const latestTrend = trendData[trendData.length-1];
 bomItems.forEach(item => {
-  const delta = item.current - item.base;
+  const current = item.trendKey ? latestTrend[item.trendKey] : item.current;
+  const delta = current - item.base;
   const pct = (delta / item.base * 100).toFixed(1);
   const cls = delta > 0 ? 'up' : delta < 0 ? 'down' : '';
   const riskBadge = item.risk === 'high' ? '<span class="badge badge-red">高</span>' :
@@ -384,7 +387,7 @@ bomItems.forEach(item => {
     <td>${item.cat}</td>
     <td><strong>${item.name}</strong><br><span style="font-size:11px;color:var(--muted)">${item.note}</span></td>
     <td>¥${item.base.toFixed(1)}</td>
-    <td>¥${item.current.toFixed(1)}</td>
+    <td>¥${current.toFixed(1)}</td>
     <td class="delta ${cls}">${delta>=0?'+':''}${pct}%</td>
     <td class="delta ${cls}">${delta>=0?'+':''}¥${delta.toFixed(1)}</td>
     <td>${riskBadge}</td>
