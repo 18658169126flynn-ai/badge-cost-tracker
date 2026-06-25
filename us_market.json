@@ -1,0 +1,172 @@
+{
+  "update_time": "2026-06-25 23:24",
+  "indices": {
+    "^GSPC": {
+      "name": "S&P 500",
+      "price": 7371.1,
+      "change_pct": 0.08
+    },
+    "^IXIC": {
+      "name": "纳斯达克",
+      "price": 25350.79,
+      "change_pct": -0.92
+    },
+    "^DJI": {
+      "name": "道琼斯",
+      "price": 52313.26,
+      "change_pct": 1.25
+    },
+    "CL=F": {
+      "name": "WTI原油",
+      "price": 71.68,
+      "change_pct": 1.91
+    }
+  },
+  "sectors": {
+    "gpu": {
+      "label": "🧠 半导体 / GPU",
+      "stocks": [
+        {
+          "symbol": "NVDA",
+          "name": "NVIDIA",
+          "price": 195.68,
+          "change_pct": -2.18
+        },
+        {
+          "symbol": "AMD",
+          "name": "AMD",
+          "price": 520.49,
+          "change_pct": 0.12
+        },
+        {
+          "symbol": "INTC",
+          "name": "Intel",
+          "price": 129.94,
+          "change_pct": -1.77
+        },
+        {
+          "symbol": "AVGO",
+          "name": "Broadcom",
+          "price": 381.23,
+          "change_pct": 0.28
+        },
+        {
+          "symbol": "MRVL",
+          "name": "Marvell",
+          "price": 274.43,
+          "change_pct": -1.65
+        }
+      ]
+    },
+    "storage": {
+      "label": "💾 存储芯片",
+      "stocks": [
+        {
+          "symbol": "MU",
+          "name": "Micron",
+          "price": 1183.71,
+          "change_pct": 12.54
+        },
+        {
+          "symbol": "WDC",
+          "name": "Western Digital",
+          "price": 677.76,
+          "change_pct": 1.05
+        }
+      ]
+    },
+    "equipment": {
+      "label": "⚙️ 半导体设备",
+      "stocks": [
+        {
+          "symbol": "ASML",
+          "name": "ASML",
+          "price": 1815.77,
+          "change_pct": 2.1
+        },
+        {
+          "symbol": "LRCX",
+          "name": "Lam Research",
+          "price": 381.5,
+          "change_pct": 2.74
+        },
+        {
+          "symbol": "KLAC",
+          "name": "KLA",
+          "price": 252.77,
+          "change_pct": 3.39
+        },
+        {
+          "symbol": "AMAT",
+          "name": "Applied Materials",
+          "price": 629.61,
+          "change_pct": 7.46
+        }
+      ]
+    },
+    "server": {
+      "label": "🖥️ 服务器 / 网络",
+      "stocks": [
+        {
+          "symbol": "DELL",
+          "name": "Dell",
+          "price": 405.85,
+          "change_pct": -5.13
+        },
+        {
+          "symbol": "HPE",
+          "name": "HPE",
+          "price": 46.79,
+          "change_pct": -4.35
+        },
+        {
+          "symbol": "SMCI",
+          "name": "Super Micro",
+          "price": 31.93,
+          "change_pct": -4.19
+        },
+        {
+          "symbol": "ANET",
+          "name": "Arista",
+          "price": 168.65,
+          "change_pct": 3.97
+        },
+        {
+          "symbol": "CSCO",
+          "name": "Cisco",
+          "price": 119.06,
+          "change_pct": -1.73
+        }
+      ]
+    },
+    "cloud": {
+      "label": "☁️ 云计算 / AI巨头",
+      "stocks": [
+        {
+          "symbol": "AMZN",
+          "name": "Amazon",
+          "price": 229.66,
+          "change_pct": -1.9
+        },
+        {
+          "symbol": "MSFT",
+          "name": "Microsoft",
+          "price": 354.9,
+          "change_pct": -5.09
+        },
+        {
+          "symbol": "GOOGL",
+          "name": "Google",
+          "price": 341.53,
+          "change_pct": -1.33
+        },
+        {
+          "symbol": "META",
+          "name": "Meta",
+          "price": 552.14,
+          "change_pct": -1.79
+        }
+      ]
+    }
+  }
+}

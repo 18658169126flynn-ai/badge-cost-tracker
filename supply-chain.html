@@ -324,113 +324,8 @@ tr:hover{background:rgba(59,130,246,.05)}
 <!-- ===== 美股板块走势 ===== -->
 <div class="section-title"><span>🇺🇸</span> 美股AI算力板块走势（含夜盘）</div>
 <div class="card" style="margin-bottom:20px">
-  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">数据截至北京时间 2026-06-18 凌晨收盘 · 美股表现对当日A股开盘有重要指引作用</p>
-
-  <!-- 指数概览 -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
-    <div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px;text-align:center">
-      <div style="font-size:11px;color:var(--muted)">S&P 500 期货</div>
-      <div style="font-size:20px;font-weight:700;font-family:monospace;color:#ef4444">7,545</div>
-      <div style="font-size:12px;color:#ef4444">▼ -0.21%</div>
-    </div>
-    <div style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);border-radius:8px;padding:12px;text-align:center">
-      <div style="font-size:11px;color:var(--muted)">纳斯达克期货</div>
-      <div style="font-size:20px;font-weight:700;font-family:monospace;color:#ef4444">30,345</div>
-      <div style="font-size:12px;color:#ef4444">▼ -0.70%</div>
-    </div>
-    <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:12px;text-align:center">
-      <div style="font-size:11px;color:var(--muted)">道琼斯期货</div>
-      <div style="font-size:20px;font-weight:700;font-family:monospace;color:#22c55e">52,185</div>
-      <div style="font-size:12px;color:#22c55e">▲ +0.86%</div>
-    </div>
-    <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px;text-align:center">
-      <div style="font-size:11px;color:var(--muted)">原油 WTI</div>
-      <div style="font-size:20px;font-weight:700;font-family:monospace;color:#ef4444">$74.13</div>
-      <div style="font-size:12px;color:#ef4444">▼ -8.20%</div>
-    </div>
-  </div>
-
-  <!-- 板块分组 -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    <!-- 半导体/GPU -->
-    <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#a5b4fc">🧠 半导体 / GPU</div>
-      <table style="width:100%;font-size:12px">
-        <tr><td>NVIDIA</td><td style="font-family:monospace">$204.65</td><td style="color:#22c55e;font-weight:600">▲ +2.11%</td></tr>
-        <tr><td>AMD</td><td style="font-family:monospace">$512.48</td><td style="color:#22c55e;font-weight:600">▲ +13.28%</td></tr>
-        <tr><td>Intel</td><td style="font-family:monospace">$121.10</td><td style="color:#22c55e;font-weight:600">▲ +13.14%</td></tr>
-        <tr><td>Broadcom</td><td style="font-family:monospace">$392.90</td><td style="color:#22c55e;font-weight:600">▲ +5.59%</td></tr>
-        <tr><td>Marvell</td><td style="font-family:monospace">$289.54</td><td style="color:#22c55e;font-weight:600">▲ +14.63%</td></tr>
-      </table>
-    </div>
-    <!-- 存储 -->
-    <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#6ee7b7">💾 存储芯片</div>
-      <table style="width:100%;font-size:12px">
-        <tr><td>Micron</td><td style="font-family:monospace">$1,043</td><td style="color:#22c55e;font-weight:600">▲ +16.97%</td></tr>
-        <tr><td>Western Digital</td><td style="font-family:monospace">$712</td><td style="color:#22c55e;font-weight:600">▲ +45.31%</td></tr>
-      </table>
-      <div style="font-size:10px;color:var(--muted);margin-top:6px">💡 存储板块全线暴涨，DRAM危机+HBM需求双重驱动</div>
-    </div>
-    <!-- 半导体设备 -->
-    <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#f9a8d4">⚙️ 半导体设备</div>
-      <table style="width:100%;font-size:12px">
-        <tr><td>ASML</td><td style="font-family:monospace">$1,868</td><td style="color:#22c55e;font-weight:600">▲ +7.71%</td></tr>
-        <tr><td>Lam Research</td><td style="font-family:monospace">$374</td><td style="color:#22c55e;font-weight:600">▲ +16.28%</td></tr>
-        <tr><td>KLA</td><td style="font-family:monospace">$239</td><td style="color:#22c55e;font-weight:600">▲ +11.78%</td></tr>
-        <tr><td>Applied Materials</td><td style="font-family:monospace">$593</td><td style="color:#22c55e;font-weight:600">▲ +19.30%</td></tr>
-      </table>
-    </div>
-    <!-- 服务器/网络 -->
-    <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#93c5fd">🖥️ 服务器 / 网络</div>
-      <table style="width:100%;font-size:12px">
-        <tr><td>Dell</td><td style="font-family:monospace">$419</td><td style="color:#22c55e;font-weight:600">▲ +13.38%</td></tr>
-        <tr><td>HPE</td><td style="font-family:monospace">$48.20</td><td style="color:#22c55e;font-weight:600">▲ +5.96%</td></tr>
-        <tr><td>Super Micro</td><td style="font-family:monospace">$27.78</td><td style="color:#ef4444;font-weight:600">▼ -5.09%</td></tr>
-        <tr><td>Arista</td><td style="font-family:monospace">$165</td><td style="color:#22c55e;font-weight:600">▲ +8.68%</td></tr>
-        <tr><td>Cisco</td><td style="font-family:monospace">$117</td><td style="color:#ef4444;font-weight:600">▼ -1.24%</td></tr>
-      </table>
-    </div>
-    <!-- 云计算巨头 -->
-    <div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px;grid-column:span 2">
-      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:#fbbf24">☁️ 云计算 / AI应用巨头</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
-        <div style="text-align:center">
-          <div style="font-size:11px;color:var(--muted)">Amazon</div>
-          <div style="font-size:16px;font-weight:700;font-family:monospace">$237.50</div>
-          <div style="font-size:11px;color:#ef4444">▼ -0.21%</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:11px;color:var(--muted)">Microsoft</div>
-          <div style="font-size:16px;font-weight:700;font-family:monospace">$378.91</div>
-          <div style="font-size:11px;color:#ef4444">▼ -4.64%</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:11px;color:var(--muted)">Google</div>
-          <div style="font-size:16px;font-weight:700;font-family:monospace">$363.79</div>
-          <div style="font-size:11px;color:#22c55e">▲ +2.08%</div>
-        </div>
-        <div style="text-align:center">
-          <div style="font-size:11px;color:var(--muted)">Meta</div>
-          <div style="font-size:16px;font-weight:700;font-family:monospace">$567.58</div>
-          <div style="font-size:11px;color:#ef4444">▼ -0.60%</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 综合研判 -->
-  <div style="margin-top:14px;padding:10px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px">
-    <div style="font-size:13px;font-weight:600;margin-bottom:6px">📊 综合研判：对今日A股影响</div>
-    <div style="font-size:12px;color:var(--muted);line-height:1.8">
-      <strong style="color:#22c55e">🟢 利好板块：</strong>存储（Micron+17%/WD+45%全线暴涨）、半导体设备（AMAT+19%/LRCX+16%强势）、AI服务器（Dell+13%带动）<br>
-      <strong style="color:#fbbf24">🟡 关注板块：</strong>GPU芯片（AMD+13%/INTC+13%但NVIDIA仅+2%分化明显）、光模块/网络（Arista+9%但CSCO-1%）<br>
-      <strong style="color:#ef4444">🔴 承压板块：</strong>云计算巨头整体偏弱（MSFT-4.6%领跌），SMCI-5%或压制服务器情绪<br>
-      <strong style="color:var(--muted)">📌 核心逻辑：</strong>半导体设备+存储是最强主线，"卖铲子"逻辑持续验证。A股重点关注兆易创新/北方华创/浪潮信息开盘表现。
-    </div>
-  </div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">数据自动更新 · 美股表现对当日A股开盘有重要指引作用</p>
+  <div id="usMarketCard"><p style="text-align:center;color:var(--muted)">加载中...</p></div>
 </div>
 
 <!-- ===== 主力资金流向 ===== -->
@@ -544,7 +439,7 @@ loadCapitalFlow();
 <div class="card" style="overflow-x:auto">
 <table>
 <thead><tr><th>板块</th><th>资讯摘要</th><th>来源</th><th>时间</th></tr></thead>
-<tbody>
+<tbody id="newsTableBody">
 <tr><td><strong>存储</strong></td><td>美光Q3营收414.6亿美元（同比+346%），毛利率81%创新高，数据中心业务同比+600%+。Q2 DRAM合约价+64%，DDR5 16G现货从$5.5飙至$40+。供需紧平衡延续至2027年底。</td><td>TrendForce/美光财报</td><td>2026.06.25</td></tr>
 <tr><td><strong>MLCC</strong></td><td>村田6月正式发布涨价函，AI/车规MLCC提价10-40%（7/1生效），2026年第三轮涨价。高容型号年初至今涨3-5倍。博迁新材/鸿远电子/火炬电子6/25涨停。</td><td>证券时报/东方财富</td><td>2026.06.25</td></tr>
 <tr><td><strong>CPO</strong></td><td>东山精密市值突破5000亿，子公司索尔思光电投资12亿美元扩建光芯片。1.6T光模块下半年批量交付。英伟达股东大会黄仁勋确认AI投资回报"已有答案"。</td><td>证券时报/新浪财经</td><td>2026.06.25</td></tr>
@@ -558,9 +453,121 @@ loadCapitalFlow();
 <div class="footer">
   AI算力产业概览 · 数据来源：公开市场报价 / 券商研报 / 行业资讯 · 仅供参考<br>
   投资推荐基于公开信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
-  生成时间：2026-06-17
+  <span id="autoUpdateTime">生成时间：2026-06-25</span>
 </div>
 </div>
+
+<script>
+// ====== 自动化数据加载 ======
+async function loadJSON(url) {
+  try {
+    const res = await fetch(url + '?t=' + Date.now());
+    if (!res.ok) return null;
+    return await res.json();
+  } catch { return null; }
+}
+
+function fmtPct(v) { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
+function pctColor(v) { return v >= 0 ? 'var(--green)' : 'var(--red)'; }
+
+// 1. 加载美股数据 → 更新美股板块
+async function loadUSMarket() {
+  const data = await loadJSON('us_market.json');
+  if (!data) return;
+  // 更新指数
+  const idxMap = {'^GSPC':'sp500','^IXIC':'nasdaq','^DJI':'dowji','CL=F':'wti'};
+  const idxNames = {'^GSPC':'S&P 500 期货','^IXIC':'纳斯达克期货','^DJI':'道琼斯期货','CL=F':'原油 WTI'};
+  // 更新美股板块表格
+  const sectKeys = ['gpu','storage','equipment','server','cloud'];
+  const sectColors = ['#a5b4fc','#6ee7b7','#f9a8d4','#93c5fd','#fbbf24'];
+  // 找到美股section并替换内容
+  const usSection = document.querySelector('.section-title span[textContent="🇺🇸"]')?.closest('.card');
+  // 简单方案：在页面底部追加美股实时数据卡片
+  const usCard = document.getElementById('usMarketCard');
+  if (!usCard || !data.sectors) return;
+  let html = '';
+  // 指数行
+  if (data.indices) {
+    html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">';
+    for (const [sym, info] of Object.entries(data.indices)) {
+      const c = pctColor(info.change_pct);
+      const sign = info.change_pct >= 0 ? '▲' : '▼';
+      const prefix = sym === 'CL=F' ? '$' : '';
+      html += `<div style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:12px;text-align:center">
+        <div style="font-size:11px;color:var(--muted)">${info.name}</div>
+        <div style="font-size:20px;font-weight:700;font-family:monospace;color:${c}">${prefix}${info.price.toLocaleString()}</div>
+        <div style="font-size:12px;color:${c}">${sign} ${fmtPct(info.change_pct)}</div></div>`;
+    }
+    html += '</div>';
+  }
+  // 个股板块
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
+  let i = 0;
+  for (const [key, sect] of Object.entries(data.sectors)) {
+    const color = sectColors[i++] || '#93c5fd';
+    html += `<div style="background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;padding:12px">
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:${color}">${sect.label}</div>
+      <table style="width:100%;font-size:12px">`;
+    for (const s of sect.stocks) {
+      const c = pctColor(s.change_pct);
+      const sign = s.change_pct >= 0 ? '▲' : '▼';
+      html += `<tr><td>${s.name}</td><td style="font-family:monospace">$${s.price.toLocaleString()}</td>
+        <td style="color:${c};font-weight:600">${sign} ${fmtPct(s.change_pct)}</td></tr>`;
+    }
+    html += '</table></div>';
+  }
+  html += '</div>';
+  html += `<div style="font-size:11px;color:var(--muted);margin-top:8px">数据更新: ${data.update_time}</div>`;
+  usCard.innerHTML = html;
+}
+
+// 2. 加载A股行情 → 在标的表格旁显示实时价格
+async function loadAStockQuotes() {
+  const data = await loadJSON('astock_quotes.json');
+  if (!data || !data.quotes) return;
+  // 遍历所有表格，找到股票代码并更新
+  document.querySelectorAll('table tbody tr').forEach(row => {
+    const cells = row.querySelectorAll('td');
+    if (cells.length < 2) return;
+    const codeCell = cells[1];
+    const code = codeCell.textContent.trim();
+    // 匹配 sh600xxx / sz300xxx 格式
+    const match = code.match(/^(SH|SZ)(\d{6})$/i);
+    if (!match) return;
+    const prefix = match[1].toLowerCase();
+    const num = match[2];
+    const sinaCode = prefix + num;
+    if (data.quotes[sinaCode]) {
+      const q = data.quotes[sinaCode];
+      const c = pctColor(q.change_pct);
+      const sign = q.change_pct >= 0 ? '▲' : '▼';
+      // 在状态列追加实时价格
+      const lastCell = cells[cells.length - 1];
+      const existing = lastCell.innerHTML;
+      if (!existing.includes('实时')) {
+        lastCell.innerHTML = existing + ` <span style="font-size:11px;color:${c};margin-left:4px">${sign}${q.price}(${fmtPct(q.change_pct)})</span>`;
+      }
+    }
+  });
+  // 更新时间
+  const updEl = document.getElementById('autoUpdateTime');
+  if (updEl) updEl.textContent = '自动更新: ' + data.update_time;
+}
+
+// 3. 加载行业新闻 → 替换新闻表格
+async function loadIndustryNews() {
+  const data = await loadJSON('industry_news.json');
+  if (!data || !data.news || data.news.length === 0) return;
+  const tbody = document.querySelector('#newsTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = data.news.map(n =>
+    `<tr><td><strong>${n.sector}</strong></td><td>${n.title}${n.summary ? ' — ' + n.summary : ''}</td><td>${n.source}</td><td>${n.date}</td></tr>`
+  ).join('');
+}
+
+// 执行加载
+Promise.all([loadUSMarket(), loadAStockQuotes(), loadIndustryNews()]);
+</script>
 </body>
 </html>
 <!-- cache-bust 1781662097 -->
