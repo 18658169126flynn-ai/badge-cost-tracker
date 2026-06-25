@@ -56,7 +56,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年6月18日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年6月25日</p>
 
 <!-- KPI Cards -->
 <div class="grid grid-3">
@@ -138,7 +138,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <div class="footer">
   胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
   投资推荐基于公开市场信息与供应链分析，不构成投资建议，投资有风险，入市需谨慎<br>
-  生成时间：2026-06-18
+  生成时间：2026-06-25
 </div>
 </div>
 
@@ -159,7 +159,8 @@ const trendData = [
   { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.4, tfcard32:33.1 },
   { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.3, tfcard32:48 },
   { date:'2026-06a', label:'2026年6月初', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.5, tfcard32:29.9 },
-  { date:'2026-06b', label:'2026年6月中', storage:382, storage18:215, pcb:15.2, cap:42, tfcard:52, tfcard32:34 },
+  { date:'2026-06c', label:'2026年6月中', storage:382, storage18:215, pcb:17.5, cap:42, tfcard:52, tfcard32:34 },
+  { date:'2026-06d', label:'2026年6月25日', storage:400, storage18:230, pcb:19, cap:80, tfcard:55, tfcard32:36 },
 ];
 
 // 基准值（最新成本表）
@@ -355,7 +356,7 @@ const bomItems = [
   { cat:'电子料', name:'存储 2+16', base:50, current:382, risk:'high', note:'DRAM危机持续！Q1合约价环比涨90-95%，6月中继续上行至¥382。三星/SK海力士产能转向HBM。' },
   { cat:'电子料', name:'64G TF卡（客供）', base:20.3, current:52, risk:'mid', note:'NAND Q1合约价涨55-60%，NOR Flash/SLC NAND半年涨100%+。6月TF卡回升至¥52。' },
   { cat:'电子料', name:'主控 SL8541E+SC2721G+SR3593A', base:70, current:82, risk:'mid', note:'8寸晶圆代工涨价5-20%，封测成本涨近30%。展锐平台供应相对稳定。' },
-  { cat:'PCB', name:'PCB光板', base:8, current:15.2, risk:'high', note:'CCL年内已涨价4次累计超40%！建滔6月再涨20%。HVLP4铜箔被NVIDIA抢购。' },
+  { cat:'PCB', name:'PCB光板', base:8, current:17.5, risk:'high', note:'建滔6/16第5次涨价+15%！年内累计超55%。铜价高位+玻璃布紧缺。' },
   { cat:'电子料', name:'电子料及产测', base:32, current:42, risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
   { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
   { cat:'电池', name:'1800mA电池', base:10.8, current:14.5, risk:'mid', note:'碳酸锂从20.5万高点回落至16.95万/吨（SMM），电池成本略降。高盛Q4预测20-25万。' },
