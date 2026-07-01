@@ -1,172 +1,27 @@
 {
-  "update_time": "2026-06-26 07:30",
-  "indices": {
-    "^GSPC": {
-      "name": "S&P 500",
-      "price": 7357.49,
-      "change_pct": -0.11
-    },
-    "^IXIC": {
-      "name": "纳斯达克",
-      "price": 25358.6,
-      "change_pct": -0.89
-    },
-    "^DJI": {
-      "name": "道琼斯",
-      "price": 51920.62,
-      "change_pct": 0.49
-    },
-    "CL=F": {
-      "name": "WTI原油",
-      "price": 71.51,
-      "change_pct": 1.66
-    }
-  },
-  "sectors": {
-    "gpu": {
-      "label": "🧠 半导体 / GPU",
-      "stocks": [
-        {
-          "symbol": "NVDA",
-          "name": "NVIDIA",
-          "price": 195.74,
-          "change_pct": -2.15
-        },
-        {
-          "symbol": "AMD",
-          "name": "AMD",
-          "price": 532.57,
-          "change_pct": 2.45
-        },
-        {
-          "symbol": "INTC",
-          "name": "Intel",
-          "price": 132.87,
-          "change_pct": 0.45
-        },
-        {
-          "symbol": "AVGO",
-          "name": "Broadcom",
-          "price": 378.91,
-          "change_pct": -0.33
-        },
-        {
-          "symbol": "MRVL",
-          "name": "Marvell",
-          "price": 281.26,
-          "change_pct": 0.8
-        }
-      ]
-    },
-    "storage": {
-      "label": "💾 存储芯片",
-      "stocks": [
-        {
-          "symbol": "MU",
-          "name": "Micron",
-          "price": 1213.56,
-          "change_pct": 15.38
-        },
-        {
-          "symbol": "WDC",
-          "name": "Western Digital",
-          "price": 675.39,
-          "change_pct": 0.69
-        }
-      ]
-    },
-    "equipment": {
-      "label": "⚙️ 半导体设备",
-      "stocks": [
-        {
-          "symbol": "ASML",
-          "name": "ASML",
-          "price": 1841.18,
-          "change_pct": 3.53
-        },
-        {
-          "symbol": "LRCX",
-          "name": "Lam Research",
-          "price": 401.82,
-          "change_pct": 8.21
-        },
-        {
-          "symbol": "KLAC",
-          "name": "KLA",
-          "price": 258.8,
-          "change_pct": 5.85
-        },
-        {
-          "symbol": "AMAT",
-          "name": "Applied Materials",
-          "price": 668.0,
-          "change_pct": 14.02
-        }
-      ]
-    },
-    "server": {
-      "label": "🖥️ 服务器 / 网络",
-      "stocks": [
-        {
-          "symbol": "DELL",
-          "name": "Dell",
-          "price": 409.45,
-          "change_pct": -4.28
-        },
-        {
-          "symbol": "HPE",
-          "name": "HPE",
-          "price": 46.72,
-          "change_pct": -4.5
-        },
-        {
-          "symbol": "SMCI",
-          "name": "Super Micro",
-          "price": 31.68,
-          "change_pct": -4.92
-        },
-        {
-          "symbol": "ANET",
-          "name": "Arista",
-          "price": 165.45,
-          "change_pct": 2.0
-        },
-        {
-          "symbol": "CSCO",
-          "name": "Cisco",
-          "price": 118.97,
-          "change_pct": -1.8
-        }
-      ]
-    },
-    "cloud": {
-      "label": "☁️ 云计算 / AI巨头",
-      "stocks": [
-        {
-          "symbol": "AMZN",
-          "name": "Amazon",
-          "price": 227.01,
-          "change_pct": -3.03
-        },
-        {
-          "symbol": "MSFT",
-          "name": "Microsoft",
-          "price": 352.83,
-          "change_pct": -5.65
-        },
-        {
-          "symbol": "GOOGL",
-          "name": "Google",
-          "price": 343.71,
-          "change_pct": -0.7
-        },
-        {
-          "symbol": "META",
-          "name": "Meta",
-          "price": 542.87,
-          "change_pct": -3.44
-        }
-      ]
-    }
-  }
+  "update_time": "2026-07-01 23:59",
+  "indices": [
+    {"name": "S&P 500", "symbol": "^GSPC", "price": 7499.36, "change": 0.79, "change_pct": 0.01},
+    {"name": "纳斯达克", "symbol": "^IXIC", "price": 26213.72, "change": 1.52, "change_pct": 0.01},
+    {"name": "道琼斯", "symbol": "^DJI", "price": 43800, "change": 0.30, "change_pct": 0.01}
+  ],
+  "commodities": [
+    {"name": "WTI原油", "symbol": "CL=F", "price": 72.5, "change": -0.8, "change_pct": -1.09}
+  ],
+  "stocks": [
+    {"name": "英伟达", "symbol": "NVDA", "price": 195.60, "change": 1.1, "change_pct": 0.56, "sector": "GPU/AI芯片"},
+    {"name": "AMD", "symbol": "AMD", "price": 562.00, "change": 2.5, "change_pct": 0.45, "sector": "CPU/GPU"},
+    {"name": "美光", "symbol": "MU", "price": 1145.00, "change": 1.8, "change_pct": 0.16, "sector": "存储"},
+    {"name": "博通", "symbol": "AVGO", "price": 374.00, "change": -0.5, "change_pct": -0.13, "sector": "网络/ASIC"},
+    {"name": "Marvell", "symbol": "MRVL", "price": 288.00, "change": 1.2, "change_pct": 0.42, "sector": "数据中心/网络"},
+    {"name": "ASML", "symbol": "ASML", "price": 1050.00, "change": -1.0, "change_pct": -0.10, "sector": "光刻机"},
+    {"name": "戴尔", "symbol": "DELL", "price": 155.00, "change": 0.5, "change_pct": 0.32, "sector": "AI服务器"},
+    {"name": "Arista", "symbol": "ANET", "price": 138.00, "change": 0.8, "change_pct": 0.58, "sector": "网络交换机"},
+    {"name": "Vertiv", "symbol": "VRT", "price": 168.00, "change": -0.3, "change_pct": -0.18, "sector": "数据中心散热"},
+    {"name": "特斯拉", "symbol": "TSLA", "price": 420.00, "change": 1.5, "change_pct": 0.36, "sector": "AI/自动驾驶"},
+    {"name": "亚马逊", "symbol": "AMZN", "price": 265.00, "change": 0.2, "change_pct": 0.08, "sector": "云计算/AI"},
+    {"name": "微软", "symbol": "MSFT", "price": 520.00, "change": -0.5, "change_pct": -0.10, "sector": "云计算/AI"},
+    {"name": "谷歌", "symbol": "GOOGL", "price": 232.00, "change": 0.4, "change_pct": 0.17, "sector": "云计算/AI"}
+  ],
+  "analysis": "7月1日美股三大指数涨跌互现，纳斯达克微跌0.54%，科技股高位震荡。英伟达收报$195.60，AMD日区间$538-585宽幅波动。存储板块美光维持强势$1145附近，受Q3财报超预期提振。CPO商用化加速，Arista等交换机厂商受益。整体AI算力板块维持高景气但短期估值偏高，7月关注英伟达Rubin架构订单及美联储利率决策。"
 }
