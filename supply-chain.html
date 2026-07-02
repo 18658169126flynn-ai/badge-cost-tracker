@@ -62,7 +62,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <div class="container">
 <a href="index.html" class="nav-link">📟 切换到胸牌成本追踪</a>
 <h1>🧠 AI算力产业概览</h1>
-<p class="subtitle">覆盖 AI 算力全链路:算力芯片 → 存储 → PCB/MLCC → 光互连(CPO/光纤) → 供电(800V) → 散热 · 数据更新至 2026年6月26日</p>
+<p class="subtitle">覆盖 AI 算力全链路:算力芯片 → 存储 → PCB/MLCC → 光互连(CPO/光纤) → 供电(800V) → 散热 · 美股实时行情来自TradingView · 更新至 2026年7月2日</p>
 
 <!-- ===== 产业链全景(置顶) ===== -->
 <div class="section-title"><span>🔗</span> AI算力产业链全景</div>
@@ -325,10 +325,152 @@ tr:hover{background:rgba(59,130,246,.05)}
 </div>
 
 <!-- ===== 美股板块走势 ===== -->
-<div class="section-title"><span>🇺🇸</span> 美股AI算力板块走势(含夜盘)</div>
+<div class="section-title"><span>🇺🇸</span> 美股AI算力板块走势(TradingView实时)</div>
 <div class="card" style="margin-bottom:20px">
-  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">数据自动更新 · 美股表现对当日A股开盘有重要指引作用</p>
-  <div id="usMarketCard"><p style="text-align:center;color:var(--muted)">加载中...</p></div>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:14px">数据来源:TradingView · 实时行情 · 美股表现对当日A股开盘有重要指引作用</p>
+  
+  <!-- TradingView 大盘指数 Ticker -->
+  <div class="tradingview-widget-container" style="margin-bottom:16px">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+      "symbols": [
+        {"proName": "SPX", "title": "S&P 500"},
+        {"proName": "IXIC", "title": "纳斯达克"},
+        {"proName": "DJI", "title": "道琼斯"},
+        {"proName": "NVDA", "title": "NVIDIA"},
+        {"proName": "AMD", "title": "AMD"},
+        {"proName": "MU", "title": "Micron"},
+        {"proName": "AVGO", "title": "Broadcom"}
+      ],
+      "showSymbolLogo": true,
+      "colorTheme": "dark",
+      "isTransparent": true,
+      "displayMode": "adaptive",
+      "locale": "zh_CN"
+    }
+    </script>
+  </div>
+  
+  <!-- TradingView 核心美股 Mini Chart 网格 -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:16px">
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#a5b4fc;margin-bottom:4px">🧠 NVIDIA (NVDA)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "NVDA",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-NVDA/"
+        }
+        </script>
+      </div>
+    </div>
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#f9a8d4;margin-bottom:4px">⚙️ AMD (AMD)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "AMD",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-AMD/"
+        }
+        </script>
+      </div>
+    </div>
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#6ee7b7;margin-bottom:4px">💾 Micron (MU)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "NASDAQ:MU",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-MU/"
+        }
+        </script>
+      </div>
+    </div>
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#93c5fd;margin-bottom:4px">🔧 Broadcom (AVGO)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "NASDAQ:AVGO",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-AVGO/"
+        }
+        </script>
+      </div>
+    </div>
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#fbbf24;margin-bottom:4px">☁️ Amazon (AMZN)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "NASDAQ:AMZN",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-AMZN/"
+        }
+        </script>
+      </div>
+    </div>
+    <div class="tv-chart-cell">
+      <div style="font-size:13px;font-weight:600;color:#a78bfa;margin-bottom:4px">🤖 Marvell (MRVL)</div>
+      <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+        {
+          "symbol": "NASDAQ:MRVL",
+          "width": "100%",
+          "height": 200,
+          "locale": "zh_CN",
+          "dateRange": "1M",
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "autosize": true,
+          "largeChartUrl": "https://www.tradingview.com/symbols/NASDAQ-MRVL/"
+        }
+        </script>
+      </div>
+    </div>
+  </div>
+  
+  <div id="usMarketCard" style="display:none"></div>
 </div>
 
 <!-- ===== 主力资金流向 ===== -->
@@ -473,7 +615,8 @@ async function loadJSON(url) {
 function fmtPct(v) { return (v >= 0 ? '+' : '') + v.toFixed(2) + '%'; }
 function pctColor(v) { return v >= 0 ? 'var(--green)' : 'var(--red)'; }
 
-// 1. 加载美股数据 → 更新美股板块
+// 1. (已用TradingView替代) 旧版美股数据加载
+/*
 async function loadUSMarket() {
   const data = await loadJSON('us_market.json');
   if (!data) return;
@@ -523,6 +666,7 @@ async function loadUSMarket() {
   html += `<div style="font-size:11px;color:var(--muted);margin-top:8px">数据更新: ${data.update_time}</div>`;
   usCard.innerHTML = html;
 }
+*/
 
 // 2. 加载A股行情 → 在标的表格旁显示实时价格
 async function loadAStockQuotes() {
@@ -568,8 +712,8 @@ async function loadIndustryNews() {
   ).join('');
 }
 
-// 执行加载
-Promise.all([loadUSMarket(), loadAStockQuotes(), loadIndustryNews()]);
+// 执行加载（美股已用TradingView实时图表替代）
+Promise.all([loadAStockQuotes(), loadIndustryNews()]);
 </script>
 </body>
 </html>
