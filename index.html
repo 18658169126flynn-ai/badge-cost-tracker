@@ -172,8 +172,8 @@ const baseStorage = 50;   // 存储从30→50
 const basePCB = 8;
 const baseCap = 22;        // 0201阻容基准（每万片）
 const baseTFCard = 20.3;   // 64G TF卡基准
-const baseTracked = baseStorage + basePCB + baseCap + baseTFCard; // 73.20
-const baseOther = baselineBOM - baseTracked; // 172.23（其他BOM物料）
+const baseTracked = baseStorage + basePCB + baseCap + baseTFCard;
+const baseOther = baselineBOM - baseTracked;
 
 // 计算各时间点的 BOM 总成本（不含客供料）
 function calcBOM(d) {
@@ -217,9 +217,15 @@ function predict(monthsAhead, scenario) {
   };
 }
 
-// ============ KPI ============
-const currentBOM = calcBOM(trendData[trendData.length-1]);
-const currentFull = calcFull(trendData[trendData.length-1]);
+// ============ KPI（从 bomItems 明细精确求和）============
+function calcCurrentBOM() {
+  const latestTrend = trendData[trendData.length-1];
+  return bomItems.reduce((sum, item) => {
+    return sum + (item.trendKey ? latestTrend[item.trendKey] : item.current);
+  }, 0);
+}
+const currentBOM = calcCurrentBOM();
+const currentFull = currentBOM + assembleCost + packagingCost + profitMargin;
 document.getElementById('kpi-current').textContent = '¥' + currentBOM.toFixed(0);
 const bomDelta = ((currentBOM - baselineBOM) / baselineBOM * 100).toFixed(1);
 document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + '% vs 基准 ¥' + baselineBOM;
