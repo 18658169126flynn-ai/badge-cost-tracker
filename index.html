@@ -120,7 +120,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <div class="card" style="overflow-x:auto">
 <table>
 <thead>
-<tr><th>分类</th><th>物料</th><th>基准报价(2025.05)</th><th>当前市价(2026.06)</th><th>涨幅</th><th>成本影响/台</th><th>风险等级</th></tr>
+<tr><th>分类</th><th>物料</th><th>基准报价(2025.05)</th><th>当前市价</th><th>涨幅</th><th>成本影响/台</th><th>风险等级</th></tr>
 </thead>
 <tbody id="bomTable"></tbody>
 </table>
@@ -264,7 +264,12 @@ document.getElementById('pred-6m').innerHTML = '¥' + p6.mid.toFixed(0) + '<br><
 document.getElementById('pred-6m-sub').textContent = '+' + ((p6.mid-baselineFull)/baselineFull*100).toFixed(1) + '% vs 基准（基准场景）';
 
 // ============ TOTAL COST CHART ============
-const allLabels = [...trendData.map(d=>d.label), '2026年7月(预)', '2026年9月(预)', '2026年12月(预)'];
+const predLabels = [
+  '1个月后（' + m1.y + '.' + String(m1.m).padStart(2,'0') + '）',
+  '3个月后（' + m3.y + '.' + String(m3.m).padStart(2,'0') + '）',
+  '6个月后（' + m6.y + '.' + String(m6.m).padStart(2,'0') + '）',
+];
+const allLabels = [...trendData.map(d=>d.label), ...predLabels];
 const allFullsLow = [...trendData.map(d=>calcFull(d)), p1.low, p3.low, p6.low];
 const allFulls = [...trendData.map(d=>calcFull(d)), p1.mid, p3.mid, p6.mid];
 const allFullsHigh = [...trendData.map(d=>calcFull(d)), p1.high, p3.high, p6.high];
@@ -418,35 +423,35 @@ document.getElementById('bomTable').innerHTML = bomHTML;
 const risks = [
   {
     title: '🔴 存储芯片 2+16', cls:'risk-high',
-    text: '基准报价¥50涨至¥382（+664%）。DRAM危机持续，Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM，通用DRAM供给严重紧缩。德国32GB内存条价格已涨4倍+。建议：尽早锁价或备货6个月用量。'
+    text: '基准报价¥50涨至¥420（+740%）。DRAM危机持续，Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM，通用DRAM供给严重紧缩。德国32GB内存条价格已涨4倍+。'
   },
   {
     title: '🟡 锂电池 1800mA', cls:'risk-mid',
-    text: '碳酸锂从20.5万高点回落至16.95万/吨（SMM 6月最新），电池成本略降至¥14.5。高盛预测Q4价格中枢20万/吨，峰值25万。储能成为锂电池第一增长引擎。建议：关注碳酸锂走势，适时备货。'
+    text: '碳酸锂从20.5万高点回落至16.95万/吨（SMM 6月最新），电池成本略降至¥14.5。7月1日主力合约冲高至16.5万/吨涨超4%。'
   },
   {
     title: '🔴 PCB 光板', cls:'risk-high',
-    text: '建滔CCL年内已涨价5次累计超55%！铜箔HVLP4被NVIDIA抢购，2026年缺口1500吨。电子布翻倍暴涨，T-glass缺口超40%。PCB价格从¥8涨至¥15.2（+90%）。建议：尽快与PCB厂商签订季度锁价协议。'
+    text: '建滔CCL年内已涨价5次累计超55%！铜箔HVLP4被NVIDIA抢购，2026年缺口1500吨。电子布翻倍暴涨，T-glass缺口超40%。PCB价格从¥8涨至¥15.2（+90%）。'
   },
   {
     title: '🟡 MLCC/电容', cls:'risk-mid',
-    text: 'MLCC史诗级涨价潮！消费类涨15-20%，累计涨幅65%。0201规格104缺货严重，村田/三星电机稼动率90%+。7月日系厂商第二轮涨价即将落地。华强北多款高端型号断货。建议：提前下单锁定交期。'
+    text: 'MLCC史诗级涨价潮！消费类涨15-20%，累计涨幅65%。0201规格104缺货严重，村田/三星电机稼动率90%+。7月日系厂商第二轮涨价即将落地。华强北多款高端型号断货。'
   },
   {
     title: '🟡 主控芯片 SL8541E', cls:'risk-mid',
-    text: '8英寸晶圆产能持续收缩，产能利用率攀升至85-90%，代工价格上调5-20%，封测成本涨幅接近30%。展锐平台供应相对稳定，但上游成本压力在传导。建议：确认展锐长协价是否覆盖本次涨价周期。'
+    text: '8英寸晶圆产能持续收缩，产能利用率攀升至85-90%，代工价格上调5-20%，封测成本涨幅接近30%。展锐平台供应相对稳定，但上游成本压力在传导。'
   },
   {
     title: '🔴 64G TF卡（客供）', cls:'risk-high',
-    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至¥65（+220%）。NAND Q2合约价继续上涨，美光Q3营收414.6亿美元创新高，存储供需紧平衡至2027年底。建议：尽快锁价备货。'
+    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至¥65（+220%）。NAND Q2合约价继续上涨，美光Q3营收414.6亿美元创新高，存储供需紧平衡至2027年底。'
   },
   {
     title: '🟢 水墨屏 2.13寸', cls:'risk-low',
-    text: 'E Ink元太科技独占电子纸技术，当前¥18.6（基准报价），市场¥15-22区间。COMPUTEX 2026展示新技术方向，短期内无涨价信号。建议：维持现有采购策略。'
+    text: 'E Ink元太科技独占电子纸技术，当前¥18.6（基准报价），市场¥15-22区间。COMPUTEX 2026展示新技术方向，短期内无涨价信号。'
   },
   {
     title: '🟢 摄像头模组', cls:'risk-low',
-    text: '图源顺供应，CMOS图像传感器供应充足，思特威等国产厂商持续推出新品。价格基本稳定¥12→¥13。建议：正常采购。'
+    text: '图源顺供应，CMOS图像传感器供应充足，思特威等国产厂商持续推出新品。价格基本稳定¥12→¥13。'
   },
 ];
 let riskHTML = '';
@@ -465,7 +470,7 @@ const defaultNews = [
   { comp:'MLCC', text:'村田6月再度提价10-40%（7/1生效），2026年第三轮涨价。中低端MLCC涨3-5倍，个别高端涨10倍。缺货潮延续至2027下半年。', src:'证券时报/第一财经', time:'2026.06.26' },
   { comp:'MLCC', text:'华强北走访：MLCC经销商向厂商拿货5-6个周期，缺货+惜售，下游被迫接受涨价。AI和新能源车需求端暴增引发史诗级缺货。', src:'东方财富/第一财经', time:'2026.06.20' },
   { comp:'电池', text:'碳酸锂6/18现货16.15-17.12万/吨，冲高回落。储能成为锂电池第一增长引擎，高盛预测Q4价格中枢20万/吨峰值25万。', src:'SMM/钛媒体', time:'2026.06.18' },
-  { comp:'晶圆/IC', text:'晶圆代工全面涨价：联电、世界先进、力积电、晶合集成相继调价。IC设计涨价潮启动，电源管理IC等100+原厂发布涨价通知。', src:'钛媒体/投资界', time:'2026.06.26' },
+  { comp:'晶圆/IC', text:'晶圆代工全面涨价：联电、世界先进、力积电、晶合集成相继调价。IC设计涨价潮启动，电源管理IC等100+原厂发布涨价通知。', src:'钛媒体', time:'2026.06.26' },
   { comp:'存储', text:'存储芯片现货涨幅最高突破300%，成本压力传导至整机和DIY配件市场。三星/SK海力士因美国监管暂停扩产，供给持续紧张。', src:'新浪科技', time:'2026.06.22' },
 ];
 
