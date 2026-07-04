@@ -217,24 +217,7 @@ function predict(monthsAhead, scenario) {
   };
 }
 
-// ============ KPI（从 bomItems 明细精确求和）============
-function calcCurrentBOM() {
-  const latestTrend = trendData[trendData.length-1];
-  return bomItems.reduce((sum, item) => {
-    return sum + (item.trendKey ? latestTrend[item.trendKey] : item.current);
-  }, 0);
-}
-const currentBOM = calcCurrentBOM();
-const currentFull = currentBOM + assembleCost + packagingCost + profitMargin;
-document.getElementById('kpi-current').textContent = '¥' + currentBOM.toFixed(0);
-const bomDelta = ((currentBOM - baselineBOM) / baselineBOM * 100).toFixed(1);
-document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + '% vs 基准 ¥' + baselineBOM;
-
-document.getElementById('kpi-latest').textContent = '¥' + currentFull.toFixed(0);
-const fullDelta = ((currentFull - baselineFull) / baselineFull * 100).toFixed(1);
-document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + '% vs 基准报价 ¥' + baselineFull;
-
-// 动态计算预测月份标签
+// ============ 动态计算预测月份标签
 const now = new Date();
 const currentMonth = now.getMonth() + 1;
 const currentYear = now.getFullYear();
@@ -424,6 +407,19 @@ bomItems.forEach(item => {
   </tr>`;
 });
 document.getElementById('bomTable').innerHTML = bomHTML;
+
+// ============ KPI（bomItems 已就绪，精确求和）============
+const currentBOM = bomItems.reduce((sum, item) => {
+  return sum + (item.trendKey ? latestTrend[item.trendKey] : item.current);
+}, 0);
+const currentFull = currentBOM + assembleCost + packagingCost + profitMargin;
+document.getElementById('kpi-current').textContent = '¥' + currentBOM.toFixed(0);
+const bomDelta = ((currentBOM - baselineBOM) / baselineBOM * 100).toFixed(1);
+document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + '% vs 基准 ¥' + baselineBOM;
+
+document.getElementById('kpi-latest').textContent = '¥' + currentFull.toFixed(0);
+const fullDelta = ((currentFull - baselineFull) / baselineFull * 100).toFixed(1);
+document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + '% vs 基准报价 ¥' + baselineFull;
 
 // ============ RISK CARDS ============
 const risks = [
