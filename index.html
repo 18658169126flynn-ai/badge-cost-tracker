@@ -86,17 +86,17 @@ tr:hover{background:rgba(59,130,246,.05)}
   <h3>🔮 未来整机成本预测（基于趋势外推，含组装/包材/利润）</h3>
   <div class="prediction-row">
     <div class="prediction-box">
-      <div class="label">1个月后（2026.07）</div>
+      <div class="label"><span id="pred-label-1m">1个月后</span></div>
       <div class="val" id="pred-1m">—</div>
       <div class="sub" id="pred-1m-sub"></div>
     </div>
     <div class="prediction-box">
-      <div class="label">3个月后（2026.09）</div>
+      <div class="label"><span id="pred-label-3m">3个月后</span></div>
       <div class="val" id="pred-3m">—</div>
       <div class="sub" id="pred-3m-sub"></div>
     </div>
     <div class="prediction-box">
-      <div class="label">6个月后（2026.12）</div>
+      <div class="label"><span id="pred-label-6m">6个月后</span></div>
       <div class="val" id="pred-6m">—</div>
       <div class="sub" id="pred-6m-sub"></div>
     </div>
@@ -227,6 +227,24 @@ document.getElementById('kpi-current-delta').textContent = '↑ +' + bomDelta + 
 document.getElementById('kpi-latest').textContent = '¥' + currentFull.toFixed(0);
 const fullDelta = ((currentFull - baselineFull) / baselineFull * 100).toFixed(1);
 document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + '% vs 基准报价 ¥' + baselineFull;
+
+// 动态计算预测月份标签
+const now = new Date();
+const currentMonth = now.getMonth() + 1;
+const currentYear = now.getFullYear();
+function addMonths(y, m, add) {
+  let newM = m + add;
+  let newY = y;
+  while (newM > 12) { newM -= 12; newY++; }
+  while (newM < 1) { newM += 12; newY--; }
+  return { y: newY, m: newM };
+}
+const m1 = addMonths(currentYear, currentMonth, 1);
+const m3 = addMonths(currentYear, currentMonth, 3);
+const m6 = addMonths(currentYear, currentMonth, 6);
+document.getElementById('pred-label-1m').textContent = '1个月后（' + m1.y + '.' + String(m1.m).padStart(2,'0') + '）';
+document.getElementById('pred-label-3m').textContent = '3个月后（' + m3.y + '.' + String(m3.m).padStart(2,'0') + '）';
+document.getElementById('pred-label-6m').textContent = '6个月后（' + m6.y + '.' + String(m6.m).padStart(2,'0') + '）';
 
 // Predictions
 // 三种场景预测
