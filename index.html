@@ -184,36 +184,22 @@ function calcFull(d) {
   return calcBOM(d) + assembleCost + packagingCost + profitMargin;
 }
 
-// 预测：三种场景（保守/基准/激进）
+// 预测：三种场景（保守/基准/激进），按月度环比涨幅外推。
+// 依据最新供应资讯：Q3 DRAM 合约价 +13~18%、NAND +10~15%，供应紧平衡延续至2027/2028，
+// 激进场景代表涨价提速（约半年存储翻倍）；保守场景代表近期现货回踩延续。
+const growthRates = {
+  low:  { storage:-0.02, pcb:0.01, cap:0.01, tfcard:0.01 },
+  mid:  { storage: 0.05, pcb:0.03, cap:0.03, tfcard:0.03 },
+  high: { storage: 0.12, pcb:0.06, cap:0.05, tfcard:0.05 },
+};
 function predict(monthsAhead, scenario) {
   const last = trendData[trendData.length-1];
-  const prev = trendData[trendData.length-3];
-  const monthsDiff = 2;   // 最近实际报价 2026-07 与 2026-08 之间约 2 个月
-  const storageSlope = (last.storage - prev.storage) / monthsDiff;
-  const pcbSlope = (last.pcb - prev.pcb) / monthsDiff;
-  const capSlope = (last.cap - prev.cap) / monthsDiff;
-  const tfSlope = (last.tfcard - prev.tfcard) / monthsDiff;
-  
-  let storageMul, pcbMul, capMul, tfMul;
-  if (scenario === 'low') {
-    // 保守：线性外推，阻尼大
-    storageMul = monthsAhead > 3 ? 0.3 : 0.5;
-    pcbMul = 0.5; capMul = 0.5; tfMul = 0.5;
-  } else if (scenario === 'high') {
-    // 激进：存储/PCB可能翻倍
-    storageMul = monthsAhead >= 6 ? 2.5 : monthsAhead >= 3 ? 1.8 : 1.2;
-    pcbMul = monthsAhead >= 6 ? 1.5 : monthsAhead >= 3 ? 1.2 : 1.0;
-    capMul = 1.2; tfMul = 1.5;
-  } else {
-    // 基准：适度增长
-    storageMul = monthsAhead > 3 ? 0.7 : 0.9;
-    pcbMul = 0.8; capMul = 0.8; tfMul = 0.8;
-  }
+  const g = growthRates[scenario];
   return {
-    storage: last.storage + storageSlope * monthsAhead * storageMul,
-    pcb: last.pcb + pcbSlope * monthsAhead * pcbMul,
-    cap: last.cap + capSlope * monthsAhead * capMul,
-    tfcard: last.tfcard + tfSlope * monthsAhead * tfMul,
+    storage: last.storage * Math.pow(1 + g.storage, monthsAhead),
+    pcb: last.pcb * Math.pow(1 + g.pcb, monthsAhead),
+    cap: last.cap * Math.pow(1 + g.cap, monthsAhead),
+    tfcard: last.tfcard * Math.pow(1 + g.tfcard, monthsAhead),
   };
 }
 
