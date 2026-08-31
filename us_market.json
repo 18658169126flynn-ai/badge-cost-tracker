@@ -1,27 +1,174 @@
 {
-  "update_time": "2026-07-01 23:59",
-  "indices": [
-    {"name": "S&P 500", "symbol": "^GSPC", "price": 7499.36, "change": 0.79, "change_pct": 0.01},
-    {"name": "纳斯达克", "symbol": "^IXIC", "price": 26213.72, "change": 1.52, "change_pct": 0.01},
-    {"name": "道琼斯", "symbol": "^DJI", "price": 43800, "change": 0.30, "change_pct": 0.01}
-  ],
-  "commodities": [
-    {"name": "WTI原油", "symbol": "CL=F", "price": 72.5, "change": -0.8, "change_pct": -1.09}
-  ],
-  "stocks": [
-    {"name": "英伟达", "symbol": "NVDA", "price": 195.60, "change": 1.1, "change_pct": 0.56, "sector": "GPU/AI芯片"},
-    {"name": "AMD", "symbol": "AMD", "price": 562.00, "change": 2.5, "change_pct": 0.45, "sector": "CPU/GPU"},
-    {"name": "美光", "symbol": "MU", "price": 1145.00, "change": 1.8, "change_pct": 0.16, "sector": "存储"},
-    {"name": "博通", "symbol": "AVGO", "price": 374.00, "change": -0.5, "change_pct": -0.13, "sector": "网络/ASIC"},
-    {"name": "Marvell", "symbol": "MRVL", "price": 288.00, "change": 1.2, "change_pct": 0.42, "sector": "数据中心/网络"},
-    {"name": "ASML", "symbol": "ASML", "price": 1050.00, "change": -1.0, "change_pct": -0.10, "sector": "光刻机"},
-    {"name": "戴尔", "symbol": "DELL", "price": 155.00, "change": 0.5, "change_pct": 0.32, "sector": "AI服务器"},
-    {"name": "Arista", "symbol": "ANET", "price": 138.00, "change": 0.8, "change_pct": 0.58, "sector": "网络交换机"},
-    {"name": "Vertiv", "symbol": "VRT", "price": 168.00, "change": -0.3, "change_pct": -0.18, "sector": "数据中心散热"},
-    {"name": "特斯拉", "symbol": "TSLA", "price": 420.00, "change": 1.5, "change_pct": 0.36, "sector": "AI/自动驾驶"},
-    {"name": "亚马逊", "symbol": "AMZN", "price": 265.00, "change": 0.2, "change_pct": 0.08, "sector": "云计算/AI"},
-    {"name": "微软", "symbol": "MSFT", "price": 520.00, "change": -0.5, "change_pct": -0.10, "sector": "云计算/AI"},
-    {"name": "谷歌", "symbol": "GOOGL", "price": 232.00, "change": 0.4, "change_pct": 0.17, "sector": "云计算/AI"}
-  ],
-  "analysis": "7月1日美股三大指数涨跌互现，纳斯达克微跌0.54%，科技股高位震荡。英伟达收报$195.60，AMD日区间$538-585宽幅波动。存储板块美光维持强势$1145附近，受Q3财报超预期提振。CPO商用化加速，Arista等交换机厂商受益。整体AI算力板块维持高景气但短期估值偏高，7月关注英伟达Rubin架构订单及美联储利率决策。"
+  "update_time": "2026-08-28 07:34",
+  "indices": {
+    "^GSPC": {
+      "name": "S&P 500",
+      "price": 7730.99,
+      "change_pct": 0.7
+    },
+    "^IXIC": {
+      "name": "纳斯达克",
+      "price": 0,
+      "change_pct": 0,
+      "error": "HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Read timed out. (read timeout=10)"
+    },
+    "^DJI": {
+      "name": "道琼斯",
+      "price": 53569.44,
+      "change_pct": -0.01
+    },
+    "CL=F": {
+      "name": "WTI原油",
+      "price": 0,
+      "change_pct": 0,
+      "error": "HTTPSConnectionPool(host='query1.finance.yahoo.com', port=443): Max retries exceeded with url: /v8/finance/chart/CL=F?interval=1d&range=2d (Caused by SSLError(SSLError(1, '[SSL: WRONG_VERSION_NUMBER] wrong version number (_ssl.c:2633)')))"
+    }
+  },
+  "sectors": {
+    "gpu": {
+      "label": "🧠 半导体 / GPU",
+      "stocks": [
+        {
+          "symbol": "NVDA",
+          "name": "NVIDIA",
+          "price": 227.98,
+          "change_pct": 7.01
+        },
+        {
+          "symbol": "AMD",
+          "name": "AMD",
+          "price": 476.67,
+          "change_pct": -0.52
+        },
+        {
+          "symbol": "INTC",
+          "name": "Intel",
+          "price": 92.09,
+          "change_pct": 5.27
+        },
+        {
+          "symbol": "AVGO",
+          "name": "Broadcom",
+          "price": 371.54,
+          "change_pct": 4.15
+        },
+        {
+          "symbol": "MRVL",
+          "name": "Marvell",
+          "price": 241.45,
+          "change_pct": 0.45
+        }
+      ]
+    },
+    "storage": {
+      "label": "💾 存储芯片",
+      "stocks": [
+        {
+          "symbol": "MU",
+          "name": "Micron",
+          "price": 935.39,
+          "change_pct": 0.26
+        },
+        {
+          "symbol": "WDC",
+          "name": "Western Digital",
+          "price": 462.0,
+          "change_pct": 2.5
+        }
+      ]
+    },
+    "equipment": {
+      "label": "⚙️ 半导体设备",
+      "stocks": [
+        {
+          "symbol": "ASML",
+          "name": "ASML",
+          "price": 1735.01,
+          "change_pct": -0.52
+        },
+        {
+          "symbol": "LRCX",
+          "name": "Lam Research",
+          "price": 318.58,
+          "change_pct": 1.25
+        },
+        {
+          "symbol": "KLAC",
+          "name": "KLA",
+          "price": 183.77,
+          "change_pct": 0.23
+        },
+        {
+          "symbol": "AMAT",
+          "name": "Applied Materials",
+          "price": 482.36,
+          "change_pct": 0.48
+        }
+      ]
+    },
+    "server": {
+      "label": "🖥️ 服务器 / 网络",
+      "stocks": [
+        {
+          "symbol": "DELL",
+          "name": "Dell",
+          "price": 472.26,
+          "change_pct": 4.6
+        },
+        {
+          "symbol": "HPE",
+          "name": "HPE",
+          "price": 54.41,
+          "change_pct": 1.82
+        },
+        {
+          "symbol": "SMCI",
+          "name": "Super Micro",
+          "price": 38.46,
+          "change_pct": 0.0
+        },
+        {
+          "symbol": "ANET",
+          "name": "Arista",
+          "price": 201.09,
+          "change_pct": 5.32
+        },
+        {
+          "symbol": "CSCO",
+          "name": "Cisco",
+          "price": 112.15,
+          "change_pct": 0.94
+        }
+      ]
+    },
+    "cloud": {
+      "label": "☁️ 云计算 / AI巨头",
+      "stocks": [
+        {
+          "symbol": "AMZN",
+          "name": "Amazon",
+          "price": 0,
+          "change_pct": 0
+        },
+        {
+          "symbol": "MSFT",
+          "name": "Microsoft",
+          "price": 0,
+          "change_pct": 0
+        },
+        {
+          "symbol": "GOOGL",
+          "name": "Google",
+          "price": 0,
+          "change_pct": 0
+        },
+        {
+          "symbol": "META",
+          "name": "Meta",
+          "price": 0,
+          "change_pct": 0
+        }
+      ]
+    }
+  }
 }
