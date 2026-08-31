@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="2026-07-07-v4">
+<meta name="version" content="2026-08-31-v5">
 <title>胸牌记录仪 — 成本动态追踪</title>
 <script src="chart.min.js"></script>
 <style>
@@ -60,7 +60,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势 · 数据更新至 2026年7月7日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势（含 2026年7-8月实际报价） · 数据更新至 2026年8月31日</p>
 
 <!-- KPI Cards -->
 <div class="grid grid-3">
@@ -141,7 +141,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 
 <div class="footer">
   胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
-  生成时间：2026-07-07
+  生成时间：2026-08-31
 </div>
 </div>
 
@@ -155,16 +155,16 @@ const profitMargin = 20;
 const baselineFull = 295;       // 整机报价（用户确认）
 const tfcardCost = 17.5;       // 64G TF卡客供
 
-// 追踪物料的历史价格趋势（电子料报价趋势表 - 最新版）
+// 追踪物料的历史价格趋势（电子料报价趋势表 - 最新版, 含2026年7-8月实际报价）
 const trendData = [
-  { date:'2025-09', label:'2025年9月', storage:79.67, storage18:47.8, pcb:8, cap:22, tfcard:20.3, tfcard32:14.9 },
-  { date:'2026-01', label:'2026年1月', storage:237.30, storage18:84, pcb:10, cap:27, tfcard:42.9, tfcard32:27.5 },
-  { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.4, tfcard32:33.1 },
-  { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.3, tfcard32:48 },
-  { date:'2026-06a', label:'2026年6月初', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.5, tfcard32:29.9 },
-  { date:'2026-06c', label:'2026年6月中', storage:382, storage18:215, pcb:16, cap:42, tfcard:52, tfcard32:34 },
-  { date:'2026-06d', label:'2026年6月25日', storage:420, storage18:230, pcb:15.2, cap:80, tfcard:65, tfcard32:36 },
-  { date:'2026-07a', label:'2026年7月4日', storage:420, storage18:230, pcb:15.2, cap:80, tfcard:65, tfcard32:36 },
+  { date:'2025-09', label:'2025年9月', storage:79.67, storage18:47.80, pcb:8, cap:22, tfcard:20.30, tfcard32:14.90 },
+  { date:'2026-01', label:'2026年1月', storage:237.30, storage18:64.00, pcb:10, cap:27, tfcard:42.90, tfcard32:27.50 },
+  { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.40, tfcard32:33.10 },
+  { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.30, tfcard32:48.00 },
+  { date:'2026-06', label:'2026年6月', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.50, tfcard32:29.90 },
+  { date:'2026-07', label:'2026年7月', storage:352.56, storage18:216.69, pcb:13.5, cap:38, tfcard:58.00, tfcard32:33.00 },
+  { date:'2026-08a', label:'2026年8月4日', storage:339.00, storage18:203.40, pcb:14, cap:39, tfcard:53.00, tfcard32:30.00 },
+  { date:'2026-08b', label:'2026年8月31日', storage:322.82, storage18:181.59, pcb:16, cap:40, tfcard:52.00, tfcard32:29.00 },
 ];
 
 // 基准值（最新成本表）
@@ -188,7 +188,7 @@ function calcFull(d) {
 function predict(monthsAhead, scenario) {
   const last = trendData[trendData.length-1];
   const prev = trendData[trendData.length-3];
-  const monthsDiff = 9;
+  const monthsDiff = 2;   // 最近实际报价 2026-07 与 2026-08 之间约 2 个月
   const storageSlope = (last.storage - prev.storage) / monthsDiff;
   const pcbSlope = (last.pcb - prev.pcb) / monthsDiff;
   const capSlope = (last.cap - prev.cap) / monthsDiff;
@@ -273,10 +273,10 @@ new Chart(document.getElementById('totalCostChart'), {
       borderColor: '#ef4444',
       backgroundColor: 'rgba(239,68,68,.05)',
       fill: false, tension: 0.3, pointRadius: 4,
-      pointBackgroundColor: allLabels.map((_,i)=>i>=5?'#ef4444':'#ef4444'),
+      pointBackgroundColor: allLabels.map((_,i)=>i>=8?'#ef4444':'#ef4444'),
       segment: {
-        borderDash: ctx => ctx.p1DataIndex >= 5 ? [6,3] : undefined,
-        borderColor: ctx => ctx.p1DataIndex >= 5 ? '#ef4444' : '#ef4444',
+        borderDash: ctx => ctx.p1DataIndex >= 8 ? [6,3] : undefined,
+        borderColor: ctx => ctx.p1DataIndex >= 8 ? '#ef4444' : '#ef4444',
       }
     },{
     },{ label: '保守场景 (¥)',
@@ -285,8 +285,8 @@ new Chart(document.getElementById('totalCostChart'), {
       fill: false, tension: 0.3, pointRadius: 3,
       borderDash: [4,2],
       segment: {
-        borderDash: ctx => ctx.p1DataIndex >= 5 ? [6,3] : undefined,
-        borderColor: ctx => ctx.p1DataIndex >= 5 ? '#22c55e' : '#22c55e',
+        borderDash: ctx => ctx.p1DataIndex >= 8 ? [6,3] : undefined,
+        borderColor: ctx => ctx.p1DataIndex >= 8 ? '#22c55e' : '#22c55e',
       }
     },{
       label: '基准场景 (¥)',
@@ -294,11 +294,11 @@ new Chart(document.getElementById('totalCostChart'), {
       borderColor: '#3b82f6',
       backgroundColor: 'rgba(59,130,246,.1)',
       fill: true, tension: 0.3, pointRadius: 5,
-      pointBackgroundColor: allLabels.map((_,i)=>i>=5?'#f59e0b':'#3b82f6'),
-      pointBorderColor: allLabels.map((_,i)=>i>=5?'#f59e0b':'#3b82f6'),
+      pointBackgroundColor: allLabels.map((_,i)=>i>=8?'#f59e0b':'#3b82f6'),
+      pointBorderColor: allLabels.map((_,i)=>i>=8?'#f59e0b':'#3b82f6'),
       segment: {
-        borderDash: ctx => ctx.p1DataIndex >= 5 ? [6,3] : undefined,
-        borderColor: ctx => ctx.p1DataIndex >= 5 ? '#f59e0b' : '#3b82f6',
+        borderDash: ctx => ctx.p1DataIndex >= 8 ? [6,3] : undefined,
+        borderColor: ctx => ctx.p1DataIndex >= 8 ? '#f59e0b' : '#3b82f6',
       }
     },{
       label: '基准报价 (¥295)',
@@ -425,7 +425,7 @@ document.getElementById('kpi-latest-delta').textContent = '↑ +' + fullDelta + 
 const risks = [
   {
     title: '🔴 存储芯片 2+16', cls:'risk-high',
-    text: '基准报价¥50涨至¥420（+740%）。DRAM危机持续，Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM，通用DRAM供给严重紧缩。德国32GB内存条价格已涨4倍+。'
+    text: '基准报价¥50涨至¥322.8（+546%）。DRAM危机持续，Q1合约价环比涨90-95%。三星/SK海力士产能转向HBM，通用DRAM供给严重紧缩。8月实际报价较7月已开始回落。'
   },
   {
     title: '🟡 锂电池 1800mA', cls:'risk-mid',
@@ -433,7 +433,7 @@ const risks = [
   },
   {
     title: '🔴 PCB 光板', cls:'risk-high',
-    text: '建滔CCL年内已涨价5次累计超55%！铜箔HVLP4被NVIDIA抢购，2026年缺口1500吨。电子布翻倍暴涨，T-glass缺口超40%。PCB价格从¥8涨至¥15.2（+90%）。'
+    text: '建滔CCL年内已涨价5次累计超55%！铜箔HVLP4被NVIDIA抢购，2026年缺口1500吨。电子布翻倍暴涨，T-glass缺口超40%。PCB价格从¥8涨至¥16（+100%）。'
   },
   {
     title: '🟡 MLCC/电容', cls:'risk-mid',
@@ -445,7 +445,7 @@ const risks = [
   },
   {
     title: '🔴 64G TF卡（客供）', cls:'risk-high',
-    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至¥65（+220%）。NAND Q2合约价继续上涨，美光Q3营收414.6亿美元创新高，存储供需紧平衡至2027年底。'
+    text: '顾硕电子客供，MOQ 350。价格从¥20.3涨至¥52（+156%）。NAND Q2合约价继续上涨，美光Q3营收414.6亿美元创新高，存储供需紧平衡至2027年底。'
   },
   {
     title: '🟢 水墨屏 2.13寸', cls:'risk-low',
