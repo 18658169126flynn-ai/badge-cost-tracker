@@ -60,7 +60,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势（含 2026年7-8月实际报价） · 数据更新至 2026年8月31日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势（含 2026年7-8月实际报价） · 数据更新至 2026年9月29日</p>
 
 <!-- KPI Cards -->
 <div class="grid grid-3">
@@ -141,7 +141,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 
 <div class="footer">
   胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
-  生成时间：2026-08-31
+  生成时间：2026-09-29
 </div>
 </div>
 
@@ -157,14 +157,15 @@ const tfcardCost = 17.5;       // 64G TF卡客供
 
 // 追踪物料的历史价格趋势（电子料报价趋势表 - 最新版, 含2026年7-8月实际报价）
 const trendData = [
-  { date:'2025-09', label:'2025年9月', storage:79.67, storage18:47.80, pcb:8, cap:22, tfcard:20.30, tfcard32:14.90 },
-  { date:'2026-01', label:'2026年1月', storage:237.30, storage18:64.00, pcb:10, cap:27, tfcard:42.90, tfcard32:27.50 },
-  { date:'2026-02', label:'2026年2月', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.40, tfcard32:33.10 },
-  { date:'2026-03', label:'2026年3月', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.30, tfcard32:48.00 },
-  { date:'2026-06', label:'2026年6月', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.50, tfcard32:29.90 },
-  { date:'2026-07', label:'2026年7月', storage:352.56, storage18:216.69, pcb:13.5, cap:38, tfcard:58.00, tfcard32:33.00 },
-  { date:'2026-08a', label:'2026年8月4日', storage:339.00, storage18:203.40, pcb:14, cap:39, tfcard:53.00, tfcard32:30.00 },
-  { date:'2026-08b', label:'2026年8月31日', storage:322.82, storage18:181.59, pcb:16, cap:40, tfcard:52.00, tfcard32:29.00 },
+  { date:'2025-09-25', label:'2025年9月25日', storage:79.67,  storage18:47.80,  pcb:8,    cap:22, tfcard:20.30, tfcard32:14.90 },
+  { date:'2026-01-12', label:'2026年1月12日', storage:237.30, storage18:84.00,  pcb:10,   cap:27, tfcard:42.90, tfcard32:27.50 },
+  { date:'2026-02-12', label:'2026年2月12日', storage:252.04, storage18:104.55, pcb:10.5, cap:30, tfcard:52.40, tfcard32:33.10 },
+  { date:'2026-03-17', label:'2026年3月17日', storage:313.69, storage18:159.62, pcb:11.2, cap:32, tfcard:77.30, tfcard32:48.00 },
+  { date:'2026-06-10', label:'2026年6月10日', storage:344.76, storage18:189.84, pcb:13.2, cap:38, tfcard:45.50, tfcard32:29.90 },
+  { date:'2026-07-05', label:'2026年7月5日',  storage:352.56, storage18:216.69, pcb:13.5, cap:38, tfcard:58.00, tfcard32:33.00 },
+  { date:'2026-08-04', label:'2026年8月4日',  storage:339.00, storage18:203.40, pcb:14,   cap:39, tfcard:53.00, tfcard32:30.00 },
+  { date:'2026-08-31', label:'2026年8月31日', storage:322.82, storage18:181.59, pcb:16,   cap:40, tfcard:52.00, tfcard32:29.00 },
+  { date:'2026-09-29', label:'2026年9月29日', storage:315.00, storage18:177.61, pcb:17,   cap:40, tfcard:52.00, tfcard32:29.00 },
 ];
 
 // 基准值（最新成本表）
