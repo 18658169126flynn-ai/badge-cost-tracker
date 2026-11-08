@@ -60,7 +60,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 <body>
 <div class="container">
 <h1>📟 胸牌记录仪 — 成本动态追踪</h1>
-<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势（含 2026年7-8月实际报价） · 数据更新至 2026年9月29日</p>
+<p class="subtitle">基于 BOM V2.7 + 最新成本拆解表 + 实时报价趋势（含 2026年7-8月实际报价） · 数据更新至 2026年10月27日</p>
 
 <!-- KPI Cards -->
 <div class="grid grid-3">
@@ -141,7 +141,7 @@ tr:hover{background:rgba(59,130,246,.05)}
 
 <div class="footer">
   胸牌记录仪成本追踪系统 · 数据来源：BOM V2.7 / 最新成本拆解表 / 公开市场报价 · 仅供参考，实际采购以供应商报价为准<br>
-  生成时间：2026-09-29
+  生成时间：2026-10-11
 </div>
 </div>
 
@@ -166,6 +166,10 @@ const trendData = [
   { date:'2026-08-04', label:'2026年8月4日',  storage:339.00, storage18:203.40, pcb:14,   cap:39, tfcard:53.00, tfcard32:30.00 },
   { date:'2026-08-31', label:'2026年8月31日', storage:322.82, storage18:181.59, pcb:16,   cap:40, tfcard:52.00, tfcard32:29.00 },
   { date:'2026-09-29', label:'2026年9月29日', storage:315.00, storage18:177.61, pcb:17,   cap:40, tfcard:52.00, tfcard32:29.00 },
+  { date:'2026-10-10', label:'2026年10月10日', storage:321.00, storage18:181.00, pcb:17.50, cap:40, tfcard:52.50, tfcard32:29.50 },
+  { date:'2026-10-11', label:'2026年10月11日', storage:321.50, storage18:181.30, pcb:17.70, cap:40.20, tfcard:52.60, tfcard32:29.60 },
+  { date:'2026-10-16', label:'2026年10月16日', storage:324.00, storage18:182.70, pcb:17.90, cap:40.50, tfcard:52.90, tfcard32:29.80 },
+  { date:'2026-10-27', label:'2026年10月27日', storage:323.17, storage18:186.00, pcb:18,   cap:42, tfcard:50.00, tfcard32:28.00 },
 ];
 
 // 基准值（最新成本表）
@@ -363,7 +367,7 @@ const bomItems = [
   { cat:'PCB', name:'PCB光板', base:8, trendKey:'pcb', risk:'high', note:'建滔年内第5次涨价+15%，间隔仅20天创最短纪录。年内累计超55%。' },
   { cat:'电子料', name:'电子料及产测', base:32, trendKey:'cap', risk:'mid', note:'MLCC史诗级涨价！消费类涨15-20%，累计涨幅65%。0201规格缺货严重。' },
   { cat:'显示', name:'2.13寸水墨屏', base:18.6, current:24, risk:'low', note:'E Ink独占，MOQ 5-10K' },
-  { cat:'电池', name:'1800mA电池', base:10.8, current:14.5, risk:'mid', note:'碳酸锂从20.5万高点回落至16.95万/吨（SMM），电池成本略降。高盛Q4预测20-25万。' },
+  { cat:'电池', name:'1800mA电池', base:10.8, current:13.5, risk:'mid', note:'碳酸锂续跌至12.05万/吨（10/9上海钢联），较8月底15.7万跌24%、较5月20万高点回落40%；电池成本压力明显缓解。' },
   { cat:'光学', name:'摄像头模组', base:12, current:13, risk:'low', note:'图源顺，CMOS供应充足' },
   { cat:'射频', name:'天线(LTE+三合一+分集)', base:2.53, current:2.53, risk:'low', note:'3月转产合同价，换厂需重新调试' },
   { cat:'声学', name:'喇叭+MIC', base:2, current:2.2, risk:'low', note:'小幅波动' },
